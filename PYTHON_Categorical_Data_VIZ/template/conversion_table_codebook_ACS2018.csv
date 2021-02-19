@@ -1,0 +1,55 @@
+﻿seq,code,variable,short_name
+01-001,B02001_003E,% black,% black
+01-002,B02001_002E,% white,% white
+01-003,B03001_003E,% Hispanic,% Hispanic
+01-004,B02001_005E,% Asian,% Asian
+01-005,B02001_004E,% American Indian and Alaska Native alone,% American Indian and Alaska Native
+01-006,B02001_006E,% Native Hawaiian and other Pacific Islander alone,% Native Hawaiian and PI
+01-008,B05002_013E,% foreign born,% foreign born
+01-009,B05007_014E,% foreign born - europe,% foreign born - europe
+01-010,B05007_027E,% foreign born - asia,% foreign born - asia
+01-011,B05007_040E,% foreign born - latin america,% foreign born - latin america
+02-001,"B01001_003E, B01001_004E, B01001_005E, B01001_006E, B01001_027E, B01001_028E, B01001_029E, B01001_030E",% < 18 years old,% < 18 years old
+02-002,"B01001_018E, B01001_019E, B01001_020E, B01001_021E, B01001_022E, B01001_023E, B01001_024E, B01001_025E, B01001_042E, B01001_043E, B01001_044E, B01001_045E, B01001_046E, B01001_047E, B01001_048E, B01001_049E",% > 60 years old,% > 60 years old
+03-001,B25105_001E,Median monthly housing costs,Median monthly housing costs
+03-002,B06011_001E,Median income in the past 12 months,Median income in the past 12 months
+03-003,B19013_001E,Median household income,Median household income
+03-004,B06012_002E,% below poverty,% below poverty
+03-005,B27011_008E,% unemployed,% unemployed
+03-006,"B27011_004E, B27011_009E, B27011_014E",% health insurance,% health insurance
+03-007,"B27011_007E, B27011_012E, B27011_017E",% without health insurance,% without health insurance
+04-001,B06009_005E,% with 4year college degree,% with 4year college degree
+04-002,B06009_002E,% less than high school graduate,% less than high school graduate
+04-003,B06009_003E,% high school graduate (includes equivalency),% high school graduate
+04-004,B06009_004E,% some college or associate's degree,% some college or associate's degree
+04-005,B06009_006E,% graduate or professional degree,% graduate or professional degree
+05-001,"B25034_007E, B25034_008E, B25034_009E, B25034_010E, B25034_011E",% structures more than 30 years old,% structures more than 30 years old
+05-002,"B25026_003E, B25026_004E, B25026_005E,B25026_010E,B25026_011E,B25026_012E",% households moved <10 years ago,% households moved <10 years ago
+05-003,B25003_002E,% owner occupied housing,% owner occupied housing
+05-004,"B11011_005E, B11011_018E",% multiunit structures,% multiunit structures
+05-005,B25002_003E,% vacant housing,% vacant housing
+06-001,B08124_002E,"% management, business, science, and arts occupations","% management, business, science ..."
+06-002,B08124_003E,% service industry,% service industry
+06-003,B08124_004E,% sales and office occupations,% sales and office occupations
+06-004,B08124_005E,"% natural resources, construction, and maintenance occupation","% natural resources, construction ..."
+06-005,B08124_006E,"% production, transportation, and material moving occupations","% production, transportation ..."
+06-006,B08124_007E,% military specific occupations,% military specific occupations
+06-007,B08126_002E,"% agriculture, forestry, fishing and hunting, and mining","% agriculture, forestry, fishing ..."
+06-008,B08126_003E,% construction,% construction
+06-009,B08126_004E,% manufacturing,% manufacturing
+06-010,B08126_005E,% wholesale trade,% wholesale trade
+06-011,B08126_006E,% retail trade,% retail trade
+06-012,B08126_007E,"% transportation and warehousing, and utilities",% transportation and warehousing ...
+06-013,B08126_008E,% information,% information
+06-014,B08126_009E,"% finance and insurance, and real estate and rental and leasing",% finance and insurance ...
+06-015,B08126_010E,"% professional, scientific, and management, and administrative and waste management services","% professional, scientific ..."
+06-016,B08126_011E,"% educational services, and health care and social assistance",% educational services ...
+06-017,B08126_012E,"% arts, entertainment, and recreation, and accommodation and food services","% arts, entertainment, & recreation..."
+06-018,B08126_014E,% public administration,% public administration
+06-019,B08126_015E,% armed forces,% armed forces
+07-001,B08006_002E,"% car, truck, or van","% car, truck, or van"
+07-002,B08006_008E,% public transportation,% public transportation
+07-003,B08006_014E,% bicycle,% bicycle
+07-004,B08006_015E,% walked,% walked
+07-005,"B08006_014E, B08006_015E",% walk or bicycle to work,% walk or bicycle to work
+07-006,B08006_016E,"% taxicab, motorcycle, bicycle, walked, or other means","% taxicab, motorcycle, bicycle, walked"
