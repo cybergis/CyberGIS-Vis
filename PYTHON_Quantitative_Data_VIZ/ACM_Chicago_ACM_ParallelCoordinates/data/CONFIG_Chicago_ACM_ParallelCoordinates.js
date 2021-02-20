@@ -20,8 +20,8 @@ var Parallel_Coordinates_Plot = true;
 var Num_Of_Decimal_Places = 2;                             // default = 1 
 
 //Adjust the size of maps
-var Map_width  = "350px";                                  // min 350px
-var Map_height  = "350px";                                  // min 300px
+var Map_width  = "360px";                                  // min 350px
+var Map_height  = "360px";                                  // min 300px
 
 //Adjust the size of the stacked chart. Double-slashes in the front need to be deleted to make them effective
 //var Chart_width  = "350px";                                // min 350px

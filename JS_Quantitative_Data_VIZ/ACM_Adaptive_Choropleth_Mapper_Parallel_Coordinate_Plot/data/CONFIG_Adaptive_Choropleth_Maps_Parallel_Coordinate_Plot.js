@@ -1,5 +1,5 @@
 // Define the number of maps that you want to visualize. upto 15 maps are supported.
-var NumOfMaps = 7;
+var NumOfMaps = 6;
 
 //Define variables that you want to visualize at initial views. For example, enter five variables when the NumOfMaps is equal to 5.
 var InitialLayers = ["2000 % white (non-Hispanic)", "2000 % black (non-Hispanic)", "2000 % Hispanic", "2000 % 17 and under (total)", "2000 % 60 and older (total)", "2000 % foreign born", "2000 % with 4-year college degree or more", "2000 % Asian and Pacific Islander race", "2000 % unemployed", "2000 % manufacturing employees", "2000 % in poverty (total)", "2000 % vacant units", "2000 % owner-occupied units", "2000 % multi-family units", "2000 Median home value", "2000 % structures more than 30 years old", "2000 % HH in neighborhood 10 years or less"];

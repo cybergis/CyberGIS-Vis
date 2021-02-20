@@ -89,20 +89,20 @@ def write_CONFIG_js(param):
             InitialLayers.append(str(param['years'][0])+' '+variable)
     
     # Automatically set Map_width, Map_height. 
-    Map_width = "350px"
-    Map_height = "350px"
-    if (NumOfMaps <= 5):
+    Map_width = "360px"
+    Map_height = "360px"
+    if (NumOfMaps <= 4):
         Map_width = "400px"
         Map_height = "400px"
-    if (NumOfMaps <= 4):
+    if (NumOfMaps <= 3):
+        Map_width = "450px"
+        Map_height = "450px"
+    if (NumOfMaps <= 2):
         Map_width = "500px"
         Map_height = "500px"
-    if (NumOfMaps <= 3):
-        Map_width = "650px"
-        Map_height = "650px"
     if (NumOfMaps <= 1):
-        Map_width = "1000px"
-        Map_height = "1000px"
+        Map_width = "700px"
+        Map_height = "700px"
         
     # replace newly computed "NumOfMaps", "InitialLayers", "Map_width", "Map_height" in CONFIG.js. See the example replacement below
     '''

@@ -102,26 +102,20 @@ def write_CONFIG_js(param):
 
     NumOfMaps = len(InitialLayers)
     # Automatically set Map_width, Map_height. 
-    Map_width = "300px"
-    Map_height = "300px"
-    if (NumOfMaps <= 6):
-        Map_width = "300px"
-        Map_height = "300px"	
-    if (NumOfMaps <= 5):
-        Map_width = "350px"
-        Map_height = "350px"
+    Map_width = "360px"
+    Map_height = "360px"
     if (NumOfMaps <= 4):
         Map_width = "400px"
         Map_height = "400px"
     if (NumOfMaps <= 3):
-        Map_width = "400px"
-        Map_height = "400px"
-    if (NumOfMaps <= 2):
         Map_width = "450px"
         Map_height = "450px"
-    if (NumOfMaps ==	1):
-        Map_width = "800px"
-        Map_height = "800px"
+    if (NumOfMaps <= 2):
+        Map_width = "500px"
+        Map_height = "500px"
+    if (NumOfMaps <= 1):
+        Map_width = "700px"
+        Map_height = "700px"
     
     # replace newly computed "NumOfMaps", "InitialLayers", "Map_width", "Map_height" in CONFIG.js. See the example replacement below
     InitialLayers = "var InitialLayers = " + json.dumps(InitialLayers) + ";"

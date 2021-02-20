@@ -100,7 +100,7 @@ MapLinksPlot was originally developed by Su Yeon Han, Sergio Rey, Elijah Knaap, 
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.txt](LICENSE.txt) file for details
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
 
 ## Funding
 
