@@ -1,17 +1,17 @@
-# MapLinksPlot
+# CyberGIS Viz
 
 <p align="center">
-<img height=100 src="http://su-gis.iptime.org/MapLinksPlot/images/MapLinksPlot_logo.PNG" alt="MapLinksPlot"/>
+<img height=100 src="images/CyberGIS_Viz.png" alt="CyberGIS_Viz"/>
 </p>
 
-<h2 align="center" style="margin-top:-10px">MapLinksPlot is an an open-source JavaScript-based mapping tool that enables linking multiple maps and various charts.</h2> 
+<h2 align="center" style="margin-top:-10px">CyberGIS Viz is an an open-source JavaScript-based mapping tool that enables linking multiple maps and various charts.</h2> 
 
 ## QuickStart
-### MapLinksPlot_JS
+### CyberGIS Viz_JS
 &nbsp;&nbsp;&nbsp;&nbsp;For Javascript users, example visaulizations are available in the two folders below:<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;JS_Quantitative_Data_VIZ<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;JS_Categorical_Data_VIZ<br/>
-### MapLinksPlot_PYTHON
+### CyberGIS Viz_PYTHON
 &nbsp;&nbsp;&nbsp;&nbsp;For python users, example visaulizations are available in the two folders below:
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PYTHON_Quantitative_Data_VIZ/Adaptive_Choropleth_Mapper.ipynb
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PYTHON_Categorical_Data_VIZ/Qualitative_Analysis_Mapper.ipynb
@@ -20,9 +20,9 @@
 &nbsp;&nbsp;&nbsp;&nbsp;You can run LinksPlot_PYTHON in your Jupyter Notebook installed in your PC as well as in CybearGISX.<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;To use it in CyberGISX, follow steps below:
 1. If you do not have a CyerGISX account, create a CyberGISX an account with your GitHub id at https://cybergisxhub.cigi.illinois.edu
-2. Open up the CyberGIX, click the "new" button on the top right corner, and select python3 and enter the command line below to download MapLinksPlot.
+2. Open up the CyberGIX, click the "new" button on the top right corner, and select python3 and enter the command line below to download CyberGIS Viz.
 ```bash
-	!git clone https://github.com/suhanmappingideas/MapLinksPlot
+	!git clone https://github.com/cybergis/CyberGIS-Viz
 ```    
 3. Follow insturctions in Install_geosnap.ipynb.
 4. Uncomment out the code below:
@@ -42,7 +42,7 @@
  
 ## Visualization Modules
 <font color="green">
-Images below show visualizations that you can create using MapLinksPlot. Click the image to see the full size.</font >
+Images below show visualizations that you can create using CyberGIS Viz. Click the image to see the full size.</font >
 
 ###  Quntitative Data Visualization
 <ul>
@@ -95,12 +95,12 @@ Images below show visualizations that you can create using MapLinksPlot. Click t
 
 ## Authors
 
-MapLinksPlot was originally developed by Su Yeon Han, Sergio Rey, Elijah Knaap, Wei Kang, and other members at the Center for Geospatial Sciences at the University of California, Riverside, and is being also updated by members at the CyberGIS Center.
+CyberGIS Viz has been developed based on [GEOSNAP VIZ](https://github.com/spatialucr/geosnap-viz) which was originally developed by Su Yeon Han, Sergio Rey, Elijah Knaap, Wei Kang, and other members at the [Center for Geospatial Sciences at the University of California, Riverside](https://spatial.ucr.edu/), and is being updated by members at the [CyberGIS Center](https://cybergis.illinois.edu/). Please contact Su Yeon Han at suhan2@illinois.edu for any questions.
 
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the Apache License 2.0 - see the [LICENSE.md](LICENSE.md) file for details
 
 ## Funding
 
