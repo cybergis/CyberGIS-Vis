@@ -43,7 +43,7 @@ CyberGIS is a new stage of [GEOSNAP VIZ](https://github.com/spatialucr/geosnap-v
 	PYTHON_Quantitative_Data_VIZ/Adaptive_Choropleth_Mapper_geosnap.py
 	PYTHON_Categorical_Data_VIZ/Qualitative_Analysis_Mapper.py  
 ``` 
- 
+<br/><br/>
 ## Visualization Modules
 <font color="green">
 Images below show visualizations that you can create using CyberGIS Viz. Click the image to see the full size.</font >
