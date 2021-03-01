@@ -1,16 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[ ]:
-
-
-#!/usr/bin/env python
-# coding: utf-8
-
 import json, math, copy
-from geosnap.io import store_ltdb
-from geosnap import Community, datasets
-from geosnap.io import store_census
 import pandas as pd
 import shapely.wkt
 import shapely.geometry
@@ -150,8 +141,8 @@ def write_CONFIG_js(param):
 
 def write_GEO_JSON_js(community, param):
     # query geometry for each tract
-    geoid = community.gdf.columns[0]
-    tracts = community.gdf[[geoid, 'geometry']].copy()
+    geoid = community.columns[0]
+    tracts = community[[geoid, 'geometry']].copy()
     tracts.drop_duplicates(subset=geoid, inplace=True)                    # get unique geoid
     #print(tracts)
     
@@ -178,18 +169,18 @@ def write_GEO_JSON_js(community, param):
 
 def write_VARIABLES_js(community, param):
     #print(param)    
-    geoid        =  community.gdf.columns[0]
+    geoid        =  community.columns[0]
     years        =  param['years']
     variables    =  param['variables']
     
     ## filtering by years
-    #community.gdf = community.gdf[community.gdf.year.isin(years)]
-    #print(community.gdf)
-    #selectedCommunity = community.gdf[variables]
-    #print(community.gdf)
+    #community = community[community.year.isin(years)]
+    #print(community)
+    #selectedCommunity = community[variables]
+    #print(community)
     #return
     
-    #make heading: community.gdf.columns[0] has "geoid" (string)
+    #make heading: community.columns[0] has "geoid" (string)
     heading = [geoid]
     for i, year in enumerate(years):
         for j, variable in enumerate(param['labels']):
@@ -202,7 +193,7 @@ def write_VARIABLES_js(community, param):
     selectedColumns.extend(variables)
     #print("selectedColumns:", type(selectedColumns), selectedColumns)
     for i, year in enumerate(years):
-        aYearDF = community.gdf[community.gdf.year==year][selectedColumns]
+        aYearDF = community[community.year==year][selectedColumns]
         #print(year, type(aYearDF), aYearDF)
         for j, variable in enumerate(variables):
             h += 1
@@ -257,21 +248,21 @@ def Adaptive_Choropleth_Mapper_viz(param):
         community = Community.from_ltdb(years=param['years'], county_fips=param['county_fips'])
     elif ('state_fips' in param and param['state_fips']):
         community = Community.from_ltdb(years=param['years'], state_fips=param['state_fips'])
-    #print(community.gdf)
+    #print(community)
 
 # if the user enters CSV and shapefile, use the files from the user
 
 #### This is executed when the user enter attributes in csv file and geometroy in shapefile ######################  
     if (community is None and 'inputCSV' in param):
-        community = Community()
-        #community.gdf = pd.read_csv(param['inputCSV'], dtype={'geoid':str})
-        community.gdf = param["inputCSV"]
-        #print(community.gdf)
-        geoid = community.gdf.columns[0]
-        #community.gdf = community.gdf.astype(str)
-        #print("inputCSV:  " + community.gdf.geoid)        
-        community.gdf[community.gdf.columns[0]] = community.gdf[geoid].astype(str)
-        #print("community.gdf.columns[0]:", community.gdf.columns[0])
+        #community = Community()
+        #community = pd.read_csv(param['inputCSV'], dtype={'geoid':str})
+        community = param["inputCSV"]
+        #print(community)
+        geoid = community.columns[0]
+        #community = community.astype(str)
+        #print("inputCSV:  " + community.geoid)        
+        community[community.columns[0]] = community[geoid].astype(str)
+        #print("community.columns[0]:", community.columns[0])
         
         # read shape file to df_shape
         #df_shape = gpd.read_file(param['shapefile'])
@@ -282,9 +273,9 @@ def Adaptive_Choropleth_Mapper_viz(param):
         #print(geokey)    
         df_shape = df_shape.set_index(geokey)
         
-        # insert geometry to community.gdf
+        # insert geometry to community
         geometry = []
-        for index, row in community.gdf.iterrows():
+        for index, row in community.iterrows():
             tractid = row[geoid]
             try:
                 tract = df_shape.loc[tractid]
@@ -292,21 +283,21 @@ def Adaptive_Choropleth_Mapper_viz(param):
             except KeyError:
                 #print("Tract ID [{}] is not found in the shape file {}".format(tractid, param['shapefile']))
                 geometry.append(None)
-       # print( "geometry" in community.gdf )        
-        #f hasattr(community.gdf, "geoemtry"):
-        #if (community.gdf["geoemtry"] is None):
+       # print( "geometry" in community )        
+        #f hasattr(community, "geoemtry"):
+        #if (community["geoemtry"] is None):
         #   pass 
         #else:
-        if(("geometry" in community.gdf) == False):
-            community.gdf.insert(len(community.gdf.columns), "geometry", geometry)
-        community.gdf.rename(columns={'period':'year'}, inplace=True)
-        #print(community.gdf)
+        if(("geometry" in community) == False):
+            community.insert(len(community.columns), "geometry", geometry)
+        community.rename(columns={'period':'year'}, inplace=True)
+        #print(community)
 ################################################################################################################      
     
-    community.gdf = community.gdf.replace([np.inf, -np.inf], np.nan)
+    community = community.replace([np.inf, -np.inf], np.nan)
     # check if geometry is not null for Spatial Clustering  
-    community.gdf = community.gdf[pd.notnull(community.gdf['geometry'])]
-    #print(community.gdf)
+    community = community[pd.notnull(community['geometry'])]
+    #print(community)
 
     codebook = pd.read_csv('template/conversion_table_codebook.csv')
     codebook.set_index(keys='variable', inplace=True)

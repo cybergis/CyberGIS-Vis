@@ -1,9 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
 import json, math, copy, sys
-from geosnap.io import store_ltdb
-from geosnap import Community, datasets
-from geosnap.io import store_census
 import pandas as pd
 import shapely.wkt
 import shapely.geometry
