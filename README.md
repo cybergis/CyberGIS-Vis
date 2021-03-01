@@ -4,9 +4,9 @@
 <img height=100 src="images/CyberGIS_Viz.PNG" alt="CyberGIS_Viz.PNG"/>
 </p>
 
-<h2 align="center" style="margin-top:-10px">CyberGIS Viz is an an open-source JavaScript-based mapping tool that enables linking multiple maps and various charts.</h2> 
+<h2> align="center" style="margin-top:-10px">CyberGIS Viz is an an open-source JavaScript-based mapping tool that enables linking multiple maps and various charts.</h2> 
 
-<h4 align="center" style="margin-top:-10px">CyberGIS is a new stage of [GEOSNAP VIZ](https://github.com/spatialucr/geosnap-viz). The multiple linked views of [GEOSNAP VIZ](https://github.com/spatialucr/geosnap-viz) are customized to visualize your high dimensional and spatiotemporal geospatial data set. </h4> 
+<h4> align="center" style="margin-top:-10px">CyberGIS is a new stage of [GEOSNAP VIZ](https://github.com/spatialucr/geosnap-viz). The multiple linked views of [GEOSNAP VIZ](https://github.com/spatialucr/geosnap-viz) are customized to visualize your high dimensional and spatiotemporal geospatial data set. </h4> 
 
 ## QuickStart
 ### CyberGIS Viz_JS
