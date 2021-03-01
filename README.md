@@ -1,7 +1,7 @@
 # CyberGIS Viz
 
 <p align="center">
-<img height=100 src="images/CyberGIS_Viz.png" alt="CyberGIS_Viz"/>
+<img height=100 src="images/CyberGIS_Viz.png" alt="CyberGIS_Viz.PNG"/>
 </p>
 
 <h2 align="center" style="margin-top:-10px">CyberGIS Viz is an an open-source JavaScript-based mapping tool that enables linking multiple maps and various charts.</h2> 
