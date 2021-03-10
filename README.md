@@ -25,7 +25,7 @@ CyberGIS-Viz is a new stage of [GEOSNAP VIZ](https://github.com/spatialucr/geosn
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PYTHON_Categorical_Data_VIZ/Qualitative_Analysis_Mapper.ipynb
 
 ## CyberGISX
-&nbsp;&nbsp;&nbsp;&nbsp;You can run CyberGIS-Viz in your Jupyter Notebook installed on your PC as well as in CybearGISX. We recommend that you use CyberGISX because all the required packages have been already installed in CyberGISX..<br/>
+You can run CyberGIS-Viz in your Jupyter Notebook installed on your PC as well as in CybearGISX. We recommend that you use CyberGISX because all the required packages have been already installed in CyberGISX..<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;To use it in CyberGISX, follow steps below:
 1. If you do not have a CyerGISX account, create a CyberGISX account with your GitHub id at https://cybergisxhub.cigi.illinois.edu
 2. Open up the CyberGIX, click the "new" button on the top right corner, and select python3 and enter the command line below to download CyberGIS-Viz.
