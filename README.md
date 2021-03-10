@@ -84,7 +84,7 @@ Images below show visualizations that you can create using CyberGIS-Viz. Click t
 
 ## Tutorials
 
-* [Introduction to MapLinksPlot and Adpative Choropleth Mapper](http://su-gis.iptime.org/MapLinksPlot/vidoes/Introduction_to_MapLinksPlot.mp4) (MapLinksPlot is an old name of CyberGIS-Viz
+* [Introduction to MapLinksPlot and Adpative Choropleth Mapper](http://su-gis.iptime.org/MapLinksPlot/vidoes/Introduction_to_MapLinksPlot.mp4) (MapLinksPlot is an old name of CyberGIS-Viz)
 * [Concepts of Adaptive Choropleth Mapper](http://su-gis.iptime.org/MapLinksPlot/vidoes/ACM_additional_functions.mp4)
 * [Introduction to CyberGISX](http://su-gis.iptime.org/MapLinksPlot/vidoes/CyberGISX.mp4): It covers how to access CyberGISX, how to install required libararies, and how to run Adaptive Choropleth Mapper in CyberGISX
 * [How to create map using Adaptive Choropleth Mapper](http://su-gis.iptime.org/MapLinksPlot/vidoes/How_to_use_ACM.mp4)
