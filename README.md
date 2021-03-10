@@ -9,6 +9,8 @@
 
 CyberGIS-Viz is a new stage of [GEOSNAP VIZ](https://github.com/spatialucr/geosnap-viz). Now the multiple linked views of [GEOSNAP VIZ](https://github.com/spatialucr/geosnap-viz) have been customized to visualize your own geospatial data set in CyberGIS-Viz. We provide a set of modules for the visualization of both quantitative and qualitative data. By using CyberGIS-Viz, you will be able to create side-by-side choropleth map visualizations for the comparison of multiple variables or spatiotemporal patterns. Various charts linked to multiple maps will also allow you to find new insight into your high-dimensional and spatiotemporal datasets. Your visualizations can be created using both Python and Javascript. Enjoy creating multiple maps and charts linked to one another in both languages!
 
+*CyberGIS-Viz has been fully tested on [Firefox](https://www.mozilla.org/en-US/firefox/new/).
+
 <br/><br/>
 
 ## QuickStart
