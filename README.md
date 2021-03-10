@@ -1,21 +1,21 @@
-# CyberGIS Viz
+# CyberGIS-Viz
 
 <p align="center">
 <img height=100 src="images/CyberGIS_Viz.PNG" alt="CyberGIS_Viz.PNG"/>
 </p>
 
-<h2 align="center" style="margin-top:-10px">CyberGIS Viz is an an open-source JavaScript-based mapping tool that enables linking multiple maps and various charts.</h2> 
+<h2 align="center" style="margin-top:-10px">CyberGIS-Viz is an an open-source JavaScript-based mapping tool that enables linking multiple maps and various charts.</h2> 
 <br/>
+CyberGIS-Viz is a new stage of [GEOSNAP VIZ](https://github.com/spatialucr/geosnap-viz). Now the multiple linked views of [GEOSNAP VIZ](https://github.com/spatialucr/geosnap-viz) have been customized to visualize your own geospatial data set in CyberGIS-Viz. We provide a set of modules for the visualization of both quantitative and qualitative data. By using CyberGIS-Viz, you will be able to create side-by-side choropleth map visualizations for the comparison of multiple variables or spatiotemporal patterns. Various charts linked to multiple maps will also allow you to find new insight into your high-dimensional and spatiotemporal datasets. Your visualizations can be created using both Python and Javascript. Enjoy creating multiple maps and charts linked to one another in both languages!
 
-CyberGIS is a new stage of [GEOSNAP VIZ](https://github.com/spatialucr/geosnap-viz). The multiple linked views of [GEOSNAP VIZ](https://github.com/spatialucr/geosnap-viz) are customized to visualize your high dimensional and spatiotemporal geospatial data set. 
 <br/><br/>
 
 ## QuickStart
-### CyberGIS Viz_JS
+### CyberGIS-Viz_JS
 &nbsp;&nbsp;&nbsp;&nbsp;For Javascript users, example visaulizations are available in the two folders below:<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;JS_Quantitative_Data_VIZ<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;JS_Categorical_Data_VIZ<br/>
-### CyberGIS Viz_PYTHON
+### CyberGIS-Viz_PYTHON
 &nbsp;&nbsp;&nbsp;&nbsp;For python users, example visaulizations are available in the two folders below:
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PYTHON_Quantitative_Data_VIZ/Adaptive_Choropleth_Mapper.ipynb
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PYTHON_Categorical_Data_VIZ/Qualitative_Analysis_Mapper.ipynb
@@ -24,7 +24,7 @@ CyberGIS is a new stage of [GEOSNAP VIZ](https://github.com/spatialucr/geosnap-v
 &nbsp;&nbsp;&nbsp;&nbsp;You can run LinksPlot_PYTHON in your Jupyter Notebook installed in your PC as well as in CybearGISX.<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;To use it in CyberGISX, follow steps below:
 1. If you do not have a CyerGISX account, create a CyberGISX an account with your GitHub id at https://cybergisxhub.cigi.illinois.edu
-2. Open up the CyberGIX, click the "new" button on the top right corner, and select python3 and enter the command line below to download CyberGIS Viz.
+2. Open up the CyberGIX, click the "new" button on the top right corner, and select python3 and enter the command line below to download CyberGIS-Viz.
 ```bash
 	!git clone https://github.com/cybergis/CyberGIS-Viz
 ```    
@@ -46,7 +46,7 @@ CyberGIS is a new stage of [GEOSNAP VIZ](https://github.com/spatialucr/geosnap-v
 <br/><br/>
 ## Visualization Modules
 <font color="green">
-Images below show visualizations that you can create using CyberGIS Viz. Click the image to see the full size.</font >
+Images below show visualizations that you can create using CyberGIS-Viz. Click the image to see the full size.</font >
 
 ###  Quntitative Data Visualization
 <ul>
@@ -99,7 +99,7 @@ Images below show visualizations that you can create using CyberGIS Viz. Click t
 
 ## Authors
 
-CyberGIS Viz has been developed based on [GEOSNAP VIZ](https://github.com/spatialucr/geosnap-viz) which was originally developed by Su Yeon Han, Sergio Rey, Elijah Knaap, Wei Kang, and other members at the [Center for Geospatial Sciences at the University of California, Riverside](https://spatial.ucr.edu/), and is being updated by members at the [CyberGIS Center](https://cybergis.illinois.edu/). Please contact Su Yeon Han at suhan2@illinois.edu for any questions.
+CyberGIS-Viz has been developed based on [GEOSNAP VIZ](https://github.com/spatialucr/geosnap-viz) which was originally developed by Su Yeon Han, Sergio Rey, Elijah Knaap, Wei Kang, and other members at the [Center for Geospatial Sciences at the University of California, Riverside](https://spatial.ucr.edu/), and is being updated by members at the [CyberGIS Center](https://cybergis.illinois.edu/). Please contact Su Yeon Han at suhan2@illinois.edu for any questions.
 
 
 ## License
