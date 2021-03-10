@@ -84,6 +84,9 @@ Images below show visualizations that you can create using CyberGIS-Viz. Click t
          <img height=200px src="http://su-gis.iptime.org/MapLinksPlot/images/Qual_CD.PNG" alt="MapLinksPlot"/>
 </ul> 
 
+## Data
+Visualizations created by CyberGIS-Viz are using a small subset of [LTDB](https://s4.ad.brown.edu/projects/diversity/researcher/LTDB.htm). [LTDB](https://s4.ad.brown.edu/projects/diversity/researcher/LTDB.htm) provides socioeconomic and demographic data with harmonized boundaries from 1970 to 2010 decennially. If you need the entire dataset, visit this [website](https://s4.ad.brown.edu/projects/diversity/researcher/LTDB.htm) to download.
+
 ## Tutorials
 
 * [Introduction to MapLinksPlot and Adpative Choropleth Mapper](http://su-gis.iptime.org/MapLinksPlot/vidoes/Introduction_to_MapLinksPlot.mp4) (MapLinksPlot is an old name of CyberGIS-Viz)
