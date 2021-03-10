@@ -19,8 +19,9 @@ CyberGIS-Viz is a new stage of [GEOSNAP VIZ](https://github.com/spatialucr/geosn
 ### CyberGIS-Viz_PYTHON
 &nbsp;&nbsp;&nbsp;&nbsp;For python users, example visaulizations are available in the two folders below:
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PYTHON_Quantitative_Data_VIZ/Adaptive_Choropleth_Mapper.ipynb
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PYTHON_Quantitative_Data_VIZ/Adaptive_Choropleth_Mapper_geosnap.ipynb
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PYTHON_Categorical_Data_VIZ/Qualitative_Analysis_Mapper.ipynb
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PYTHON_Categorical_Data_VIZ/Neighborhood_Analysis_Mapper.ipynb
+
 ## CyberGISX
 &nbsp;&nbsp;&nbsp;&nbsp;You can run LinksPlot_PYTHON in your Jupyter Notebook installed in your PC as well as in CybearGISX.<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;To use it in CyberGISX, follow steps below:
@@ -29,7 +30,7 @@ CyberGIS-Viz is a new stage of [GEOSNAP VIZ](https://github.com/spatialucr/geosn
 ```bash
 	!git clone https://github.com/cybergis/CyberGIS-Viz
 ```    
-3. Follow insturctions in Install_geosnap.ipynb.
+3. This example (PYTHON_Quantitative_Data_VIZ/Adaptive_Choropleth_Mapper_geosnap.ipynb) uses data from [LTDB](https://s4.ad.brown.edu/projects/diversity/researcher/LTDB.htm). In order to use the data from [LTDB](https://s4.ad.brown.edu/projects/diversity/researcher/LTDB.htm), please follow insturctions in Install_geosnap.ipynb.
 4. Uncomment out the code below:
 
 ```bash  
