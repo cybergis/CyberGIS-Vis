@@ -4,12 +4,11 @@
 <img height=100 src="images/CyberGIS_Viz.PNG" alt="CyberGIS_Viz.PNG"/>
 </p>
 
-<h2 align="center" style="margin-top:-10px">CyberGIS-Viz is an an open-source JavaScript-based mapping tool that enables linking multiple maps and various charts.</h2> 
+<h2 align="center" style="margin-top:-10px">CyberGIS-Viz is an open-source software tool for interactive geospatial visualization and scalable visual analytics.</h2> 
 <br/>
 
-CyberGIS-Viz is a new stage of [GEOSNAP VIZ](https://github.com/spatialucr/geosnap-viz). Now the multiple linked views of [GEOSNAP VIZ](https://github.com/spatialucr/geosnap-viz) have been customized to visualize your own geospatial data set in CyberGIS-Viz. We provide a set of modules for the visualization of both quantitative and qualitative data. By using CyberGIS-Viz, you will be able to create side-by-side choropleth map visualizations for the comparison of multiple variables or spatiotemporal patterns. Various charts linked to multiple maps will also allow you to find new insight into your high-dimensional and spatiotemporal datasets. Your visualizations can be created using both Python and Javascript. Enjoy creating multiple maps and charts linked to one another in both languages!
 
-*CyberGIS-Viz has been fully tested on [Firefox](https://www.mozilla.org/en-US/firefox/new/).
+CyberGIS-Viz integrates cutting-edge cyberGIS and online visualization capabilities into a suite of software modules for visualization and visual analytical approaches to knowledge discovery based on geospatial data. Key features of the current CyberGIS-Viz implementation include: (1) comparative visualization of spatiotemporal patterns through choropleth maps; (2) dynamic cartographic mapping linked with charts to explore high-dimensional data; (3) reproducible visual analytics through integration with CyberGIS-Jupyter; and (4) multi-language support including both Python and Javascript. [Firefox is the recommended web browser for reaping the best performance of CyberGIS-Viz.](https://www.mozilla.org/en-US/firefox/new/)
 
 <br/><br/>
 
@@ -25,7 +24,7 @@ CyberGIS-Viz is a new stage of [GEOSNAP VIZ](https://github.com/spatialucr/geosn
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PYTHON_Categorical_Data_VIZ/Qualitative_Analysis_Mapper.ipynb
 
 ## CyberGISX
-You can run CyberGIS-Viz in your Jupyter Notebook installed on your PC as well as in CybearGISX. We recommend that you use CyberGISX because all the required packages have been already installed in CyberGISX..<br/>
+**You can run CyberGIS-Viz in your Jupyter Notebook installed on your PC as well as in CybearGISX. We recommend that you use CyberGISX because all the required packages have been integrated in CyberGISX**.<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;To use it in CyberGISX, follow steps below:
 1. If you do not have a CyerGISX account, create a CyberGISX account with your GitHub id at https://cybergisxhub.cigi.illinois.edu
 2. Open up the CyberGIX, click the "new" button on the top right corner, and select python3 and enter the command line below to download CyberGIS-Viz.
@@ -87,37 +86,25 @@ Images below show visualizations that you can create using CyberGIS-Viz. Click t
 ## Data
 Visualizations created by CyberGIS-Viz are using a small subset of [LTDB](https://s4.ad.brown.edu/projects/diversity/researcher/LTDB.htm). [LTDB](https://s4.ad.brown.edu/projects/diversity/researcher/LTDB.htm) provides socioeconomic and demographic data with harmonized boundaries from 1970 to 2010 decennially. If you need the entire dataset, visit this [website](https://s4.ad.brown.edu/projects/diversity/researcher/LTDB.htm) to download.
 
-## Tutorials
+## Related Resources
 
-* [Introduction to MapLinksPlot and Adpative Choropleth Mapper](http://su-gis.iptime.org/MapLinksPlot/vidoes/Introduction_to_MapLinksPlot.mp4) (MapLinksPlot is an old name of CyberGIS-Viz)
-* [Concepts of Adaptive Choropleth Mapper](http://su-gis.iptime.org/MapLinksPlot/vidoes/ACM_additional_functions.mp4)
-* [Introduction to CyberGISX](http://su-gis.iptime.org/MapLinksPlot/vidoes/CyberGISX.mp4): It covers how to access CyberGISX, how to install required libararies, and how to run Adaptive Choropleth Mapper in CyberGISX
-* [How to create map using Adaptive Choropleth Mapper](http://su-gis.iptime.org/MapLinksPlot/vidoes/How_to_use_ACM.mp4)
-*  [Various Visualization Modules of MapLinksPlot](http://su-gis.iptime.org/MapLinksPlot/vidoes/Other_Viz_Modules.mp4)
+* [Leaflet](https://leafletjs.com) 
+* [PlotlyJS](https://plot.ly/javascript/) 
+* [D3](https://d3js.org/) 
+* [CyberGISX](https://github.com/cybergis) 
+* [GEOSNAP VIZ](https://github.com/spatialucr/geosnap-viz) 
 
+## Contributors
 
-
-## Built With
-
-* [Leaflet](https://leafletjs.com) - Used to make maps
-* [PlotlyJS](https://plot.ly/javascript/) - Used to make charts
-* [D3](https://d3js.org/) - Used to make charts
-
-
-## Authors
-
-CyberGIS-Viz has been developed based on [GEOSNAP VIZ](https://github.com/spatialucr/geosnap-viz) which was originally developed by Su Yeon Han, Sergio Rey, Elijah Knaap, Wei Kang, and other members at the [Center for Geospatial Sciences at the University of California, Riverside](https://spatial.ucr.edu/), and is being updated by members at the [CyberGIS Center](https://cybergis.illinois.edu/). Please contact Su Yeon Han at suhan2@illinois.edu for any questions.
-
+The lead developer of CyberGIS-Viz is Dr. Su Yeon Han at the [CyberGIS Center for Advanced Digital and Spatial Studies (CyberGIS Center)](https://cybergis.illinois.edu/) and the Principal Investigator of CyberGIS-Viz is Dr. Shaowen Wang at CyberGIS Center. This software repository is primarily maintained by [CyberGIS Center](https://cybergis.illinois.edu/). Please email any questions to [help@cybergis.org](mailto:help@cybergis.org).
 
 ## License
 
-This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENSE) file for details
+**This project is licensed under the Apache License 2.0 - see the [LICENSE](https://github.com/cybergis/CyberGIS-Viz/blob/master/LICENSE) file for details.**
 
 ## Funding
 
-<img src="images/nsf_logo.jpg" width=100 /> This project was supported by NSF Award #1733705,
-[Neighborhoods in Space-Time Contexts](https://www.nsf.gov/awardsearch/showAward?AWD_ID=1733705&HistoricalAwards=false) and is currenty supported by NSF Award #1743184,
-[SI2-S2I2 Conceptualization: Geospatial Software Institute](https://www.nsf.gov/awardsearch/showAward?AWD_ID=1743184). Any opinions, findings, and conclusions or recommendations expressed on the site are those of the author(s) and do not necessarily reflect the views of the National Science Foundation.
+The CyberGIS-Viz project is supported by the CyberGIS Center for Advanced Digital and Spatial Studies at the University of Illinois at Urbana-Champaign.
 
 
 
