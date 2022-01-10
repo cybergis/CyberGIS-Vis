@@ -1,4 +1,4 @@
-# CyberGIS-Viz
+# CyberGIS-Vis
 
 <p align="center">
 <img height=100 src="images/CyberGIS_Viz.PNG" alt="CyberGIS_Viz.PNG"/>
@@ -8,7 +8,7 @@
 <br/>
 
 
-CyberGIS-Viz integrates cutting-edge cyberGIS and online visualization capabilities into a suite of software modules for visualization and visual analytical approaches to knowledge discovery based on geospatial data. Key features of the current CyberGIS-Viz implementation include: (1) comparative visualization of spatiotemporal patterns through choropleth maps; (2) dynamic cartographic mapping linked with charts to explore high-dimensional data; (3) reproducible visual analytics through integration with CyberGIS-Jupyter; and (4) multi-language support including both Python and Javascript. [Firefox is the recommended web browser for reaping the best performance of CyberGIS-Viz.](https://www.mozilla.org/en-US/firefox/new/)
+CyberGIS-Vis integrates cutting-edge cyberGIS and online visualization capabilities into a suite of software modules for visualization and visual analytical approaches to knowledge discovery based on geospatial data. Key features of the current CyberGIS-Viz implementation include: (1) comparative visualization of spatiotemporal patterns through choropleth maps; (2) dynamic cartographic mapping linked with charts to explore high-dimensional data; (3) reproducible visual analytics through integration with CyberGIS-Jupyter; and (4) multi-language support including both Python and Javascript. [Firefox is the recommended web browser for reaping the best performance of CyberGIS-Vis.](https://www.mozilla.org/en-US/firefox/new/)
 
 <br/><br/>
 
@@ -24,12 +24,12 @@ CyberGIS-Viz integrates cutting-edge cyberGIS and online visualization capabilit
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PYTHON_Categorical_Data_VIZ/Qualitative_Analysis_Mapper.ipynb
 
 ## CyberGISX
-**You can run CyberGIS-Viz in your Jupyter Notebook installed on your PC as well as in CybearGISX. We recommend that you use CyberGISX because all the required packages have been integrated in CyberGISX**.<br/>
+**You can run CyberGIS-Vis in your Jupyter Notebook installed on your PC as well as in CybearGISX. We recommend that you use CyberGISX because all the required packages have been integrated in CyberGISX**.<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;To use it in CyberGISX, follow steps below:
 1. If you do not have a CyerGISX account, create a CyberGISX account with your GitHub id at https://cybergisxhub.cigi.illinois.edu
 2. Open up the CyberGIX, click the "new" button on the top right corner, and select python3 and enter the command line below to download CyberGIS-Viz.
 ```bash
-	!git clone https://github.com/cybergis/CyberGIS-Viz
+	!git clone https://github.com/cybergis/CyberGIS-Vis
 ```    
 3. This example (PYTHON_Quantitative_Data_VIZ/Adaptive_Choropleth_Mapper_geosnap.ipynb) uses data from [LTDB](https://s4.ad.brown.edu/projects/diversity/researcher/LTDB.htm). In order to use the data from [LTDB](https://s4.ad.brown.edu/projects/diversity/researcher/LTDB.htm), please follow insturctions in Install_geosnap.ipynb.
 4. Uncomment out the code below:
@@ -49,7 +49,7 @@ CyberGIS-Viz integrates cutting-edge cyberGIS and online visualization capabilit
 <br/><br/>
 ## Visualization Modules
 <font color="green">
-Images below show visualizations that you can create using CyberGIS-Viz. Click the image to see the full size.</font >
+Images below show visualizations that you can create using CyberGIS-Vis. Click the image to see the full size.</font >
 
 ###  Quntitative Data Visualization
 <ul>
@@ -84,7 +84,7 @@ Images below show visualizations that you can create using CyberGIS-Viz. Click t
 </ul> 
 
 ## Data
-Visualizations created by CyberGIS-Viz are using a small subset of [LTDB](https://s4.ad.brown.edu/projects/diversity/researcher/LTDB.htm). [LTDB](https://s4.ad.brown.edu/projects/diversity/researcher/LTDB.htm) provides socioeconomic and demographic data with harmonized boundaries from 1970 to 2010 decennially. If you need the entire dataset, visit this [website](https://s4.ad.brown.edu/projects/diversity/researcher/LTDB.htm) to download.
+Visualizations created by CyberGIS-Vis are using a small subset of [LTDB](https://s4.ad.brown.edu/projects/diversity/researcher/LTDB.htm). [LTDB](https://s4.ad.brown.edu/projects/diversity/researcher/LTDB.htm) provides socioeconomic and demographic data with harmonized boundaries from 1970 to 2010 decennially. If you need the entire dataset, visit this [website](https://s4.ad.brown.edu/projects/diversity/researcher/LTDB.htm) to download.
 
 ## Related Resources
 
@@ -96,15 +96,15 @@ Visualizations created by CyberGIS-Viz are using a small subset of [LTDB](https:
 
 ## Contributors
 
-The lead developer of CyberGIS-Viz is Dr. Su Yeon Han at the [CyberGIS Center for Advanced Digital and Spatial Studies (CyberGIS Center)](https://cybergis.illinois.edu/) and the Principal Investigator of CyberGIS-Viz is Dr. Shaowen Wang at CyberGIS Center. This software repository is primarily maintained by [CyberGIS Center](https://cybergis.illinois.edu/). Please email any questions to [help@cybergis.org](mailto:help@cybergis.org).
+The lead developer of CyberGIS-Vis is Dr. Su Yeon Han at the [CyberGIS Center for Advanced Digital and Spatial Studies (CyberGIS Center)](https://cybergis.illinois.edu/) and the Principal Investigator of CyberGIS-Vis is Dr. Shaowen Wang at CyberGIS Center. This software repository is primarily maintained by [CyberGIS Center](https://cybergis.illinois.edu/). Please email any questions to [help@cybergis.org](mailto:help@cybergis.org).
 
 ## License
 
-**This project is licensed under the Apache License 2.0 - see the [LICENSE](https://github.com/cybergis/CyberGIS-Viz/blob/master/LICENSE) file for details.**
+**This project is licensed under the Apache License 2.0 - see the [LICENSE](https://github.com/cybergis/CyberGIS-Vis/blob/master/LICENSE) file for details.**
 
 ## Funding
 
-The CyberGIS-Viz project is supported by the CyberGIS Center for Advanced Digital and Spatial Studies at the University of Illinois at Urbana-Champaign.
+The CyberGIS-Vis project is supported by the CyberGIS Center for Advanced Digital and Spatial Studies at the University of Illinois at Urbana-Champaign.
 
 
 
