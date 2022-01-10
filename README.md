@@ -4,11 +4,11 @@
 <img height=100 src="images/CyberGIS_Viz.PNG" alt="CyberGIS_Viz.PNG"/>
 </p>
 
-<h2 align="center" style="margin-top:-10px">CyberGIS-Viz is an open-source software tool for interactive geospatial visualization and scalable visual analytics.</h2> 
+<h2 align="center" style="margin-top:-10px">CyberGIS-Vis is an open-source software tool for interactive geospatial visualization and scalable visual analytics.</h2> 
 <br/>
 
 
-CyberGIS-Vis integrates cutting-edge cyberGIS and online visualization capabilities into a suite of software modules for visualization and visual analytical approaches to knowledge discovery based on geospatial data. Key features of the current CyberGIS-Viz implementation include: (1) comparative visualization of spatiotemporal patterns through choropleth maps; (2) dynamic cartographic mapping linked with charts to explore high-dimensional data; (3) reproducible visual analytics through integration with CyberGIS-Jupyter; and (4) multi-language support including both Python and Javascript. [Firefox is the recommended web browser for reaping the best performance of CyberGIS-Vis.](https://www.mozilla.org/en-US/firefox/new/)
+CyberGIS-Vis integrates cutting-edge cyberGIS and online visualization capabilities into a suite of software modules for visualization and visual analytical approaches to knowledge discovery based on geospatial data. Key features of the current CyberGIS-Vis implementation include: (1) comparative visualization of spatiotemporal patterns through choropleth maps; (2) dynamic cartographic mapping linked with charts to explore high-dimensional data; (3) reproducible visual analytics through integration with CyberGIS-Jupyter; and (4) multi-language support including both Python and Javascript. [Firefox is the recommended web browser for reaping the best performance of CyberGIS-Vis.](https://www.mozilla.org/en-US/firefox/new/)
 
 <br/><br/>
 
