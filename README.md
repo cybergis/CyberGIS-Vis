@@ -1,7 +1,7 @@
 # CyberGIS-Vis
 
 <p align="center">
-<img height=100 src="images/CyberGIS_Viz.PNG" alt="CyberGIS_Viz.PNG"/>
+<img height=150 src="images/CyberGIS_Viz.PNG" alt="CyberGIS_Viz.PNG"/>
 </p>
 
 <h2 align="center" style="margin-top:-10px">CyberGIS-Vis is an open-source software tool for interactive geospatial visualization and scalable visual analytics.</h2> 
