@@ -1,1 +1,0 @@
-https://libraries.io/npm/pyextjs/0.1.2
