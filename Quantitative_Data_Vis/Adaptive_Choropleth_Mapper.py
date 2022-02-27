@@ -15,7 +15,7 @@ import pprint
 from sklearn.preprocessing import minmax_scale
 import numpy as np
 from scipy import stats
-#from notebook import notebookapp
+from notebook import notebookapp
 from IPython.core.display import display, HTML
 from IPython.display import Javascript
 import geopandas as gpd

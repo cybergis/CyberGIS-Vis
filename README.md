@@ -48,7 +48,8 @@ CyberGIS-Vis integrates cutting-edge cyberGIS and online visualization capabilit
         Categorical_Data_Vis/Qualitative_Analysis_Mapper.py
 ```
 4. Comment out below. These are related to create URLs in the Jupyter Server. 
-```bash  
+```bash
+	#from notebook import notebookapp
 	#servers = list(notebookapp.list_running_servers())
     #servers1 = 'https://cybergisx.cigi.illinois.edu'+servers[0]["base_url"]+ 'view'
     #servers2 = 'https://cybergisx.cigi.illinois.edu'+servers[0]["base_url"]+ 'edit'
