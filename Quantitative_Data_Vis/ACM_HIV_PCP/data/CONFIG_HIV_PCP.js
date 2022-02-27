@@ -60,7 +60,7 @@ var Num_Of_Decimal_Places = 2;                              // default = 1
 
 //Adjust the size of maps
 var Map_width = "650px";
-var Map_height  = "400px";                                  // min 300px
+var Map_height  = "";                                  // min 300px
 
 //Adjust the size of the stacked chart. Double-slashes in the front need to be deleted to make them effective
 var Chart_width  = "350px";									// min 350px
