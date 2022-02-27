@@ -67,12 +67,10 @@ Images below show visualizations that you can create using CyberGIS-Viz. Click t
 <ul>
         <li>Adaptive Choropleth Mapper (ACM)</li>
         <ul><li> <a href="images/ACM">Click to see more information.</a></li></ul>   
-        
 		<li>Adaptive Choropleth Mapper with Stacked Chart
 	        <ul><li> The Stacked Chart visualizes the temporal change </li></ul>    
        </li> 
         <img height=100px src="images/ACM.PNG" alt="MapLinksPlot"/>
-        
 		<li>Adaptive Choropelth Mapper with Correlogram</li>
         <img height=250px src="images/ACM_Correlogram.PNG" alt="MapLinksPlot"/>
         <li>Adaptive Choropleth Mapper with Scatter Plot</li>
