@@ -15,8 +15,8 @@ CyberGIS-Viz integrates cutting-edge cyberGIS and online visualization capabilit
 ## QuickStart
 
 **Example visaulizations are available in the two folders below:** <br/>
-*Tabspace* *Quantitative_Data_VIZ* <br/>
-*Tabspace* *Categorical_Data_VIZ* <br/>
+*	*Quantitative_Data_VIZ <br/>
+*	*Categorical_Data_VIZ <br/>
 
 ## CyberGISX
 **You can run CyberGIS-Viz in your Jupyter Notebook installed on your PC as well as in CybearGISX. We recommend that you use CyberGISX because all the required packages have been integrated in CyberGISX**.<br/><br/>
