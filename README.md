@@ -105,11 +105,10 @@ Images below show visualizations that you can create using CyberGIS-Viz. Click t
 Visualizations created by CyberGIS-Viz are using a small subset of [LTDB](https://s4.ad.brown.edu/projects/diversity/researcher/LTDB.htm). [LTDB](https://s4.ad.brown.edu/projects/diversity/researcher/LTDB.htm) provides socioeconomic and demographic data with harmonized boundaries from 1970 to 2010 decennially. If you need the entire dataset, visit this [website](https://s4.ad.brown.edu/projects/diversity/researcher/LTDB.htm) to download.
 
 ## Related Resources
-
+* [CyberGISX](https://cybergisxhub.cigi.illinois.edu/) 
 * [Leaflet](https://leafletjs.com) 
 * [PlotlyJS](https://plot.ly/javascript/) 
 * [D3](https://d3js.org/) 
-* [CyberGISX](https://github.com/cybergis) 
 * [GEOSNAP VIZ](https://github.com/spatialucr/geosnap-viz) 
 
 ## Contributors
