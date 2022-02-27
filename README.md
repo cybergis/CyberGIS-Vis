@@ -19,8 +19,9 @@ CyberGIS-Viz integrates cutting-edge cyberGIS and online visualization capabilit
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Categorical_Data_VIZ<br/>
 
 ## CyberGISX
-**You can run CyberGIS-Viz in your Jupyter Notebook installed on your PC as well as in CybearGISX. We recommend that you use CyberGISX because all the required packages have been integrated in CyberGISX**.<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;To use it in CyberGISX, follow steps below:
+**You can run CyberGIS-Viz in your Jupyter Notebook installed on your PC as well as in CybearGISX. We recommend that you use CyberGISX because all the required packages have been integrated in CyberGISX**.<br/><br/>
+
+**To use it in CyberGISX, follow steps below:**
 1. If you do not have a CyerGISX account, create a CyberGISX account with your GitHub id at https://cybergisxhub.cigi.illinois.edu
 2. Open up the CyberGIX, click the "new" button on the top right corner, and select python3 and enter the command line below to download CyberGIS-Viz.
 ```bash
@@ -31,7 +32,8 @@ CyberGIS-Viz integrates cutting-edge cyberGIS and online visualization capabilit
         Quantitative_Data_VIZ/Adaptive_Chropleth_Mapper.ipynb
         Categorical_Data_VIZ/Qualitative_Analysis_Mapper.ipynb
 ``` 
-To run in the loca environment, follow steps below.
+<br/><br/>
+**To run in the loca environment, follow steps below.**
 1. Download and install Anaconda at https://www.anaconda.com/.
 2. After installation is done, open "Anaconda Prompt" and enter command lines below to create an environment.
 ```bash
