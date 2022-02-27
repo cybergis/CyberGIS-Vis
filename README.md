@@ -72,33 +72,33 @@ Images below show visualizations that you can create using CyberGIS-Vis. Click t
 		<li>Adaptive Choropleth Mapper with Stacked Chart
 	        <ul><li> The Stacked Chart visualizes the temporal change </li></ul>    
        </li> 
-        <img height=100px src="images/ACM.PNG" alt="MapLinksPlot"/>
+        <img height=100px src="images/ACM.PNG" alt="ACM"/>
 		<li>Adaptive Choropelth Mapper with Correlogram</li>
-        <img height=250px src="images/ACM_Correlogram.PNG" alt="MapLinksPlot"/>
+        <img height=250px src="images/ACM_Correlogram.PNG" alt="ACM_Correlogram"/>
         <li>Adaptive Choropleth Mapper with Scatter Plot</li>
-		<img height=150px src="images/ACM_Scatter.png" alt="MapLinksPlot"/>
+		<img height=150px src="images/ACM_Scatter.png" alt="ACM_Scatter"/>
         <li>Adaptive Choropleth Mapper with Parallel Coordinate Plot (PCP) </li>
-        <img height=200px src="images/ACM_PCP.PNG" alt="MapLinksPlot"/>
+        <img height=200px src="images/ACM_PCP.PNG" alt="ACM_PCP"/>
         <li>Adaptive Choropleth Mapper with Multiple Linked Chart (MLC) </li>
-        <img height=200px src="images/ACM_MLC.PNG" alt="MapLinksPlot"/>
+        <img height=200px src="images/ACM_MLC.PNG" alt="ACM_MLC"/>
 		<li>Adaptive Choropleth Mapper with Comparison Linke Chart (CLC)</li>
-        <img height=200px src="images/ACM_CLC.PNG" alt="MapLinksPlot"/>
+        <img height=200px src="images/ACM_CLC.PNG" alt="ACM_CLC"/>
 </ul>     
              
 ###  Categorical Data Visualization
 
 <ul>
         <li>Qualitative_Analysis_Mapper</li>
-        <img height=100px src="images/Qual.PNG" alt="MapLinksPlot"/>
+        <img height=100px src="images/Qual.PNG" alt="Qual"/>
         <li>Qualitative_Analysis_Mapper with Stacked Chart</li>
         <ul><li> The Stacked Chart visualizes the temporal change </li></ul>    
-        <img height=100px src="images/Qual_Stacked.PNG" alt="MapLinksPlot"/>
+        <img height=100px src="images/Qual_Stacked.PNG" alt="Qual_Stacked"/>
         <li>Qualitative_Analysis_Mapper with Parallel Categories Diagram</li>
              <ul><li> Parallel Categories Diagram represents how the categorical data changes over time in quantity. <a href="https://plotly.com/javascript/parallel-categories-diagram">Click to see more info.</a></li></ul>    
-      <img height=200px src="images/Qual_PCD.PNG" alt="MapLinksPlot"/>
+      <img height=200px src="images/Qual_PCD.PNG" alt="Qual_PCD"/>
         <li>Qualitative_Analysis_Mapper with Chord Diagram</li>
         <ul><li> The Chord Diagram quantifies changes of categorical data between the two periods </li></ul> 
-         <img height=200px src="images/Qual_CD.PNG" alt="MapLinksPlot"/>
+         <img height=200px src="images/Qual_CD.PNG" alt="Qual_CD"/>
 </ul> 
 
 ## Data
