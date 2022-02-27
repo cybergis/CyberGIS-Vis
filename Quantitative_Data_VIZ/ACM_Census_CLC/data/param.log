@@ -1,0 +1,20 @@
+2022-02-26 01:21:33 ACM_Census_CLC
+
+  {'title': 'Adaptive Choropleth Mapper with Multiple Line Charts',
+   'Subject': 'Temporal Patterns',
+   'filename_suffix': 'Census_CLC',
+   'variables': ['p_nonhisp_white_persons', 'p_nonhisp_black_persons',
+                 'p_hispanic_persons', 'p_asian_persons'],
+   'label': 'short_name',
+   'NumOfMaps': 2,
+   'Map_width': '650px',
+   'Top10_Chart': True,
+   'Comparision_Chart': True,
+   'NumOfCLC': 4,
+   'InitialVariableCLC': ['1980_% white (non-Hispanic)',
+                          '1990_% white (non-Hispanic)',
+                          '2000_% white (non-Hispanic)',
+                          '2010_% white (non-Hispanic)'],
+   'DefaultRegion_CLC': ['06037102105', '06037103300'],
+   'labels': ['% white (non-Hispanic)', '% black (non-Hispanic)', '% Hispanic',
+              '% Asian & PI race']}
