@@ -14,7 +14,7 @@ CyberGIS-Viz integrates cutting-edge cyberGIS and online visualization capabilit
 
 ## QuickStart
 
-&nbsp;&nbsp;&nbsp;&nbsp;Example visaulizations are available in the two folders below:<br/>
+**Example visaulizations are available in the two folders below:**
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Quantitative_Data_VIZ<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Categorical_Data_VIZ<br/>
 
