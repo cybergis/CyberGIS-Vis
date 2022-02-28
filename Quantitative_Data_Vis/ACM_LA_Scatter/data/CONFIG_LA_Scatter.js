@@ -59,7 +59,7 @@ var Multiple_Line_Chart = false;
 var Num_Of_Decimal_Places = 2;                              // default = 1 
 
 //Adjust the size of maps
-var Map_width = "450px";
+var Map_width = "470px";
 var Map_height = "450px";
 
 //Adjust the size of the stacked chart. Double-slashes in the front need to be deleted to make them effective

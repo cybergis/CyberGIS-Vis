@@ -1,4 +1,4 @@
-2022-02-27 14:47:59 ACM_LA_Scatter
+2022-02-28 22:07:19 ACM_LA_Scatter
 
   {'title': 'Adaptive Choropleth Mapper with Scatter Plot',
    'filename_suffix': 'LA_Scatter',
@@ -11,7 +11,7 @@
                  'p_housing_units_multiunit_structures', 'median_home_value',
                  'p_structures_30_old', 'p_household_recent_move',
                  'p_persons_under_18', 'p_persons_over_60'],
-   'Map_width': '450px',
+   'Map_width': '470px',
    'Map_height': '450px',
    'Scatter_Plot': True,
    'NumOfCLC': 1,

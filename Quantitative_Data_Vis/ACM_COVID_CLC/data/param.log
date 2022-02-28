@@ -1,4 +1,4 @@
-2022-02-26 22:41:54 ACM_COVID_CLC
+2022-02-28 21:48:01 ACM_COVID_CLC
 
   {'title': 'Comparison of COVID-19 Confirmed Rate between Metropolitan '
             'Statistical Areas, USA',
@@ -10,6 +10,7 @@
    'Initial_map_center': [37, -97],
    'Initial_map_zoom_level': 4,
    'Map_width': '650px',
+   'Map_height': '450px',
    'Top10_Chart': True,
    'Comparision_Chart': True,
    'NumOfCLC': 46,

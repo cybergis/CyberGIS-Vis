@@ -37,7 +37,7 @@ var HighlightMLC = []; //Set default region
 
 // Define variables that you want to visualize at initial map views. For example, 
 // enter five variables when the NumOfMaps is equal to 5.
-var InitialLayers = ["2020-04-19_Confirmed Rate", "2020-11-01_Confirmed Rate"];
+var InitialLayers = ["2020-03-15_Confirmed Rate", "2020-12-27_Confirmed Rate"];
 
 /*Define initial map center and zoom level below. Map Extent and Zoom level will be automatically adjusted when you do not define map center and zoom level. Double-slashes  in the front need to be deleted to make them effective*/
 var Initial_map_center = [37, -97];
@@ -60,7 +60,7 @@ var Num_Of_Decimal_Places = 2;                              // default = 1
 
 //Adjust the size of maps
 var Map_width = "650px";
-var Map_height  = "400px";                                  // min 300px
+var Map_height = "400px";
 
 //Adjust the size of the stacked chart. Double-slashes in the front need to be deleted to make them effective
 var Chart_width  = "350px";									// min 350px
