@@ -51,8 +51,8 @@ CyberGIS-Vis integrates cutting-edge cyberGIS and online visualization capabilit
 ```bash
 	#from notebook import notebookapp
 	#servers = list(notebookapp.list_running_servers())
-    #servers1 = 'https://cybergisx.cigi.illinois.edu'+servers[0]["base_url"]+ 'view'
-    #servers2 = 'https://cybergisx.cigi.illinois.edu'+servers[0]["base_url"]+ 'edit'
+        #servers1 = 'https://cybergisx.cigi.illinois.edu'+servers[0]["base_url"]+ 'view'
+        #servers2 = 'https://cybergisx.cigi.illinois.edu'+servers[0]["base_url"]+ 'edit'
 	#local_dir1 = servers1 + cwd 
 	#local_dir2 = servers2 + cwd
 ```   
@@ -69,7 +69,7 @@ Images below show visualizations that you can create using CyberGIS-Vis. Click t
 ###  Quntitative Data Visualization
 <ul>
         <li>Adaptive Choropleth Mapper (ACM)</li>
-        <ul><li>[Click to see more information](https://github.com/cybergis/CyberGIS-Vis)</li></ul>   
+        <ul><li><a href="https://github.com/cybergis/CyberGIS-Vis">Click to see more information</a></li></ul>   
 		<li>Adaptive Choropleth Mapper with Stacked Chart
 	        <ul><li> The Stacked Chart visualizes the temporal change </li></ul>    
        </li> 
