@@ -69,7 +69,7 @@ Images below show visualizations that you can create using CyberGIS-Vis. Click t
 ###  Quntitative Data Visualization
 <ul>
         <li>Adaptive Choropleth Mapper (ACM)</li>
-        <ul><li><a href="https://github.com/cybergis/CyberGIS-Vis">Click to see more information</a></li></ul>   
+        <ul><li><a href="http://su-gis.iptime.org/ACM">Click to see more information</a></li></ul>   
 		<li>Adaptive Choropleth Mapper with Stacked Chart
 	        <ul><li> The Stacked Chart visualizes the temporal change </li></ul>    
        </li> 
