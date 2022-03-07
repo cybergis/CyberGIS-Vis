@@ -1,4 +1,4 @@
-2022-02-26 22:33:25 ACM_HIV_MLC
+2022-03-07 05:21:40 ACM_HIV_MLC
 
   {'title': 'Adaptive Choropleth Mapper with Multiple Line Charts',
    'Subject': 'Temporal Patterns',
@@ -8,9 +8,8 @@
    'Initial_map_center': [37, -97],
    'Initial_map_zoom_level': 4,
    'Map_width': '650px',
+   'Map_height': '410px',
    'Top10_Chart': True,
    'Multiple_Line_Chart': True,
    'NumOfMLC': 2,
-   'DefaultRegion_MLC': '36061',
-   'NumOfCLC': 7,
-   'labels': ['HIV', 'Health Care Center (/100k pop)']}
+   'DefaultRegion_MLC': '36061'}

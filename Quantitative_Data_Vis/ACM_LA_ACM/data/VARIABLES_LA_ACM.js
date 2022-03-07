@@ -1,6 +1,6 @@
 var GEO_VARIABLES =
 [
-  ["geoid", "1980_% speaking other language at home (age 5+)", "1980_% female-headed families with children", "1980_Per capita income", "1990_% speaking other language at home (age 5+)", "1990_% female-headed families with children", "1990_Per capita income", "2000_% speaking other language at home (age 5+)", "2000_% female-headed families with children", "2000_Per capita income", "2010_% speaking other language at home (age 5+)", "2010_% female-headed families with children", "2010_Per capita income"],
+  ["geoid", "1980_% other language", "1980_% female headed families", "1980_per capita income", "1990_% other language", "1990_% female headed families", "1990_per capita income", "2000_% other language", "2000_% female headed families", "2000_per capita income", "2010_% other language", "2010_% female headed families", "2010_per capita income"],
   ["06037101110", 9.601677443, 7.089151605, 24074.37442, 17.53821384, 9.355828288, 35362.48595, 40.24444444, 14.41947566, 27067.68683, 54.44023149, 5.437553101, 28200.5721],
   ["06037101122", 9.606003051, 7.084509975, 24081.49988, 17.55012054, 9.342020309, 35366.62739, 23.78048716, 6.759906536, 39593.04388, 40.58542077, 7.612095933, 45487.67416],
   ["06037101210", 17.7558571, 19.71947262, 18057.15324, 31.73652593, 17.61006268, 24311.93007, 50.56050115, 19.52957947, 18137.55753, 67.64615385, 11.1037234, 20048.68258],

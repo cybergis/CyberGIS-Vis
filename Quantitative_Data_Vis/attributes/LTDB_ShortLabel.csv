@@ -1,0 +1,191 @@
+variable,short_name
+n_asian_under_15,asian (15-)
+n_black_under_15,black (15-)
+n_hispanic_under_15,hispanic (15-)
+n_native_under_15,native (15-)
+n_white_under_15,white (15-)
+n_persons_under_18,persons (18-)
+n_asian_over_60,asian (60+)
+n_black_over_60,black (60+)
+n_hispanic_over_60,hispanic (60+)
+n_native_over_60,native (60+)
+n_persons_over_60,persons (60+)
+n_white_over_60,white (60+)
+n_asian_over_65,asian (65+)
+n_black_over_65,black (65+)
+n_hispanic_over_65,hispanic (65+)
+n_native_over_65,native (65+)
+n_white_over_65,white (65+)
+n_persons_over_75,persons (75+)
+n_persons_over_15,persons (15+)
+n_civilians_over_16,civilians (16+)
+n_civilians_over_18,civilians (18+)
+n_persons_over_25,persons (25+)
+n_age_5_older,age 5 older
+n_asian_age_distribution,asian age distribution
+n_black_age_distribution,black age distribution
+n_hispanic_age_distribution,hispanic age distribution
+n_native_age_distribution,native age distribution
+n_white_age_distribution,white age distribution
+n_asian_persons,asian persons
+n_black_persons,black persons
+n_chinese_persons,chinese persons
+n_labor_force,labor force
+n_civilians_16_64,civilians (16~64)
+n_edu_college_greater,edu college greater
+n_cuban_pop,cuban pop
+n_poverty_determined_asian,poverty determined asian
+n_poverty_determined_black,poverty determined black
+n_total_pop_sample,total pop sample
+n_female_over_16,female (16+)
+n_poverty_determined_families,poverty determined families
+n_poverty_determined_hispanic,poverty determined hispanic
+n_disabled,disabled
+n_housing_units_multiunit_structures_denom,housing units multiunit structures denom
+n_poverty_determined_native,poverty determined native
+n_poverty_determined_persons,poverty determined persons
+n_poverty_determined_white,poverty determined white
+n_employed_over_16,employed (16+)
+n_total_families,total families
+n_foreign_born_pop,foreign born pop
+n_female_headed_families,female headed families
+n_filipino_persons,filipino persons
+n_female_labor_force,female labor force
+n_german_pop,german pop
+n_german_born_pop,german born pop
+n_household_recent_move,household recent move
+n_structures_30_old,structures 30 old
+n_hawaiian_persons,hawaiian persons
+n_total_households,total households
+n_asian_households,asian households
+n_black_households,black households
+n_hispanic_households,hispanic households
+n_white_households,white households
+median_household_income,median household income
+median_income_asianhh,median income asianhh
+median_income_blackhh,median income blackhh
+median_income_hispanichh,median income hispanichh
+median_income_whitehh,median income whitehh
+n_hispanic_persons,hispanic persons
+n_edu_hs_less,edu hs less
+n_total_housing_units,total housing units
+per_capita_income,per capita income
+n_asian_indian_persons,asian indian persons
+n_irish_pop,irish pop
+n_irish_born_pop,irish born pop
+n_italian_pop,italian pop
+n_italian_born_pop,italian born pop
+n_japanese_persons,japanese persons
+n_korean_persons,korean persons
+n_limited_english,limited english
+n_employed_manufacturing,employed manufacturing
+n_married,married
+n_mexican_pop,mexican pop
+median_home_value,median home value
+median_contract_rent,median contract rent
+n_housing_units_multiunit_structures,housing units multiunit structures
+n_recent_immigrant_pop,recent immigrant pop
+n_poverty_over_65,poverty (65+)
+n_poverty_asian,poverty asian
+n_naturalized_pop,naturalized pop
+n_poverty_black,poverty black
+n_poverty_families_children,poverty families children
+n_nonhisp_black_persons,nonhisp black persons
+n_poverty_hispanic,poverty hispanic
+n_nonhisp_white_persons,nonhisp white persons
+n_poverty_native,poverty native
+n_poverty_persons,poverty persons
+n_native_persons,native persons
+n_poverty_white,poverty white
+n_occupied_housing_units,occupied housing units
+n_other_language,other language
+n_owner_occupied_housing_units,owner occupied housing units
+p_recent_immigrant_pop,% recent immigrant pop
+p_household_recent_move,% household recent move
+p_asian_under_15,% asian (15-)
+p_black_under_15,% black (15-)
+p_hispanic_under_15,% hispanic (15-)
+p_native_under_15,% native (15-)
+p_white_under_15,% white (15-)
+p_persons_under_18,% persons (18-)
+p_structures_30_old,% structures 30 old
+p_persons_over_60,% persons (60+)
+p_asian_over_65,% asian (65+)
+p_black_over_65,% black (65+)
+p_hispanic_over_65,% hispanic (65+)
+p_native_over_65,% native (65+)
+p_poverty_rate_over_65,% poverty rate (65+)
+p_white_over_65,% white (65+)
+p_persons_over_75,% persons (75+)
+p_poverty_rate_asian,% poverty rate asian
+p_asian_persons,% asian persons
+p_poverty_rate_black,% poverty rate black
+p_chinese_persons,% chinese persons
+p_edu_college_greater,% edu college greater
+p_cuban_pop,% cuban pop
+p_foreign_born_pop,% foreign born pop
+p_female_headed_families,% female headed families
+p_filipino_persons,% filipino persons
+p_female_labor_force,% female labor force
+p_poverty_rate_children,% poverty rate children
+p_german_pop,% german pop
+p_german_born_pop,% german born pop
+p_hawaiian_persons,% hawaiian persons
+p_hispanic_persons,% hispanic persons
+p_poverty_rate_hispanic,% poverty rate hispanic
+p_edu_hs_less,% edu hs less
+p_asian_indian_persons,% asian indian persons
+p_irish_pop,% irish pop
+p_irish_born_pop,% irish born pop
+p_italian_pop,% italian pop
+p_italian_born_pop,% italian born pop
+p_japanese_persons,% japanese persons
+p_korean_persons,% korean persons
+p_limited_english,% limited english
+p_employed_manufacturing,% employed manufacturing
+p_married,% married
+p_mexican_pop,% mexican pop
+p_housing_units_multiunit_structures,% housing units multiunit structures
+p_poverty_rate_native,% poverty rate native
+p_naturalized_pop,% naturalized pop
+p_nonhisp_black_persons,% nonhisp black persons
+p_nonhisp_white_persons,% nonhisp white persons
+p_native_persons,% native persons
+p_other_language,% other language
+n_total_pop,total pop
+p_owner_occupied_units,% owner occupied units
+p_poverty_rate,% poverty rate
+p_puerto_rican_pop,% puerto rican pop
+p_employed_professional,% employed professional
+n_puerto_rican_pop,puerto rican pop
+n_employed_professional,employed professional
+p_russian_pop,% russian pop
+p_russian_born_pop,% russian born pop
+p_scandanavian_pop,% scandanavian pop
+p_scandanavian_born_pop,% scandanavian born pop
+p_employed_self_employed,% employed self employed
+p_unemployment_rate,% unemployment rate
+p_vacant_housing_units,% vacant housing units
+p_veterans,% veterans
+p_vietnamese_persons,% vietnamese persons
+p_widowed_divorced,% widowed divorced
+p_poverty_rate_white,% poverty rate white
+n_renter_occupied_housing_units,renter occupied housing units
+n_russian_pop,russian pop
+n_russian_born_pop,russian born pop
+n_scandaniavian_pop,scandaniavian pop
+n_scandaniavian_born_pop,scandaniavian born pop
+n_employed_self_employed,employed self employed
+n_unemployed_persons,unemployed persons
+n_vacant_housing_units,vacant housing units
+n_veterans,veterans
+n_vietnamese_persons,vietnamese persons
+n_widowed_divorced,widowed divorced
+n_white_persons,white persons
+n_total_housing_units_sample,total housing units sample
+p_white_over_60,% white (60+)
+p_black_over_60,% black (60+)
+p_hispanic_over_60,% hispanic (60+)
+p_native_over_60,% native (60+)
+p_asian_over_60,% asian (60+)
+p_disabled,% disabled

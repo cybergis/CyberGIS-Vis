@@ -1,4 +1,4 @@
-2022-02-28 22:05:18 ACM_HIV_PCP
+2022-03-07 05:29:30 ACM_HIV_PCP
 
   {'title': 'Adaptive Choropleth Mapper with Paralle Coordinate Plot',
    'filename_suffix': 'HIV_PCP',
@@ -10,6 +10,4 @@
    'Map_height': '410px',
    'Top10_Chart': True,
    'Parallel_Coordinates_Plot': True,
-   'NumOfPCP': 7,
-   'NumOfCLC': 7,
-   'labels': ['HIV']}
+   'NumOfPCP': 7}

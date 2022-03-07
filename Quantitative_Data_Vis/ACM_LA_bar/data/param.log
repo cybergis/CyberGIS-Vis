@@ -1,0 +1,9 @@
+2022-03-07 05:30:13 ACM_LA_bar
+
+  {'title': 'Adaptive Choropleth Mapper with Stacked Chart',
+   'filename_suffix': 'LA_bar',
+   'NumOfMaps': 3,
+   'shortLabelCSV': 'attributes/LTDB_ShortLabel.csv',
+   'variables': ['p_other_language', 'p_female_headed_families',
+                 'per_capita_income'],
+   'Top10_Chart': True}

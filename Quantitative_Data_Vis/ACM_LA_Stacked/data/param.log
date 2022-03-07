@@ -1,12 +1,10 @@
-2022-02-28 21:24:30 ACM_LA_Stacked
+2022-03-07 05:30:05 ACM_LA_Stacked
 
   {'title': 'Adaptive Choropleth Mapper with Stacked Chart',
    'filename_suffix': 'LA_Stacked',
    'NumOfMaps': 5,
-   'label': 'short_name',
+   'shortLabelCSV': 'attributes/LTDB_ShortLabel.csv',
    'variables': ['p_asian_persons'],
    'Map_width': '350px',
    'Map_height': '350px',
-   'Stacked_Chart': True,
-   'NumOfCLC': 4,
-   'labels': ['% Asian & PI race']}
+   'Stacked_Chart': True}

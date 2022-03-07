@@ -78,7 +78,7 @@
 <body style="height:1500px;">
 	
 	<header>
-		<h1>Adaptive Choropleth Mapper with Correlogram</h1>	
+		<h1>HIV Scenario Analysis from 2012 to 2022, United States</h1>	
 	</header>
 	
 	<br>
@@ -153,9 +153,11 @@ var app={
 	MLCvariables: [],                            // variables of MLC(Multiple Synchronized Line Chart) for selected variables
 	titlesOfMLC: [],							 // titles of MLC(Multiple Synchronized Line Chart) for selected variables
 	HighlightMLC: [],							 // highlighted areas of MLC(Multiple Synchronized Line Chart)
+    HighlightCLC: [],							 // highlighted areas of CLC(Comparision Line Chart)
 	DefaultRegion_MLC: "17019",					 // Set default region of MLC
 	DefaultRegion_CLC: ["17019", "6073"],		 // Set default region of CLC	
-	InitialMapCenter: null,                      // initial map center coordinates from configuration file [34.0522, -118.2437]
+	Top10_NoDisplay : [],                        // Define no display variables of Top10 Bar cart
+    InitialMapCenter: null,                      // initial map center coordinates from configuration file [34.0522, -118.2437]
 	InitialMapZoomLevel: null,                   // initial map zoom level from configuration file (ex. 10)
 	StackedChart: false,                          // draw stacked area chart or not form configuration file (default: false)
 	Correlogram: true,                           // draw correlogram or not form configuration file (default: true)
@@ -2178,10 +2180,22 @@ $( document ).ready(function() {
 	if (typeof DefaultRegion_MLC !== 'undefined' && typeof DefaultRegion_MLC === 'string') {
 		app.DefaultRegion_MLC = DefaultRegion_MLC;
 	}
+    // set highlighted areas of CLC (Comparision Line Chart)						 // deep copy of array
+	if (typeof HighlightCLC !== 'undefined' && HighlightCLC instanceof Array) {
+		app.HighlightCLC = HighlightCLC;
+	}
+	//console.log(app.HighlightCLC);
 	// set two initial regions for Comparison Line Chart
 	if (typeof DefaultRegion_CLC !== 'undefined' && DefaultRegion_CLC instanceof Array) {
 		app.DefaultRegion_CLC = DefaultRegion_CLC;
 	}
+    
+    // set no display variables of Top10 Bar cart to global variable
+	if (typeof Top10_NoDisplay !== 'undefined' && Top10_NoDisplay instanceof Array) {
+		app.Top10_NoDisplay = Top10_NoDisplay;
+	}
+    //console.log(app.Top10_NoDisplay);
+    
 	// set initial map center to global variable
 	if (typeof Initial_map_center !== 'undefined' && Initial_map_center instanceof Array) {
 		if (Initial_map_center.length == 2) app.InitialMapCenter = Initial_map_center;
@@ -3378,10 +3392,29 @@ function paintTop10Chart({mapN="", lassoData="", lassoedMap="", eventData="", gl
 	
 	var divTop10 = document.getElementById('chart_Top10BarChart');
 	Plotly.purge(divTop10);
+    divTop10.innerHTML = "";
 	
 	var selectedItem = $("#Top10Chart select[name=ACSdata]").val();
 	console.log("selectedItem:", selectedItem)
 	
+    // check not abaiable chart from selected variable
+    var selectedText = $("#Top10Chart select[name=ACSdata] option:selected").text();
+    //console.log("selectedText:", selectedText)
+    var p = selectedText.indexOf('_');
+    var variable = selectedText;
+    if (p > 0) variable = selectedText.substr(p+1);
+    console.log("selected variable:", variable)
+    if (app.Top10_NoDisplay.includes(variable)) {
+        divTop10.innerHTML = 
+            "<div style='width:100%;height:100%;text-align:center;'>" +
+            "<span style='color:blue;font-size:larger;'>" +
+            "<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" +
+            "<i style='background-color:yellow;'>" + 
+            "This chart is not available with the selected variable." + 
+            "</i></span></div>";
+        return;
+    }
+    
 	var mapBounds = app[mapN].map.getBounds();
 	var west = mapBounds.getWest();
 	var south = mapBounds.getSouth();
@@ -3532,6 +3565,42 @@ function paintComparisionLineChart({mapN="", lassoData="", lassoedMap="", eventD
 	
 	var divCLC = document.getElementById('chart_ComparisionLineChart');
 	Plotly.purge(divCLC);
+    
+    // split date and title from variables
+    var date_CLCvariables = app.CLCvariables;
+    var title_CLCvariables = "";
+    var dates = [];
+    var variables = [];
+    app.CLCvariables.forEach(function (value, i) {
+        var p = value.indexOf('_');
+        var date = value;
+        var variable = "";
+        if (p > 0) {
+            date = value.substr(0,p);
+            //date = value.substr(0,p) + '.';
+            variable = value.substr(p+1);   
+        }
+        dates.push(date);
+        variables.push(variable);
+        //console.log('%d: "%s" "%s"', i, date, variable);
+    });
+    var set_variables = new Set(variables);
+    //console.log(set_variables);
+    if (variables.length > 0 && set_variables.size == 1) {
+        date_CLCvariables = dates;
+        title_CLCvariables = variables[0];
+    }
+    console.log(date_CLCvariables);
+    console.log('title_CLCvariables: "%s"', title_CLCvariables);
+    //var counts = {};
+    //variables.forEach(function(x) { counts[x] = (counts[x] || 0) + 1; });
+    //console.log(counts);
+    
+    // append title with variable
+    var chartID = (app.subject) ? "Comparision Line Chart : " + app.subject : "Comparision Line Chart";
+    if (title_CLCvariables.length > 0) chartID += " of " + 
+        "<span style='color:blue;font-size:larger;'>&nbsp;" + title_CLCvariables + "</span>";
+	$("#CLCchart .map_id").html('&nbsp;<b>'+chartID+'</b>');
 	
 	//const arrAvg = arr => arr.reduce((a,b) => a + b, 0) / arr.length
 	var arrAvg = function(nums) {
@@ -3570,7 +3639,8 @@ function paintComparisionLineChart({mapN="", lassoData="", lassoedMap="", eventD
 	
 	var series1_normalized = normalizeNums(series1);
 	var series2_normalized = normalizeNums(series2);
-	var date = app.CLCvariables;
+	//var date = app.CLCvariables;
+    var date = date_CLCvariables;
 	
 	console.log("series1: " + series1)
 	console.log("series2: " + series2)
@@ -3745,7 +3815,7 @@ function paintComparisionLineChart({mapN="", lassoData="", lassoedMap="", eventD
 					args: [{'visible': [false, false, false, false, true, true, true, true]},
 						{//'title': 'Yahoo',
 							'annotations': [...Temporal_Area2_Compare, ...Temporal_Area1_Compare]}],
-					label: 'Direct Comparision',
+					label: 'Trend Comparision',
 					method: 'update'
 				},			
 				{
@@ -3769,8 +3839,28 @@ function paintComparisionLineChart({mapN="", lassoData="", lassoedMap="", eventD
 			active: 4,								// Initiaize button is activated
 		},	
 	]
-
+    
+    var shapes = [];
+    for (var i=0; i<app.HighlightCLC.length; i++) {
+        var bgcolor = {
+            type: 'rect',
+            xref: 'x',
+            yref: 'paper',
+            x0: app.HighlightCLC[i][0],             // from
+            x1: app.HighlightCLC[i][1],             // to
+            y0: 0,
+            y1: 1,
+            fillcolor: app.HighlightCLC[i][2],      // color
+            opacity: 0.2,
+            line: {
+                width: 0
+            }
+        }
+        shapes.push(bgcolor);
+    }
+    
 	var layout = {
+        shapes: shapes,
 		//title: "Comparision of " + app.subject + " between "+ series1_name + " and " + series2_name,
 		updatemenus: updatemenus,
 		paper_bgcolor: '#FAFAFA',

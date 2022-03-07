@@ -1,4 +1,4 @@
-2022-02-28 22:12:59 ACM_Census_PCP
+2022-03-07 05:29:58 ACM_Census_PCP
 
   {'title': 'Adaptive Choropleth Mapper with Paralle Coordinate Plot',
    'filename_suffix': 'Census_PCP',
@@ -11,7 +11,7 @@
                  'p_owner_occupied_units', 'p_housing_units_multiunit_structures',
                  'median_home_value', 'p_structures_30_old',
                  'p_household_recent_move'],
-   'label': 'short_name',
+   'shortLabelCSV': 'attributes/LTDB_ShortLabel.csv',
    'NumOfMaps': 3,
    'Map_width': '370px',
    'Map_height': '350px',
@@ -24,13 +24,4 @@
                           '2010_% professional employees',
                           '2010_% manufacturing employees', '2010_% in poverty',
                           '2010_% foreign born', '2010_% 17 and under (total)',
-                          '2010_% 60 and older'],
-   'NumOfCLC': 1,
-   'labels': ['% white (non-Hispanic)', '% black (non-Hispanic)', '% Hispanic',
-              '% Asian & PI race', '% manufacturing employees', '% in poverty',
-              '% foreign born', '% 17 and under (total)', '% 60 and older',
-              '% with 4-year college degree or more', '% unemployed',
-              '% professional employees', '% vacant units',
-              '% owner-occupied units', '% multi-family units',
-              'Median home value', '% structures more than 30 years old',
-              '% HH in neighborhood 10 years or less']}
+                          '2010_% 60 and older']}

@@ -29,8 +29,8 @@ prefix_cwd = "/home/jovyan/work"
 cwd = cwd.replace(prefix_cwd, "")
 
 # This is for Jupyter notebbok installed in your PC
-local_dir1 = cwd
-local_dir2 = cwd  
+#local_dir1 = cwd
+#local_dir2 = cwd  
 
 #This is for CyberGISX. Uncomment two command lines below when you run in CyberGIX Environment
 local_dir1 = servers1 + cwd + '/'
@@ -61,7 +61,13 @@ def write_CONFIG_js(param, oDir):
     
     # get valid varables from contents
     vlist = re.findall(r'(\nvar +(\S+) *= *(.+))', contents)
-
+    # vlist = [ ('\nvar Subject = "";', 'Subject', '"";')
+    #           ('\nvar NumOfMaps = 2;', 'NumOfMaps', '2;')
+    #           ('\nvar NumOfPCP = 7;', 'NumOfPCP', '7;')
+    #           ('\nvar NumOfCLC = 7;', 'NumOfCLC', '7;')
+    #           ('\nvar NumOfMLC = 4;', 'NumOfMLC', '4;')
+    #           ...                                         ]
+    
     # replace the value of the file to the value in the parameter 
     vdict = {vtuple[1]: vtuple for vtuple in vlist}
     for i, (key, value) in enumerate(param.items()):
@@ -79,23 +85,35 @@ def write_CONFIG_js(param, oDir):
 def write_VARIABLES_js(community, param, oDir):
     #print(param)    
     geoid        =  community.columns[0]
-    years        =  param['years']
+    periods      =  param['periods']
     variables    =  param['variables']
-
+    
+    ## filtering by years
+    #community = community[community.year.isin(years)]
+    #print(community)
+    #selectedCommunity = community[variables]
+    #print(community)
+    #return
+    
     #make heading: community.columns[0] has "geoid" (string)
     heading = [geoid]
-    for i, year in enumerate(years):
-        for j, variable in enumerate(param['labels']):
-            heading.append(str(year)+'_'+variable)
+    for i, period in enumerate(periods):
+        #for j, variable in enumerate(param['labels']):
+        #    #heading.append(str(period)+' '+variable)
+        #    heading.append(str(period)+'_'+variable)
+        for j, variable in enumerate(variables):
+            if (variable in param['labels']): shortLabel = param['labels'][variable]
+            else: shortLabel = variable
+            heading.append(str(period)+'_'+shortLabel)
     #Make Dictionary
     mydictionary = {}    # key: geoid, value: variables by heading
     h = -1
     selectedColumns = [geoid]
     selectedColumns.extend(variables)
     #print("selectedColumns:", type(selectedColumns), selectedColumns)
-    for i, year in enumerate(years):
-        aYearDF = community[community.year==year][selectedColumns]
-        #print(year, type(aYearDF), aYearDF)
+    for i, period in enumerate(periods):
+        aYearDF = community[community.period==period][selectedColumns]
+        #print(period, type(aYearDF), aYearDF)
         for j, variable in enumerate(variables):
             h += 1
             for index, row in aYearDF.iterrows():
@@ -103,7 +121,7 @@ def write_VARIABLES_js(community, param, oDir):
                 key = row[geoid]
                 val = row[variable]
                 if (math.isnan(val)): #converts Nan in GEOSNAP data to -9999
-                    #print(i, j, key, year, val)
+                    #print(i, j, key, period, val)
                     val = -9999
                 if (key in mydictionary):
                     value = mydictionary[key]
@@ -133,9 +151,16 @@ def write_VARIABLES_js(community, param, oDir):
 def write_GEO_JSON_js(param, oDir):    
     # read shape file to df_shape
     df_shapes = param['shapefile']
+    #print(df_shapes)
+    #df_shapes = df_shapes.rename(columns={'GEOID10': 'geoid'})
+    #df_shapes = param['shapefile']
+    #print(df_shapes.dtypes)
     df_shapes = df_shapes.astype(str)
+    #print(df_shapes.dtypes)
+    
     geoid = df_shapes.columns[0]
     name = df_shapes.columns[1]
+    #print(df_shapes.columns[0], df_shapes.columns[1])
     
     df_shapes = df_shapes[pd.notnull(df_shapes['geometry'])]
     
@@ -154,11 +179,15 @@ def write_GEO_JSON_js(param, oDir):
             continue
         #print(tract.geometry)
         aShape = shapely.wkt.loads(shape.geometry)
+        #print(type(shape))
+        #print(shape.geoid)
+        #print(shape.name)
         feature["geometry"] = shapely.geometry.mapping(aShape)
+        #feature["properties"] = {geoid: tract.__getattribute__(geoid), "tractID": tract.__getattribute__(geoid)}
         feature["properties"] = {geoid: shape.geoid, name: shape.name}
         wCount += 1
         ofile.write(json.dumps(feature)+',\n')
-
+    #print("GEO_JSON.js write count:", wCount)
     # complete the geojosn format by adding parenthesis at the end.	
     ofile.write(']}\n')
     ofile.close()
@@ -173,10 +202,15 @@ def write_LOG(param, oDir):
     del param['inputCSV']
     del param['shapefile']
     del param['periods']
-    del param['years']    
+    del param['labels']
     contents = pprint.pformat(param, compact=True, sort_dicts=False)        # depth=1, 
+    #print("==============================")
+    #print(param)
+    #write new outfiles: GEO_CONFIG.js GEO_JSON.js VARIABLES.js
     ofile = open(oDir+"/data/param.log", "w")
     create_at = datetime.now()
+    #print(create_at)
+    #print(create_at.strftime('%y-%m-%d %H:%M:%S'))  
     ofile.write('%s %s\n\n' % (create_at.strftime('%Y-%m-%d %H:%M:%S'), oDir))
     ofile.write('  '+contents.replace('\n', '\n  '))
     ofile.close()
@@ -194,26 +228,43 @@ def Adaptive_Choropleth_Mapper_log(param):
     subnames = os.listdir(dirname)
     for subname in subnames:
         fullpath = os.path.join(dirname, subname)
+        #print(local_dir1+fullpath)
         if (not os.path.isdir(fullpath)): continue
         if (not subname.startswith('ACM_')): continue
+        #print(os.path.join(fullpath, 'index.html'))
         indexfile = os.path.join(fullpath, 'index.html')
         logfile = os.path.join(fullpath, 'data/param.log')
         if (not os.path.exists(indexfile)): continue
         if (not os.path.exists(logfile)): continue
+        #print(fullpath, logfile)
+        # read param.log
         ifile = open(logfile, "r")
         wholetext = ifile.read()
         contents = wholetext.split('\n', maxsplit=1)
         if (len(contents) != 2): continue
         cols = contents[0].split(' ', maxsplit=3)
+        #create_at = contents[0] if (len(cols) <= 2) else cols[0] + ' ' + cols[1] + ' &nbsp; ' + cols[2]
         create_at = contents[0]
         out_dir = ""
         if (len(cols) >= 3): 
             create_at = cols[0] + ' ' + cols[1]
-            out_dir = cols[2]       
+            out_dir = cols[2]
+        #create_at = datetime.fromisoformat(create_at).replace(tzinfo=timezone.utc).astimezone(tz=tz.tzlocal())
+        
+        #current_time = datetime.now().isoformat()
+        #created_at = datetime.fromisoformat(current_time)
+        #print(create_at)        
         create_at = datetime.fromisoformat(create_at).replace(tzinfo=timezone.utc)
+        #print(create_at)        
         param = contents[1]
+        #print(subname+'/'+'index.html')
+        #print(create_at)
+        #print(param)
+        #logs.append({'indexfile': subname+'/'+'index.html', 'create_at': create_at, 'out_dir': out_dir, 'param': param})
+        #logs.append({'indexfile': local_dir1+subname+'/'+'index.html', 'create_at': create_at, 'out_dir': out_dir, 'param': param})
         logs.append({'indexfile': local_dir1+'/'+subname+'/'+'index.html', 'create_at': create_at.isoformat(), 'out_dir': out_dir, 'param': param})
     logs = sorted(logs, key=lambda k: k['create_at']) 
+    #print(logs)
     
     #Write output to log.html
     filename_LOG = "ACM_log.html"
@@ -237,6 +288,7 @@ def Adaptive_Choropleth_Mapper_log(param):
         html += '    <tr>\n'
         html += '      <td>\n'
         html += '      <span style="color:#CD5C5C;"><strong>' + str(idx+1) + '. ' + val['out_dir'] + '</strong></span>'
+        #html += '        <span style="display: inline-block; width:380px; text-align: right;">' + val['create_at'] + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'
         html += '        <span style="display: inline-block; width:380px; text-align: right;">' + '<span class="utcToLocal">'+ val['create_at'] + '</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'        
         html += '        <input type="text" value=' + val['indexfile']+ ' id="myInput' + str(idx+1) + '">'
         html += '        <button onclick="myFunction' + str(idx+1) + '()">Copy</button></span>\n'        
@@ -283,46 +335,70 @@ def Adaptive_Choropleth_Mapper_log(param):
 
 def Adaptive_Choropleth_Mapper_viz(param):
     
-    # if no 'periods' or 'periods' == 'All', get 'periods' from 'inputCSV' in the param.
-    if ('periods' in param and isinstance(param['periods'], str) and (param['periods'].lower() == "all" or param['periods'] == "")):    
+    # check column in input CSV
+    if ('inputCSV' in param):
+        dfName = 'inputCSV'
+        if (CheckColumnName(dfName, param[dfName], 'geoid', 0) == False): return
+        if (CheckColumnName(dfName, param[dfName], 'period') == False): return
+    # check column in shape file
+    if ('shapefile' in param):
+        dfName = 'shapefile'
+        if (CheckColumnName(dfName, param[dfName], 'geoid', 0) == False): return
+        if (CheckColumnName(dfName, param[dfName], 'name', 1) == False): return
+    
+    # Checks if period and periods are mutually exclusive in the param.
+    if ('period' in param and 'periods' in param):
+        print("Both period and periods exist in the param.")
+        print("Please confirm below the param list.")
+        print("period: {}".format(param['period']))
+        print("periods: {}".format(param['periods']))
+        return
+    
+    # If periods does not exist in the param, it is created from period as a list.
+    if ('period' in param and 'periods' not in param): 
+        param['periods'] = [param['period']]
+    # Also, if periods do not exist in the param, create them from inputCSV.
+    if ('periods' not in param or isinstance(param['periods'], str) and 
+        (param['periods'].lower() == "all" or param['periods'] == "")):
         df_input = param['inputCSV']
-        nameOf1stColumn = df_input.columns[0]       # name of the 1st column may be 'geoid'
-        nameOf2ndColumn = df_input.columns[1]       # name of the 2nd column may be 'year'
-        #print(nameOf1stColumn, nameOf2ndColumn)
-        param['periods'] = sorted(list(set(df_input[nameOf2ndColumn].tolist())));
-
+        param['periods'] = sorted(list(set(df_input['period'].tolist())));
+        #print("default param ['periods']:", param['periods'])
     
-    # if no 'NumOfCLC' or 'NumOfCLC' == 0, get 'NumOfCLC' from length of the 'periods' in the param.
-    if ('NumOfCLC' not in param or isinstance(param['NumOfCLC'], (int, float)) and param['NumOfCLC'] <= 0):
-        if ('periods' in param): param['NumOfCLC'] = len(param['periods']);
+    # If NumOfCLC is not in the param, it will be the length of periods.
+    if ('Comparision_Chart' in param and 
+        isinstance(param['Comparision_Chart'], bool) and param['Comparision_Chart'] == True):
+        if ('NumOfCLC' not in param or 
+            isinstance(param['NumOfCLC'], int) and param['NumOfCLC'] <= 0):
+            if ('periods' in param): 
+                param['NumOfCLC'] = len(param['periods']);
+                #print("default param ['NumOfCLC']:", param['NumOfCLC'])
     
-    # convert year, variable to years, variables in the param
-    if ('years' not in param and 'year' in param): param['years'] = [param['year']]
-    if ('years' not in param and 'year' not in param and 'periods' in param): param['years'] = param['periods']
-    if ('years' not in param and 'year' not in param and 'periods' not in param and 'period' in param): param['years'] = [param['period']]
-    if ('variables' not in param and 'variable' in param): param['variables'] = [param['variable']]
+    # If variables does not exist in the param, it is created from variable as a list.
+    if ('variables' not in param and 'variable' in param): 
+        param['variables'] = [param['variable']]
+        #print("default param ['variables']:", param['variables'])
     
-    # select community by state_fips, msa_fips, county_fips
     community = None
-    if ('msa_fips' in param and param['msa_fips']):
-        community = Community.from_ltdb(years=param['years'], msa_fips=param['msa_fips'])
-    elif ('county_fips' in param and param['county_fips']):
-        community = Community.from_ltdb(years=param['years'], county_fips=param['county_fips'])
-    elif ('state_fips' in param and param['state_fips']):
-        community = Community.from_ltdb(years=param['years'], state_fips=param['state_fips'])
-
-# if the user enters CSV and shapefile, use the files from the user
-
-#### This is executed when the user enter attributes in csv file and geometroy in shapefile #####
-    if (community is None and 'inputCSV' in param):
+    # select community by state_fips, msa_fips, county_fips  ->  reserved for future use (RFU)
+    #if ('msa_fips' in param and param['msa_fips']):
+    #    community = Community.from_ltdb(years=param['years'], msa_fips=param['msa_fips'])
+    #    #community = Community.from_ltdb(msa_fips=param['msa_fips'])
+    #elif ('county_fips' in param and param['county_fips']):
+    #    community = Community.from_ltdb(years=param['years'], county_fips=param['county_fips'])
+    #elif ('state_fips' in param and param['state_fips']):
+    #    community = Community.from_ltdb(years=param['years'], state_fips=param['state_fips'])
+    #print(community)
+    
+    #### This is executed when the user enter attributes in csv file and geometroy in shapefile 
+    if ('inputCSV' in param and 'shapefile' in param):
         community = param["inputCSV"]
         geoid = community.columns[0]      
         community[community.columns[0]] = community[geoid].astype(str)
-
-        # read shape file to df_shape
+        #print("community.columns[0]:", community.columns[0])
+        
         df_shape = param['shapefile']
         df_shape = df_shape.astype(str)     
-        geokey = df_shape.columns[0]  
+        geokey = df_shape.columns[0]
         df_shape = df_shape.set_index(geokey)
         
         # insert geometry to community
@@ -333,36 +409,36 @@ def Adaptive_Choropleth_Mapper_viz(param):
                 tract = df_shape.loc[tractid]
                 geometry.append(shapely.wkt.loads(tract.geometry))
             except KeyError:
+                #print("Tract ID [{}] is not found in the shape file {}".format(tractid, param['shapefile']))
                 geometry.append(None)
+        
         if(("geometry" in community) == False):
             community.insert(len(community.columns), "geometry", geometry)
-        community.rename(columns={'period':'year'}, inplace=True)
-      
-    community = community.replace([np.inf, -np.inf], np.nan)
- 
-    community = community[pd.notnull(community['geometry'])]
-
-
-    codebook = pd.read_csv('template/conversion_table_codebook.csv')
-    codebook.set_index(keys='variable', inplace=True)
-    labels = copy.deepcopy(param['variables'])
-
-    if ('label' in param):
-        label = 'short_name'  # default
-        if (param['label'] == 'variable'): label = 'variable'
-        if (param['label'] == 'full_name'): label = 'full_name'
-        if (param['label'] == 'short_name'): label = 'short_name'
-        if (label != 'variable'):
-            for idx, variable in enumerate(param['variables']):
-                try:
-                    codeRec = codebook.loc[variable]
-                    labels[idx] = codeRec[label]
-                except:
-                    print("variable not found in codebook.  variable:", variable)
-        param['labels'] = labels
-    param['labels'] = labels
+    ####
     
+    community = community.replace([np.inf, -np.inf], np.nan)
+    # check if geometry is not null for Spatial Clustering  
+    community = community[pd.notnull(community['geometry'])]
+    #print(community)
 
+    # read short label and convert it to dict
+    ##  param['labels'] = {}
+    ##  if ('shortLabelCSV' in param):
+    ##      df_shortLabel = pd.read_csv(param['shortLabelCSV']).set_index('variable')
+    ##      param['labels'] = df_shortLabel.to_dict()['short_name']
+    ##      print(param['labels'])
+    param['labels'] = {}
+    if ('shortLabelCSV' in param):
+        df_shortLabel = pd.read_csv(param['shortLabelCSV'])
+        for index, row in df_shortLabel.iterrows():
+            variable = row['variable']
+            shortName = row['short_name']
+            if (shortName == ""): shortName = variable
+            if (variable not in param['labels']): param['labels'][variable] = shortName
+            else: print("duplicate in shortLabelCSV. [{}] '{}': '{}'".format(index, variable, shortName))
+    #print(param['labels'])
+    
+    
     #Create a new folder where GEO_CONFIG.js GEO_JSON.js VARIABLES.js will be saved
     oDir = 'ACM_' + param['filename_suffix']
     path = Path(oDir + '/data')
@@ -372,11 +448,14 @@ def Adaptive_Choropleth_Mapper_viz(param):
     write_INDEX_html(param, oDir)
     write_CONFIG_js(param, oDir)
     write_VARIABLES_js(community, param, oDir)
+    #write_GEO_JSON_js(community, param)
     write_GEO_JSON_js(param, oDir)
     write_LOG(param, oDir)
-
+        
+    #print(local_dir)
     fname =urllib.parse.quote('index.html')
     template_dir = os.path.join(local_dir1, 'ACM_' + param['filename_suffix'])
+    #url = 'file:' + os.path.join(template_dir, fname)
     url = os.path.join(template_dir, fname)    
     webbrowser.open(url)
     print('To see your visualization, click the URL below (or locate the files):')
@@ -387,23 +466,188 @@ def Adaptive_Choropleth_Mapper_viz(param):
     print(local_dir2 + 'ACM_' + param['filename_suffix']+'/data/CONFIG_' + param['filename_suffix']+'.js')
     #display(Javascript('window.open("{url}");'.format(url=url)))
 
+
+# Check if column exists in a data frame.
+# If necessary, you can even check its position.
+def CheckColumnName(df_name, df, columnName, pos=-1):
+    
+    if (columnName not in df):
+        print("Column '{}' is not in {}.".format(columnName, df_name))
+        print("Please confirm below columns name list.")
+        print(df.columns.tolist())
+        return False   
+    if (pos >= 0 and df.columns.get_loc(columnName) != pos):
+        p = pos + 1
+        strPos = '{}th'.format(p)
+        if (p == 1): strPos = '{}st'.format(p)
+        if (p == 2): strPos = '{}nd'.format(p)
+        if (p == 3): strPos = '{}rd'.format(p)
+        print("Column '{}' is not {} column in {}.".format(columnName, strPos, df_name))
+        print("Please confirm below columns name list.")
+        print(df.columns.tolist())
+        return False
+    return True
+
     
 if __name__ == '__main__':
     started_datetime = datetime.now()
     print('Scenario_Analysis_Mapper start at %s' % (started_datetime.strftime('%Y-%m-%d %H:%M:%S')))
 
+    input_attributes = pd.read_csv("attributes/Los_Angeles_1980_1990_2000_2010.csv", dtype={'geoid':str})
+    #input_attributes = input_attributes.rename(columns={'geoid': 'geoid'})
+    input_attributes = input_attributes.rename(columns={'year': 'period'})
+    #print(input_attributes.columns.tolist())
+    shapefile = gpd.read_file("shp/Los_Angeles_tract/Los_Angeles_2.shp")
+    shapefile = shapefile.rename(columns={'tractID': 'geoid', 'tract_key': 'name'})
+    #print(shapefile) 
 
     input_attributes_hiv = pd.read_csv("attributes/HIV_US_multiple_long.csv", dtype={'geoid':str})
-    input_attributes_hiv = input_attributes_hiv.rename(columns={'geoid': 'geoid'})
-    
+    #input_attributes_hiv = input_attributes_hiv.rename(columns={'geoid': 'geoid'})
+    #input_attributes_hiv = input_attributes_hiv.rename(columns={'period': 'period'})
+    #print(input_attributes_hiv.columns.tolist())    
     shapefile_us = gpd.read_file("shp/US/counties.shp")
+    #print(shapefile_us) 
     
+    param_MLC = {
+    'title': "Adaptive Choropleth Mapper with Multiple Line Charts",
+    'Subject': "Temporal Patterns",
+    'filename_suffix': "Census_MLC_v2",                                      # max 30 character  
+    #'inputCSV': "data_imputedx.csv",     
+    'inputCSV': input_attributes,   
+    'shapefile': shapefile, 
+    #'period': 2000,
+    'periods': [1980, 1990, 2000, 2010],
+    'variables': [         #enter variable names of the column you selected above.
+            "p_nonhisp_white_persons",
+            "p_nonhisp_black_persons",
+            "p_hispanic_persons",
+            "p_asian_persons",         
+        ],
+    #'label': "short_name", #Pick variable,short_name,full_name from template/conversion_table_codebook.csv
+    'shortLabelCSV': "attributes/Los_Angeles_1980_1990_2000_2010_ShortLabel.csv",
+    'NumOfMaps':2,
+    'Map_width':"650px",
+    'Top10_Chart': True,     
+    'Multiple_Line_Chart': True,
+    'NumOfMLC':4,
+    'InitialVariableMLC': ["1980 % white (non-Hispanic)", "1980 % black (non-Hispanic)", "1980 % Hispanic", "1980 % Asian and Pacific Islander race"],
+    'DefaultRegion_MLC':"06037237201" 
+}
+
+    param_CLC = {
+    'title': "Adaptive Choropleth Mapper with Multiple Line Charts",
+    'Subject': "Temporal Patterns",
+    'filename_suffix': "Census_CLC",                                      # max 30 character  
+    #'inputCSV': "data_imputedx.csv",     
+    'inputCSV': input_attributes,   
+    'shapefile': shapefile, 
+    #'period': 2000,
+    'periods': [1980, 1990, 2000, 2010],
+    'variables': [         #enter variable names of the column you selected above.
+            "p_nonhisp_white_persons",
+            "p_nonhisp_black_persons",
+            "p_hispanic_persons",
+            "p_asian_persons",         
+        ],
+    #'label': "short_name", #Pick variable,short_name,full_name from template/conversion_table_codebook.csv 
+    'shortLabelCSV': "attributes/Los_Angeles_1980_1990_2000_2010_ShortLabel.csv",
+    'NumOfMaps':2,
+    'Map_width':"650px",
+    'Top10_Chart': True,     
+    'Comparision_Chart': True,
+    'NumOfCLC': 4, # set the number of x value of the Comparision_Chart
+    'InitialVariableCLC':["1980_% white (non-Hispanic)", "1990_% white (non-Hispanic)", "2000_% white (non-Hispanic)", "2010_% white (non-Hispanic)"],
+    'DefaultRegion_CLC': ["06037102105", "06037103300"]
+}
+    param_PCP = {
+    'title': "Adaptive Choropleth Mapper with Paralle Coordinate Plot",
+    'filename_suffix': "Census_PCP",                                      # max 30 character  
+    #'inputCSV': "data_imputedx.csv",     
+    'inputCSV': input_attributes,   
+    'shapefile': shapefile, 
+    #'period': 2000,
+    'periods': [1980, 1990, 2000, 2010],
+    'variables': [         #enter variable names of the column you selected above.
+            "p_nonhisp_white_persons",
+            "p_nonhisp_black_persons",
+            "p_hispanic_persons",
+            "p_asian_persons",         
+        ],
+    #'label': "short_name", #Pick variable,short_name,full_name from template/conversion_table_codebook.csv 
+    'shortLabelCSV': "attributes/Los_Angeles_1980_1990_2000_2010_ShortLabel.csv",
+    'NumOfMaps':2,
+    'Map_width':"650px",
+    'Top10_Chart': True,    
+    'Parallel_Coordinates_Plot': True,
+    'NumOfPCP':4,
+    'InitialVariablePCP': ["1980 % white (non-Hispanic)", "1980 % black (non-Hispanic)", "1980 % Hispanic", "1980 % Asian and Pacific Islander race"]
+}
+################################################################################
+    param_Correlogram = {
+        'title': "Adaptive Choropleth Mapper with Correlogram",
+        'filename_suffix': "LA_Correlogram",
+        'inputCSV': input_attributes,   
+        'shapefile': shapefile,
+        'period': 2010,
+        'NumOfMaps': 4,    
+        #'label': "short_name", #Pick variable,short_name,full_name from template/conversion_table_codebook.csv         
+        'shortLabelCSV': "attributes/Los_Angeles_1980_1990_2000_2010_ShortLabel.csv",
+        'variables': [         #enter variable names of the column you selected above.
+            "p_nonhisp_white_persons",
+            "p_nonhisp_black_persons",
+            "p_hispanic_persons",
+            "p_asian_persons",          
+            "p_other_language",
+            "p_female_headed_families",
+            "median_income_blackhh",
+            "median_income_hispanichh",
+            "median_income_asianhh",
+            "per_capita_income",     
+        ],
+        'Correlogram': True,        
+    }
+
+    param_Scatter = {
+        'title': "Adaptive Choropleth Mapper with Correlogram",
+        'filename_suffix': "LA_Scatter",
+        'inputCSV': input_attributes,   
+        'shapefile': shapefile,
+        'period': 2010,
+        #'periods': [2000, 2010],
+        #'periods': "",
+        #'label': "short_name", #Pick variable,short_name,full_name from template/conversion_table_codebook.csv
+        'shortLabelCSV': "attributes/Los_Angeles_1980_1990_2000_2010_ShortLabel.csv",
+        'variables': [         #enter variable names of the column you selected above.
+            "p_nonhisp_white_persons",
+            "p_nonhisp_black_persons",
+            "p_hispanic_persons",
+            "p_asian_persons",
+            "p_foreign_born_pop",
+            "p_edu_college_greater",
+            "p_unemployment_rate",
+            "p_employed_manufacturing",
+            "p_poverty_rate",
+            "p_vacant_housing_units",
+            "p_owner_occupied_units",
+            "p_housing_units_multiunit_structures",
+            "median_home_value",
+            "p_structures_30_old",
+            "p_household_recent_move",
+            "p_persons_under_18",
+            "p_persons_over_60",     
+        ],
+        'Scatter_Plot': True,        
+    }    
+
     param_MLC_HIV = {
         'title': "Adaptive Choropleth Mapper with Multiple Line Charts",
         'Subject': "Temporal Patterns",
-        'filename_suffix': "HIV_MLC",                                      # max 30 character    
+        'filename_suffix': "HIV_MLC",                                      # max 30 character  
+        #'inputCSV': "data_imputedx.csv",     
         'inputCSV': input_attributes_hiv,   
         'shapefile': shapefile_us, 
+        #'period': 2000,
+        #'periods': [2012, 2013, 2014, 2015, 2016, 2017, 2018],
         'periods': "All",
         'variables': [         #enter variable names of the column you selected above.
                 "HIV",
@@ -416,10 +660,12 @@ if __name__ == '__main__':
         'Top10_Chart': True,     
         'Multiple_Line_Chart': True,
         'NumOfMLC':2,
-        'DefaultRegion_MLC':"36061" 
+        #'InitialVariableMLC': ['2012_HIV', '2013_HIV', '2014_HIV', '2015_HIV', '2016_HIV', '2017_HIV', '2018_HIV'],
+        'DefaultRegion_MLC':"36061",
+        #'Top10_NoDisplay': ["HIV"]
     }
     
-    param_CLC_HIV = {
+    param_CLC_hiv = {
         'title': "Adaptive Choropleth Mapper with Comparison Line Chart",
         'Subject': "Temporal Patterns",
         'filename_suffix': "HIV_CLC",                                      # max 30 character  
@@ -436,6 +682,9 @@ if __name__ == '__main__':
         'Map_width':"650px",
         'Top10_Chart': True,     
         'Comparision_Chart': True,
+        #'NumOfCLC': 0, # set the number of x value of the Comparision_Chart
+        #'InitialVariableCLC': ['2012_HIV', '2013_HIV', '2014_HIV', '2015_HIV', '2016_HIV', '2017_HIV', '2018_HIV'],
+        #'InitialVariableCLC': ['2012_Health Care Center (/100k pop)', '2013_Health Care Center (/100k pop)', '2014_Health Care Center (/100k pop)', '2015_Health Care Center (/100k pop)', '2016_Health Care Center (/100k pop)', '2017_Health Care Center (/100k pop)', '2018_Health Care Center (/100k pop)'],
         'DefaultRegion_CLC': ["36061", "12086"] #New York, NY VS Miami-Dade, FL 
     }
     
@@ -457,122 +706,7 @@ if __name__ == '__main__':
         'Top10_Chart': True,    
         'Parallel_Coordinates_Plot': True,
         'NumOfPCP':7,
-    }
- 
-    input_attributes = pd.read_csv("attributes/Los_Angeles_1980_1990_2000_2010.csv", dtype={'geoid':str})
-    input_attributes = input_attributes.rename(columns={'geoid': 'geoid'})
-
-    shapefile = gpd.read_file("shp/Los_Angeles_tract/Los_Angeles_2.shp")
-    shapefile = shapefile.rename(columns={'tractID': 'geoid', 'tract_key': 'name'})
-
-    param_MLC = {
-    'title': "Adaptive Choropleth Mapper with Multiple Line Charts",
-    'Subject': "Temporal Patterns",
-    'filename_suffix': "Census_MLC",                                      # max 30 character      
-    'inputCSV': input_attributes,   
-    'shapefile': shapefile, 
-    'periods': [1980, 1990, 2000, 2010],
-    'variables': [         #enter variable names of the column you selected above.
-            "p_nonhisp_white_persons",
-            "p_nonhisp_black_persons",
-            "p_hispanic_persons",
-            "p_asian_persons",         
-        ],
-    'label': "short_name", #Pick variable,short_name,full_name from template/conversion_table_codebook.csv 
-    'NumOfMaps':2,
-    'Map_width':"650px",
-    'Top10_Chart': True,     
-    'Multiple_Line_Chart': True,
-    'NumOfMLC':4,
-    'InitialVariableMLC': ["1980 % white (non-Hispanic)", "1980 % black (non-Hispanic)", "1980 % Hispanic", "1980 % Asian and Pacific Islander race"],
-    'DefaultRegion_MLC':"06037237201" 
-}
-
-    param_CLC = {
-    'title': "Adaptive Choropleth Mapper with Multiple Line Charts",
-    'Subject': "Temporal Patterns",
-    'filename_suffix': "Census_CLC",                                      # max 30 character   
-    'inputCSV': input_attributes,   
-    'shapefile': shapefile, 
-    'periods': [1980, 1990, 2000, 2010],
-    'variables': [         #enter variable names of the column you selected above.
-            "p_nonhisp_white_persons",
-            "p_nonhisp_black_persons",
-            "p_hispanic_persons",
-            "p_asian_persons",         
-        ],
-    'label': "short_name", #Pick variable,short_name,full_name from template/conversion_table_codebook.csv 
-    'NumOfMaps':2,
-    'Map_width':"650px",
-    'Top10_Chart': True,     
-    'Comparision_Chart': True,
-    'NumOfCLC': 4, # set the number of x value of the Comparision_Chart
-    'InitialVariableCLC':["1980_% white (non-Hispanic)", "1990_% white (non-Hispanic)", "2000_% white (non-Hispanic)", "2010_% white (non-Hispanic)"],
-    'DefaultRegion_CLC': ["06037102105", "06037103300"]
-}
-    param_PCP = {
-    'title': "Adaptive Choropleth Mapper with Paralle Coordinate Plot",
-    'filename_suffix': "Census_PCP",                                      # max 30 character  
-    #'inputCSV': "data_imputedx.csv",     
-    'inputCSV': input_attributes,   
-    'shapefile': shapefile, 
-    'periods': [2010],
-    'variables': [         #enter variable names of the column you selected above.
-            "p_nonhisp_white_persons",
-            "p_nonhisp_black_persons",
-            "p_hispanic_persons",
-            "p_asian_persons",
-            "p_employed_manufacturing",
-            "p_poverty_rate",
-            "p_foreign_born_pop",
-            "p_persons_under_18",
-            "p_persons_over_60",  
-            "p_edu_college_greater",
-            "p_unemployment_rate",
-            "p_employed_professional",
-            "p_vacant_housing_units",
-            "p_owner_occupied_units",
-            "p_housing_units_multiunit_structures",
-            "median_home_value",
-            "p_structures_30_old",
-            "p_household_recent_move",
-      
-        ],
-    'label': "short_name", #Pick variable,short_name,full_name from template/conversion_table_codebook.csv 
-    'NumOfMaps':2,
-    'Map_width':"650px",
-    'Top10_Chart': True,    
-    'Parallel_Coordinates_Plot': True,
-    'NumOfPCP':10,
-    'InitialVariablePCP': ["2010_% white (non-Hispanic)", "2010_% black (non-Hispanic)", "2010_% Hispanic", "2010_% Asian & PI race", "2010_% professional employees", "2010_% manufacturing employees", "2010_% in poverty", "2010_% foreign born", "2010_% 17 and under (total)", "2010_% 60 and older"]
-}
-    param_Scatter = {
-        'title': "Adaptive Choropleth Mapper with Correlogram",
-        'filename_suffix': "LA_Scatter",
-        'inputCSV': input_attributes,   
-        'shapefile': shapefile,
-        'periods': [2010],
-        'label': "short_name", #Pick variable,short_name,full_name from template/conversion_table_codebook.csv         
-        'variables': [         #enter variable names of the column you selected above.
-            "p_nonhisp_white_persons",
-            "p_nonhisp_black_persons",
-            "p_hispanic_persons",
-            "p_asian_persons",
-            "p_foreign_born_pop",
-            "p_edu_college_greater",
-            "p_unemployment_rate",
-            "p_employed_manufacturing",
-            "p_poverty_rate",
-            "p_vacant_housing_units",
-            "p_owner_occupied_units",
-            "p_housing_units_multiunit_structures",
-            "median_home_value",
-            "p_structures_30_old",
-            "p_household_recent_move",
-            "p_persons_under_18",
-            "p_persons_over_60",     
-        ],
-        'Scatter_Plot': True,        
+        #'InitialVariablePCP':['2012_HIV', '2013_HIV', '2014_HIV', '2015_HIV', '2016_HIV', '2017_HIV', '2018_HIV']
     }
     
     param_Correlogram = {
@@ -581,8 +715,9 @@ if __name__ == '__main__':
         'inputCSV': input_attributes,   
         'shapefile': shapefile,
         'NumOfMaps':4,
-        'periods': [2010],
-        'label': "short_name", #Pick variable,short_name,full_name from template/conversion_table_codebook.csv         
+        'period': 2010,
+        #'label': "short_name", #Pick variable,short_name,full_name from template/conversion_table_codebook.csv         
+        'shortLabelCSV': "attributes/Los_Angeles_1980_1990_2000_2010_ShortLabel.csv",
         'variables': [         #enter variable names of the column you selected above.
             "p_nonhisp_white_persons",
             "p_nonhisp_black_persons",
@@ -614,7 +749,8 @@ if __name__ == '__main__':
         'shapefile': shapefile,
         'periods': [1980, 1990, 2000, 2010],
         'NumOfMaps': 5,
-        'label': "short_name", #Pick variable,short_name,full_name from template/conversion_table_codebook.csv         
+        #'label': "short_name", #Pick variable,short_name,full_name from template/conversion_table_codebook.csv         
+        'shortLabelCSV': "attributes/Los_Angeles_1980_1990_2000_2010_ShortLabel.csv",
         'variables': [         #enter variable names of the column you selected above.
             "p_asian_persons",    
         ],
@@ -628,7 +764,8 @@ if __name__ == '__main__':
         'shapefile': shapefile,
         'periods': [1980, 1990, 2000, 2010],
         'NumOfMaps': 3,
-        'label': "short_name", #Pick variable,short_name,full_name from template/conversion_table_codebook.csv         
+        #'label': "short_name", #Pick variable,short_name,full_name from template/conversion_table_codebook.csv         
+        'shortLabelCSV': "attributes/Los_Angeles_1980_1990_2000_2010_ShortLabel.csv",
         'variables': [         #enter variable names of the column you selected above.           
             "p_other_language",
             "p_female_headed_families",
@@ -636,7 +773,7 @@ if __name__ == '__main__':
         ],
         'Top10_Chart': True,  #Comment out if you do not want to visualize this chart      
     }
-    Covid_Visits = pd.read_csv("attributes/Covid_Visits.csv", dtype={'geoid':str})
+    Covid_Visits = pd.read_csv("attributes/Covid_Visits_old.csv", dtype={'geoid':str})
     Covid_Visits = Covid_Visits.rename(columns={'geoid': 'geoid'})
      
     shapefile_MSA = gpd.read_file("shp/MSA_country/msa_country.shp", dtype={'GEOID':str})
@@ -648,13 +785,14 @@ if __name__ == '__main__':
         'filename_suffix': "COVID_MLC",                                      # max 30 character      
         'inputCSV': Covid_Visits,   
         'shapefile': shapefile_MSA, 
-        'periods': "All",
+        'periods': ["2020-02-16", "2020-02-23", "2020-03-01", "2020-03-08", "2020-03-15", "2020-03-22", "2020-03-29", "2020-04-05", "2020-04-12", "2020-04-19", "2020-04-26", "2020-05-03", "2020-05-10", "2020-05-17", "2020-05-24", "2020-05-31", "2020-06-07", "2020-06-14", "2020-06-21", "2020-06-28", "2020-07-05", "2020-07-12", "2020-07-19", "2020-07-26", "2020-08-02", "2020-08-09", "2020-08-16", "2020-08-23", "2020-08-30", "2020-09-06", "2020-09-13", "2020-09-20", "2020-09-27", "2020-10-04", "2020-10-11", "2020-10-18", "2020-10-25", "2020-11-01", "2020-11-08", "2020-11-15", "2020-11-22", "2020-11-29", "2020-12-06", "2020-12-13", "2020-12-20", "2020-12-27"],
         'variables': [         #enter variable names of the column you selected above.
                 "Confirmed Rate",
                 "Death Rate",
                 "The Number of Visits from Outside to Inside of the selected MSA"
             ],
         'NumOfMaps':2,
+        #'InitialLayers':["419_confirmed" , "1101_confirmed"],
         'InitialLayers':["2020-04-19_Confirmed Rate" , "2020-11-01_Confirmed Rate"],
         'Initial_map_center':[37, -97],
         'Initial_map_zoom_level':4,    
@@ -663,6 +801,8 @@ if __name__ == '__main__':
         'Multiple_Line_Chart': True,
         'NumOfMLC':3,
         'titlesOfMLC':["1. COVID-19 Confirmed Cases (/100k pop)", "2. COVID-19 Death Cases (/100k pop)", "3. The Number of Visitors"],
+        #'InitialVariableMLC': ['2012_HIV', '2013_HIV', '2014_HIV', '2015_HIV', '2016_HIV', '2017_HIV', '2018_HIV'],
+        'HighlightMLC': [["2020-02-16", "2020-04-05", "#fdff32"],["2020-10-04", "2020-12-27", "#fdff32"]],
         'DefaultRegion_MLC':"35620" 
     }
 
@@ -672,7 +812,7 @@ if __name__ == '__main__':
         'filename_suffix': "COVID_CLC",                                      # max 30 character      
         'inputCSV': Covid_Visits,   
         'shapefile': shapefile_MSA, 
-        'periods': "All",
+        'periods': ["2020-02-16", "2020-02-23", "2020-03-01", "2020-03-08", "2020-03-15", "2020-03-22", "2020-03-29", "2020-04-05", "2020-04-12", "2020-04-19", "2020-04-26", "2020-05-03", "2020-05-10", "2020-05-17", "2020-05-24", "2020-05-31", "2020-06-07", "2020-06-14", "2020-06-21", "2020-06-28", "2020-07-05", "2020-07-12", "2020-07-19", "2020-07-26", "2020-08-02", "2020-08-09", "2020-08-16", "2020-08-23", "2020-08-30", "2020-09-06", "2020-09-13", "2020-09-20", "2020-09-27", "2020-10-04", "2020-10-11", "2020-10-18", "2020-10-25", "2020-11-01", "2020-11-08", "2020-11-15", "2020-11-22", "2020-11-29", "2020-12-06", "2020-12-13", "2020-12-20", "2020-12-27"],
         'variables': [         #enter variable names of the column you selected above.
                 "Confirmed Rate"
             ],
@@ -684,28 +824,33 @@ if __name__ == '__main__':
         'Top10_Chart': True,     
         'Comparision_Chart': True,
         'NumOfCLC': 46,
+        'HighlightCLC': [["2020-02-16", "2020-04-05", "#fdff32"],["2020-10-04", "2020-12-27", "#fdff32"]],
         'DefaultRegion_CLC': ["35620", "16980"] 
     }
     
     # param_MLC, param_CLC, param_PCP, 
-    # param_MLC_HIV, param_CLC_HIV, 
+    # param_MLC_HIV, param_CLC_hiv, 
     # param_MLC_COVID, param_CLC_COVID, param_PCP_hiv, param_PCP, param_Scatter, param_Correlogram, param_Stacked, param_bar
     
-    #Adaptive_Choropleth_Mapper_viz(param_PCP)
+    #Adaptive_Choropleth_Mapper_viz(param_Scatter)
     
     Adaptive_Choropleth_Mapper_viz(param_MLC_HIV)
-    Adaptive_Choropleth_Mapper_viz(param_CLC_HIV)
+    #Adaptive_Choropleth_Mapper_viz(param_CLC_hiv)
     
-    Adaptive_Choropleth_Mapper_viz(param_MLC)
-    Adaptive_Choropleth_Mapper_viz(param_CLC)
-    
-    Adaptive_Choropleth_Mapper_viz(param_MLC_COVID)
-    Adaptive_Choropleth_Mapper_viz(param_CLC_COVID)
-    Adaptive_Choropleth_Mapper_viz(param_PCP)
-    Adaptive_Choropleth_Mapper_viz(param_Scatter)
-    Adaptive_Choropleth_Mapper_viz(param_Correlogram)
-    Adaptive_Choropleth_Mapper_viz(param_Stacked)
-    Adaptive_Choropleth_Mapper_viz(param_bar)
+    #Adaptive_Choropleth_Mapper_viz(param_MLC_COVID)
+    #Adaptive_Choropleth_Mapper_log(param_MLC_COVID)
+    #Adaptive_Choropleth_Mapper_viz(param_CLC_COVID)
+    #Adaptive_Choropleth_Mapper_log(param_CLC_COVID)
+    #Adaptive_Choropleth_Mapper_viz(param_PCP_hiv)
+    #Adaptive_Choropleth_Mapper_log(param_PCP_hiv)
+    #Adaptive_Choropleth_Mapper_viz(param_Scatter)
+    #Adaptive_Choropleth_Mapper_log(param_Scatter)
+    #Adaptive_Choropleth_Mapper_viz(param_Correlogram)
+    #Adaptive_Choropleth_Mapper_log(param_Correlogram)
+    #Adaptive_Choropleth_Mapper_viz(param_Stacked)
+    #Adaptive_Choropleth_Mapper_log(param_Stacked)
+    #Adaptive_Choropleth_Mapper_viz(param_bar)
+    #Adaptive_Choropleth_Mapper_log(param_bar)
     
     ended_datetime = datetime.now()
     elapsed = ended_datetime - started_datetime

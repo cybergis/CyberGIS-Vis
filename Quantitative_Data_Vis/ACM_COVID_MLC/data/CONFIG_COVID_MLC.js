@@ -12,7 +12,7 @@ var InitialVariablePCP = [];
 
 
 // Define the number of variable that you want to visaulize Comparision Line Chart. 
-var NumOfCLC = 46;
+var NumOfCLC = 0;
 // Define variables that you want to visualize at CLC (Comparision Line Chart).
 //var InitialVariableCLC = ["2012_HIV Rate", "2013_HIV Rate", "2014_HIV Rate", "2015_HIV Rate", "2016_HIV Rate", "2017_HIV Rate", "2018_HIV Rate", "2019_HIV Rate", "2020_HIV Rate", "2021_HIV Rate", "2022_HIV Rate"]
 var InitialVariableCLC = [];
@@ -60,7 +60,7 @@ var Num_Of_Decimal_Places = 2;                              // default = 1
 
 //Adjust the size of maps
 var Map_width = "650px";
-var Map_height = "400px";
+var Map_height = "410px";
 
 //Adjust the size of the stacked chart. Double-slashes in the front need to be deleted to make them effective
 var Chart_width  = "350px";									// min 350px

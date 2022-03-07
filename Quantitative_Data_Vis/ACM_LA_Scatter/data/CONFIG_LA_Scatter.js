@@ -12,7 +12,7 @@ var InitialVariablePCP = [];
 
 
 // Define the number of variable that you want to visaulize Comparision Line Chart. 
-var NumOfCLC = 1;
+var NumOfCLC = 0;
 // Define variables that you want to visualize at CLC (Comparision Line Chart).
 //var InitialVariableCLC = ["2012_HIV Rate", "2013_HIV Rate", "2014_HIV Rate", "2015_HIV Rate", "2016_HIV Rate", "2017_HIV Rate", "2018_HIV Rate", "2019_HIV Rate", "2020_HIV Rate", "2021_HIV Rate", "2022_HIV Rate"]
 var InitialVariableCLC = [];
