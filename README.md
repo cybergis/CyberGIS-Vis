@@ -74,33 +74,33 @@ Images below show visualizations that you can create using CyberGIS-Vis. Click t
 		<li>Adaptive Choropleth Mapper with Stacked Chart
 	        <ul><li> The Stacked Chart visualizes the temporal change </li></ul>    
        </li> 
-        <img height=100px src="images/ACM.PNG" alt="ACM"/>
+        <img height=100px src="http://su-gis.iptime.org/CyberGIS-Vis/images/ACM.PNG" alt="ACM"/>
 		<li>Adaptive Choropelth Mapper with Correlogram</li>
-        <img height=250px src="images/ACM_Correlogram.PNG" alt="ACM_Correlogram"/>
+        <img height=250px src="http://su-gis.iptime.org/CyberGIS-Vis/images/ACM_Correlogram.PNG" alt="ACM_Correlogram"/>
         <li>Adaptive Choropleth Mapper with Scatter Plot</li>
-		<img height=150px src="images/ACM_Scatter.png" alt="ACM_Scatter"/>
+		<img height=150px src="http://su-gis.iptime.org/CyberGIS-Vis/images/ACM_Scatter.png" alt="ACM_Scatter"/>
         <li>Adaptive Choropleth Mapper with Parallel Coordinate Plot (PCP) </li>
-        <img height=200px src="images/ACM_PCP.PNG" alt="ACM_PCP"/>
+        <img height=200px src="http://su-gis.iptime.org/CyberGIS-Vis/images/ACM_PCP.PNG" alt="ACM_PCP"/>
         <li>Adaptive Choropleth Mapper with Multiple Linked Chart (MLC) </li>
-        <img height=200px src="images/ACM_MLC.PNG" alt="ACM_MLC"/>
+        <img height=200px src="http://su-gis.iptime.org/CyberGIS-Vis/images/ACM_MLC.PNG" alt="ACM_MLC"/>
 		<li>Adaptive Choropleth Mapper with Comparison Linke Chart (CLC)</li>
-        <img height=200px src="images/ACM_CLC.PNG" alt="ACM_CLC"/>
+        <img height=200px src="http://su-gis.iptime.org/CyberGIS-Vis/images/ACM_CLC.PNG" alt="ACM_CLC"/>
 </ul>     
              
 ###  Categorical Data Visualization
 
 <ul>
         <li>Qualitative_Analysis_Mapper</li>
-        <img height=100px src="images/Qual.PNG" alt="Qual"/>
+        <img height=100px src="http://su-gis.iptime.org/CyberGIS-Vis/images/Qual.PNG" alt="Qual"/>
         <li>Qualitative_Analysis_Mapper with Stacked Chart</li>
         <ul><li> The Stacked Chart visualizes the temporal change of categorical data in a quantitative way.  <a href="http://su-gis.iptime.org/GEOSNAP/NAM_SD_1_neighborhood">Click to see demo.</a></li></ul>    
-        <img height=100px src="images/Qual_Stacked.PNG" alt="Qual_Stacked"/>
+        <img height=100px src="http://su-gis.iptime.org/CyberGIS-Vis/images/Qual_Stacked.PNG" alt="Qual_Stacked"/>
         <li>Qualitative_Analysis_Mapper with Parallel Categories Diagram</li>
              <ul><li> Parallel Categories Diagram represents how the categorical data changes over time in quantity. <a href="http://su-gis.iptime.org/GEOSNAP/NAM_SD_3_sequence_neighborhood_categoriesDiagram">Click to see demo.</a></li></ul>    
-      <img height=200px src="images/Qual_PCD.PNG" alt="Qual_PCD"/>
+      <img height=200px src="http://su-gis.iptime.org/CyberGIS-Vis/images/Qual_PCD.PNG" alt="Qual_PCD"/>
         <li>Qualitative_Analysis_Mapper with Chord Diagram</li>
         <ul><li> The Chord Diagram quantifies changes of categorical data between the two periods. <a href="http://su-gis.iptime.org/GEOSNAP/NAM_SD_4_sequence_neighborhood_chordDiagram">Click to see demo.</a></li></ul></li></ul> 
-         <img height=200px src="images/Qual_CD.PNG" alt="Qual_CD"/>
+         <img height=200px src="http://su-gis.iptime.org/CyberGIS-Vis/images/Qual_CD.PNG" alt="Qual_CD"/>
 </ul> 
 
 ## Data
