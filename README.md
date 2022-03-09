@@ -96,10 +96,10 @@ Images below show visualizations that you can create using CyberGIS-Vis. Click t
         <ul><li> The Stacked Chart visualizes the temporal change </li></ul>    
         <img height=100px src="images/Qual_Stacked.PNG" alt="Qual_Stacked"/>
         <li>Qualitative_Analysis_Mapper with Parallel Categories Diagram</li>
-             <ul><li> Parallel Categories Diagram represents how the categorical data changes over time in quantity. <a href="https://plotly.com/javascript/parallel-categories-diagram">Click to see more info.</a></li></ul>    
+             <ul><li> Parallel Categories Diagram represents how the categorical data changes over time in quantity. <a href="http://su-gis.iptime.org/GEOSNAP/NAM_SD_3_sequence_neighborhood_categoriesDiagram">Click to see demo.</a></li></ul>    
       <img height=200px src="images/Qual_PCD.PNG" alt="Qual_PCD"/>
         <li>Qualitative_Analysis_Mapper with Chord Diagram</li>
-        <ul><li> The Chord Diagram quantifies changes of categorical data between the two periods </li></ul> 
+        <ul><li> The Chord Diagram quantifies changes of categorical data between the two periods. <a href="http://su-gis.iptime.org/GEOSNAP/NAM_SD_4_sequence_neighborhood_chordDiagram">Click to see demo.</a></li></ul></li></ul> 
          <img height=200px src="images/Qual_CD.PNG" alt="Qual_CD"/>
 </ul> 
 
