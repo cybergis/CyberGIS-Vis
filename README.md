@@ -93,7 +93,7 @@ Images below show visualizations that you can create using CyberGIS-Vis. Click t
         <li>Qualitative_Analysis_Mapper</li>
         <img height=100px src="images/Qual.PNG" alt="Qual"/>
         <li>Qualitative_Analysis_Mapper with Stacked Chart</li>
-        <ul><li> The Stacked Chart visualizes the temporal change </li></ul>    
+        <ul><li> The Stacked Chart visualizes the temporal change of categorical data in a quantitative way.  <a href="http://su-gis.iptime.org/GEOSNAP/NAM_SD_1_neighborhood">Click to see demo.</a></li></ul>    
         <img height=100px src="images/Qual_Stacked.PNG" alt="Qual_Stacked"/>
         <li>Qualitative_Analysis_Mapper with Parallel Categories Diagram</li>
              <ul><li> Parallel Categories Diagram represents how the categorical data changes over time in quantity. <a href="http://su-gis.iptime.org/GEOSNAP/NAM_SD_3_sequence_neighborhood_categoriesDiagram">Click to see demo.</a></li></ul>    
