@@ -100,7 +100,7 @@ Images below show visualizations that you can create using CyberGIS-Vis. Click t
       <img height=200px src="http://su-gis.iptime.org/CyberGIS-Vis/images/Qual_PCD.PNG" alt="Qual_PCD"/>
         <li>Qualitative_Analysis_Mapper with Chord Diagram</li>
         <ul><li> The Chord Diagram quantifies changes of categorical data between the two periods. <a href="http://su-gis.iptime.org/GEOSNAP/NAM_SD_4_sequence_neighborhood_chordDiagram">Click to see demo.</a></li></ul></li></ul> 
-         <img height=200px src="http://su-gis.iptime.org/CyberGIS-Vis/images/Qual_CD.PNG" alt="Qual_CD"/>
+         <img height=200px src="http://su-gis.iptime.org/CyberGIS-Vis/images/Qual_CD.PNG" alt="Qual_CD"/> 
 </ul> 
 
 ## Data
