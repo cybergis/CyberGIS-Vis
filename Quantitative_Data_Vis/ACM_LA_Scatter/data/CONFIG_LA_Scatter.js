@@ -37,7 +37,7 @@ var HighlightMLC = []; //Set default region
 
 // Define variables that you want to visualize at initial map views. For example, 
 // enter five variables when the NumOfMaps is equal to 5.
-var InitialLayers = [];
+var InitialLayers = ["2010_% edu college greater", "2010_% employed manufacturing"];
 
 /*Define initial map center and zoom level below. Map Extent and Zoom level will be automatically adjusted when you do not define map center and zoom level. Double-slashes  in the front need to be deleted to make them effective*/
 var Initial_map_center = null;  

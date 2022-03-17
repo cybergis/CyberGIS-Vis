@@ -26,13 +26,13 @@
 	<link rel="stylesheet" href="../template/Adaptive_Choropleth_Mapper/lib/Leaflet.markercluster-master@1.4.1/dist/MarkerCluster.css">
 	<link rel="stylesheet" href="../template/Adaptive_Choropleth_Mapper/lib/Leaflet.markercluster-master@1.4.1/dist/MarkerCluster.Default.css">
 
-	<script src="../template/Adaptive_Choropleth_Mapper/lib/leaflet@1.5.1/leaflet.js"></script>
+	<script src="../template/Adaptive_Choropleth_Mapper/lib/leaflet@1.5.1/leaflet-src.js"></script>
 	<script src="../template/Adaptive_Choropleth_Mapper/lib/Leaflet.markercluster-master@1.4.1/dist/leaflet.markercluster.js"></script>
 
 	<script src="../template/Adaptive_Choropleth_Mapper/lib/leaflet-lasso-master@2.0.4/dist/leaflet-lasso.umd.min.js"></script>
 	<script src="../template/Adaptive_Choropleth_Mapper/lib/sweetalert/sweetalert.min.js"></script>
-
-	<script src="../template/Adaptive_Choropleth_Mapper/lib/geocode/Control.BingGeocoder.js"></script>
+    <link rel="stylesheet" href="../template/Adaptive_Choropleth_Mapper/lib/geocode/Control.BingGeocoder.css" />
+	<script src="../template/Adaptive_Choropleth_Mapper/lib/geocode/Control.BingGeocoder.js" type="text/javascript" ></script>
 
 	<link rel="stylesheet" href="../template/Adaptive_Choropleth_Mapper/css/Adaptive_Choropleth_Mapper.css" />
 	<style>
@@ -78,7 +78,7 @@
 <body style="height:1500px;">
 	
 	<header>
-		<h1>HIV Scenario Analysis from 2012 to 2022, United States</h1>	
+		<h1>Adaptive Choropleth Mapper with Scatter Plot</h1>	
 	</header>
 	
 	<br>
@@ -270,9 +270,10 @@ var COLOR_CLASS = {
 };
 
 
-	var mbAttr = 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, ' +
-			'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+	var mbAttr = '<font size = "1">Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, ' +
+			'Imagery © <a href="https://www.mapbox.com/">Mapbox</a></font>',
 		mbUrl = 'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw';
+
 
 
 	var FakeBaseLayers = {
@@ -1387,11 +1388,12 @@ function ACSdata_render(mIDX) {
 		var map = app[mIDX].map;
 		var item = app[mIDX].item;
 		
-        if (first == 0) {
+        if (first < NumOfMaps) {
             var options = {
                 collapsed: true, /* Whether its collapsed or not */
-                position: 'topright', /* The position of the control */
+                position: 'topleft', /* The position of the control */
                 text: 'Locate', /* The text of the submit button */
+                geocoderId: first,
                 callback: function (results) {
                     var bbox = results.resourceSets[0].resources[0].bbox,
                         first = new L.LatLng(bbox[0], bbox[1]),
@@ -1403,9 +1405,6 @@ function ACSdata_render(mIDX) {
             };	
 
             var bingGeocoder = new L.Control.BingGeocoder('AsaKzgbo2GW8wrcv0mLCyVvEx2Q8V1N54Gpmizw-fzHIKOAjAMMy4TdNfKdS71vs', options);
-            if (bingGeocoder != null) {
-                console.log("f");
-            }
             map.addControl(bingGeocoder);  
         }
         first += 1;
@@ -2493,7 +2492,8 @@ function draw_all_maps() {
 	$("#mapContainer").css("height", app.MapHeight.replace('px','')*1+100+'px');
 	$("#chart_scatter").css("height", app.MapHeight.replace('px','')*1+50+'px');
 	var parcoords_width = 1500;
-	if (parcoords_width < app.m * 200) parcoords_width = app.m * 200;
+	//if (parcoords_width < app.m * 200) parcoords_width = app.m * 200; //app.nPCPvariables
+	if (parcoords_width < app.nPCPvariables * 200) parcoords_width = app.nPCPvariables * 200;
 	if (parcoords_width > 2000) parcoords_width = 2000;
 	$("#chart_ParallelCoordinates").css("width", parcoords_width+'px');
 	$("#chart_ParallelCoordinates").css("height", app.MapHeight.replace('px','')*1+50+'px');
@@ -3869,7 +3869,7 @@ function paintComparisionLineChart({mapN="", lassoData="", lassoedMap="", eventD
 	}
 	
 	
-	Plotly.plot(divCLC, data, layout, {showLink: false, displaylogo: false, displayModeBar: false,});
+	Plotly.plot(divCLC, data, layout, {showLink: false, displaylogo: false, displayModeBar: true,});
 	//divCLC.on('plotly_afterplot', function(){
 	//	console.log('done plotting');
 	//});
@@ -4326,8 +4326,8 @@ function paintParcoords({lassoData="", lassoedMap="", eventData="", globalJoin=n
 		var label = layers[i];
 		var textLine = splitShortName(label);
 		//label = "[Map"+(i+1)+"] "+textLine[0];
-		if (app.m > 10) {
-			label = "[Map"+(i+1)+"] "+textLine[0];
+		if (app.nPCPvariables > 12) {
+			label = "["+(i+1)+"] "+textLine[0];
 		}
 		dimensions.push(
 			{
@@ -4350,6 +4350,7 @@ function paintParcoords({lassoData="", lassoedMap="", eventData="", globalJoin=n
 	//var ticktext = intervals.map(i => i.toFixed(app.NumOfDecimalPlaces));
     var tickvals = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].slice(0, intervals.length + 1);
 	var ticktext = intervals.map(i => i.toFixed(app.NumOfDecimalPlaces));
+    maxSelectedItem = maxSelectedItem.toFixed(2);
     ticktext.push(maxSelectedItem.toString());
 	console.log(tickvals, ticktext)
 	
@@ -4474,8 +4475,9 @@ function paintParcoords({lassoData="", lassoedMap="", eventData="", globalJoin=n
 			words = '';
 			var str = shorts[i].split(' ');
 			for (var j=0; j<str.length; j++) {
-				if (words.length > 9 || (words + str[j]).length > 15) {
-					names.push(words.trim());
+				if (words.length > 9 || (words + str[j]).length > 20) {
+					//names.push(words.trim());
+					names.push(words.substring(0, 14));
 					words = '';
 				}
 				words += str[j] + ' ';
@@ -5114,7 +5116,7 @@ function paintScatter(map0="map0", map1="map1", {lassoData="", eventData="", glo
 	if (line0['y'][1] < min_yData) max_point = (min_yData - bb) / aa;             // x = ( y - b ) / a
 	var line0 = { 'x':[min_point, max_point], 'y': [a + min_point*b,  a + max_point*b] };
 	
-	var colors = '#0066FF';
+	var colors = '#ff99ff'; 
 	//if (zItem != "L000" && zmInterval != null && selectedpoints.length == 0) {
 	if (zItem != "L000" && selectedpoints.length == 0) {
 		var interval = app[map2][zmInterval];
@@ -5142,7 +5144,7 @@ function paintScatter(map0="map0", map1="map1", {lassoData="", eventData="", glo
 				'color': colors,
 				//'line': {'width': 1},
 			},
-			selected: { marker: { color: '#FF0066' } },
+			selected: { marker: { color: '#00FFFF' } },
 			//unselected: { marker: { opacity: '#0066FF' } },
 			//'name': year.toString(),
 			'name': '',
@@ -5153,7 +5155,7 @@ function paintScatter(map0="map0", map1="map1", {lassoData="", eventData="", glo
 			'x': line0['x'], 
 			'y': line0['y'],
 			'mode': 'lines',
-			'line': {'color': '#009999'},
+			'line': {'color': '#ff0066'},
 			'name': 'Reg'
 		}
 	]
@@ -5199,7 +5201,7 @@ function paintScatter(map0="map0", map1="map1", {lassoData="", eventData="", glo
 				'y': line1['y'],
 				'mode': 'lines', 
 				//'line': {'color': '#FF6600'},
-				'line': {'color': '#FF0000'}, //0000FF
+				'line': {'color': '#00CED1'}, //0000FF
 				'name': 'Reg'}
 		)
 		//data.push(

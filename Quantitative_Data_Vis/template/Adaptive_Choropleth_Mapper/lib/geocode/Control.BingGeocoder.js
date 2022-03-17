@@ -1,8 +1,17 @@
+function geocoder_submit(formId, subId){
+            const form = document.querySelector("#form-"+formId);
+            const formTrigger = form.querySelector("#" + subId);
+            //const formTrigger = document.querySelector("#" + subId);
+            const submitEvent = new SubmitEvent("submit", { submitter: formTrigger });
+            form.dispatchEvent(submitEvent);
+        }
+
 L.Control.BingGeocoder = L.Control.extend({
 	options: {
 		collapsed: true,
 		position: 'topright',
 		text: 'Locate',
+        geocoderId: 0,
 		callback: function (results) {
 			var bbox = results.resourceSets[0].resources[0].bbox,
 				first = new L.LatLng(bbox[0], bbox[1]),
@@ -51,13 +60,16 @@ L.Control.BingGeocoder = L.Control.extend({
 			this._expand();
 		}
 
+        form.id = 'form-' + this.options.geocoderId;
 		container.appendChild(form);
 
 		return container;
 	},
-
+    
 	_createButton: function(css, text) {
-		var btn = '<button type="submit" class="' + css + '-button" />' + text + '</button>';
+        refID = css + '-' + this.options.geocoderId;
+        
+		var btn = '<button type="submit" class="' + css + '-button" id="'+refID+'" /><div onclick="javascript:geocoder_submit(\'' +this.options.geocoderId+'\','+'\''+refID+'\')">' + text + '</div></button>';
 
 		var radioFragment = document.createElement('div');
 		radioFragment.innerHTML = btn;
@@ -75,7 +87,7 @@ L.Control.BingGeocoder = L.Control.extend({
 			key : this.key,
 			jsonp : this._callbackId
 		},
-		url = 'http://dev.virtualearth.net/REST/v1/Locations' + L.Util.getParamString(params),
+		url = 'https://dev.virtualearth.net/REST/v1/Locations' + L.Util.getParamString(params),
 		script = L.DomUtil.create('script', '', document.getElementsByTagName('head')[0]);
 
 		script.type = 'text/javascript';

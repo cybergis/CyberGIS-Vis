@@ -2,11 +2,11 @@
 var Subject = "";
 
 // Define the number of maps that you want to visualize. upto 15 maps are supported.
-var NumOfMaps = 3;
+var NumOfMaps = 4;
 
 
 // Define the number of variable that you want to visaulize Parallel Coordinates Plot. 
-var NumOfPCP = 10;
+var NumOfPCP = 4;
 //Define variables that you want to visualize at PCP.
 var InitialVariablePCP = ["2010_% white (non-Hispanic)", "2010_% black (non-Hispanic)", "2010_% Hispanic", "2010_% Asian & PI race", "2010_% professional employees", "2010_% manufacturing employees", "2010_% in poverty", "2010_% foreign born", "2010_% 17 and under (total)", "2010_% 60 and older"];
 
@@ -59,7 +59,7 @@ var Multiple_Line_Chart = false;
 var Num_Of_Decimal_Places = 2;                              // default = 1 
 
 //Adjust the size of maps
-var Map_width = "370px";
+var Map_width = "350px";
 var Map_height = "350px";
 
 //Adjust the size of the stacked chart. Double-slashes in the front need to be deleted to make them effective
