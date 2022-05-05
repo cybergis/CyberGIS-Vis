@@ -20,10 +20,14 @@ from IPython.core.display import display, HTML
 from IPython.display import Javascript
 import geopandas as gpd
 
-#Create directory for Visualization    
+#Create directory for Visualization 
 servers = list(notebookapp.list_running_servers())
-servers1 = 'https://cybergisx.cigi.illinois.edu'+servers[0]["base_url"]+ 'view'
-servers2 = 'https://cybergisx.cigi.illinois.edu'+servers[0]["base_url"]+ 'edit'      
+jupyter_envs = {k: v for k, v in os.environ.items() if k.startswith('JUPYTER')}
+temp_server = jupyter_envs['JUPYTER_INSTANCE_URL']
+
+servers1 = temp_server+servers[0]["base_url"]+ 'view'
+servers2 = temp_server+servers[0]["base_url"]+ 'edit'
+
 cwd = os.getcwd()
 prefix_cwd = "/home/jovyan/work"
 cwd = cwd.replace(prefix_cwd, "")
