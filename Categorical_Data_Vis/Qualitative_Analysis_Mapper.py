@@ -24,17 +24,21 @@ def Qual_viz(param):
     write_VARIABLES_js(param)
     write_GEO_JSON_js(param)
     
-    #Create directory for VIZ 
+    #Create directory for Visualization 
     servers = list(notebookapp.list_running_servers())
-    servers1 = 'https://cybergisx.cigi.illinois.edu'+servers[0]["base_url"]+ 'view'
-    servers2 = 'https://cybergisx.cigi.illinois.edu'+servers[0]["base_url"]+ 'edit'      
+    jupyter_envs = {k: v for k, v in os.environ.items() if k.startswith('JUPYTER')}
+    temp_server = jupyter_envs['JUPYTER_INSTANCE_URL']
+
+    servers1 = temp_server+servers[0]["base_url"]+ 'view'
+    servers2 = temp_server+servers[0]["base_url"]+ 'edit'
+
     cwd = os.getcwd()
     prefix_cwd = "/home/jovyan/work"
     cwd = cwd.replace(prefix_cwd, "")
     
     # This is for Jupyter notebbok installed in your PC
-    local_dir1 = cwd
-    local_dir2 = cwd  
+    #local_dir1 = cwd
+    #local_dir2 = cwd  
     
     #This is for CyberGISX. Uncomment two command lines below when you run in CyberGIX Environment
     local_dir1 = servers1 + cwd
