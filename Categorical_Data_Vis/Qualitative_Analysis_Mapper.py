@@ -14,7 +14,7 @@ import pprint
 from sklearn.preprocessing import minmax_scale
 import numpy as np
 from scipy import stats
-from notebook import notebookapp
+from jupyter_server import serverapp
 from IPython.core.display import display, HTML
 import geopandas as gpd
 
@@ -24,25 +24,27 @@ def Qual_viz(param):
     write_VARIABLES_js(param)
     write_GEO_JSON_js(param)
     
-    #Create directory for Visualization 
-    servers = list(notebookapp.list_running_servers())
+    
+    ## Retrieve Server URL that Jupyter is running
     jupyter_envs = {k: v for k, v in os.environ.items() if k.startswith('JUPYTER')}
     temp_server = jupyter_envs['JUPYTER_INSTANCE_URL']
 
+    # Define Paths for Visualization (Jupyter Lab)
+    servers = list(serverapp.list_running_servers())
     servers1 = temp_server+servers[0]["base_url"]+ 'view'
     servers2 = temp_server+servers[0]["base_url"]+ 'edit'
 
     cwd = os.getcwd()
     prefix_cwd = "/home/jovyan/work"
     cwd = cwd.replace(prefix_cwd, "")
-    
+
     # This is for Jupyter notebbok installed in your PC
     #local_dir1 = cwd
     #local_dir2 = cwd  
-    
+
     #This is for CyberGISX. Uncomment two command lines below when you run in CyberGIX Environment
-    local_dir1 = servers1 + cwd
-    local_dir2 = servers2 + cwd 
+    local_dir1 = servers1 + cwd + '/'
+    local_dir2 = servers2 + cwd + '/' 
     
     #print(local_dir)
     fname =urllib.parse.quote('index.html')

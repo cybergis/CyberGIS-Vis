@@ -1,4 +1,4 @@
-2022-03-15 05:27:54 ACM_Census_PCP
+2022-07-06 19:40:17 ACM_Census_PCP
 
   {'title': 'Adaptive Choropleth Mapper with Paralle Coordinate Plot',
    'filename_suffix': 'Census_PCP',
@@ -12,12 +12,12 @@
                  'median_home_value', 'p_structures_30_old',
                  'p_household_recent_move'],
    'shortLabelCSV': 'attributes/LTDB_ShortLabel.csv',
-   'NumOfMaps': 4,
-   'Map_width': '350px',
-   'Map_height': '350px',
+   'NumOfMaps': 2,
+   'Map_width': '650px',
+   'Map_height': '400px',
    'Top10_Chart': True,
    'Parallel_Coordinates_Plot': True,
-   'NumOfPCP': 4,
+   'NumOfPCP': 10,
    'InitialVariablePCP': ['2010_% white (non-Hispanic)',
                           '2010_% black (non-Hispanic)', '2010_% Hispanic',
                           '2010_% Asian & PI race',

@@ -1,6 +1,6 @@
-2022-03-15 05:28:08 ACM_LA_bar
+2022-07-06 19:41:03 ACM_LA_bar
 
-  {'title': 'Adaptive Choropleth Mapper with Stacked Chart',
+  {'title': 'Adaptive Choropleth Mapper with Bar Chart',
    'filename_suffix': 'LA_bar',
    'NumOfMaps': 3,
    'shortLabelCSV': 'attributes/LTDB_ShortLabel.csv',

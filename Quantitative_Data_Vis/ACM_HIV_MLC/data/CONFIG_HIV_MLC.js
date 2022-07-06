@@ -15,8 +15,8 @@ var InitialVariablePCP = [];
 var NumOfCLC = 0;
 // Define variables that you want to visualize at CLC (Comparision Line Chart).
 //var InitialVariableCLC = ["2012_HIV Rate", "2013_HIV Rate", "2014_HIV Rate", "2015_HIV Rate", "2016_HIV Rate", "2017_HIV Rate", "2018_HIV Rate", "2019_HIV Rate", "2020_HIV Rate", "2021_HIV Rate", "2022_HIV Rate"]
-var InitialVariableCLC = [];
-var DefaultRegion_CLC = "";
+var InitialVariableCLC = []; 
+var DefaultRegion_CLC = ""; //Set Defaul Region
 
 // Define the number of variable that you want to visualize Multiple Synchronized Line Chart. 
 var NumOfMLC = 2;
@@ -29,7 +29,7 @@ var titlesOfMLC = [];
 // Define beginning and ending of highlighted areas of MLC. You can do multiple times
 // [["begin_X_value","end_X_value","color"], ["begin_X_value","end_X_value","color"]…] 
 var DefaultRegion_MLC = "36061";
-var HighlightMLC = []; //Set default region
+var HighlightMLC = []; //Set  highlighted ranges for x value
 
 
 //Define the geographic id or name to be display on the top-right corner of the map

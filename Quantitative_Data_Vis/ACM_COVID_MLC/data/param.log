@@ -1,4 +1,4 @@
-2022-03-15 05:29:00 ACM_COVID_MLC
+2022-07-06 19:38:56 ACM_COVID_MLC
 
   {'title': 'Covid-19 Risk Assessment using Twitter, Metropolitan Statistical '
             'Areas, USA',
@@ -8,16 +8,15 @@
                  'The Number of Visits from Outside to Inside of the selected '
                  'MSA'],
    'NumOfMaps': 2,
-   'InitialLayers': ['2020-03-15_Confirmed Rate', '2020-12-27_Confirmed Rate'],
+   'InitialLayers': ['2020-04-19_Confirmed Rate', '2020-11-01_Confirmed Rate'],
    'Initial_map_center': [37, -97],
    'Initial_map_zoom_level': 4,
    'Map_width': '650px',
-   'Map_height': '400px',
+   'Map_height': '410px',
    'Top10_Chart': True,
    'Multiple_Line_Chart': True,
    'NumOfMLC': 3,
    'titlesOfMLC': ['1. COVID-19 Confirmed Cases (/100k pop)',
                    '2. COVID-19 Death Cases (/100k pop)',
-                   '3. The Number of Visits from Outside to Inside of the '
-                   'selected MSA'],
+                   '3. The Number of Visitors'],
    'DefaultRegion_MLC': '35620'}

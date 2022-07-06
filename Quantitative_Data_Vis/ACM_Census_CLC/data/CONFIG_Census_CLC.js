@@ -28,8 +28,8 @@ var InitialVariableMLC = []
 var titlesOfMLC = [];
 // Define beginning and ending of highlighted areas of MLC. You can do multiple times
 // [["begin_X_value","end_X_value","color"], ["begin_X_value","end_X_value","color"]…] 
-var DefaultRegion_MLC = ""; //Set highlighted ranges for x value
-var HighlightMLC = []; //Set default region
+var DefaultRegion_MLC = ""; //Set Default region
+var HighlightMLC = []; //Set  highlighted ranges for x value
 
 
 //Define the geographic id or name to be display on the top-right corner of the map

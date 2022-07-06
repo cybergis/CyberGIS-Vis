@@ -15,8 +15,8 @@ var InitialVariablePCP = [];
 var NumOfCLC = 0;
 // Define variables that you want to visualize at CLC (Comparision Line Chart).
 //var InitialVariableCLC = ["2012_HIV Rate", "2013_HIV Rate", "2014_HIV Rate", "2015_HIV Rate", "2016_HIV Rate", "2017_HIV Rate", "2018_HIV Rate", "2019_HIV Rate", "2020_HIV Rate", "2021_HIV Rate", "2022_HIV Rate"]
-var InitialVariableCLC = [];
-var DefaultRegion_CLC = "";
+var InitialVariableCLC = []; 
+var DefaultRegion_CLC = ""; //Set Defaul Region
 
 // Define the number of variable that you want to visualize Multiple Synchronized Line Chart. 
 var NumOfMLC = 0;
@@ -28,8 +28,8 @@ var InitialVariableMLC = []
 var titlesOfMLC = [];
 // Define beginning and ending of highlighted areas of MLC. You can do multiple times
 // [["begin_X_value","end_X_value","color"], ["begin_X_value","end_X_value","color"]…] 
-var DefaultRegion_MLC = ""; //Set highlighted ranges for x value
-var HighlightMLC = []; //Set default region
+var DefaultRegion_MLC = ""; //Set Default region
+var HighlightMLC = []; //Set  highlighted ranges for x value
 
 
 //Define the geographic id or name to be display on the top-right corner of the map
@@ -37,7 +37,7 @@ var HighlightMLC = []; //Set default region
 
 // Define variables that you want to visualize at initial map views. For example, 
 // enter five variables when the NumOfMaps is equal to 5.
-var InitialLayers = ["2010_% edu college greater", "2010_% employed manufacturing"];
+var InitialLayers = [];
 
 /*Define initial map center and zoom level below. Map Extent and Zoom level will be automatically adjusted when you do not define map center and zoom level. Double-slashes  in the front need to be deleted to make them effective*/
 var Initial_map_center = null;  
@@ -59,8 +59,8 @@ var Multiple_Line_Chart = false;
 var Num_Of_Decimal_Places = 2;                              // default = 1 
 
 //Adjust the size of maps
-var Map_width = "470px";
-var Map_height = "450px";
+var Map_width  = "";                                   // min 350px
+var Map_height  = "";                             // min 300px
 
 //Adjust the size of the stacked chart. Double-slashes in the front need to be deleted to make them effective
 var Chart_width  = "350px";									// min 350px

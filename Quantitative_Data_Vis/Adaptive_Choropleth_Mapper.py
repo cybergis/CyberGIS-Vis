@@ -15,16 +15,17 @@ import pprint
 from sklearn.preprocessing import minmax_scale
 import numpy as np
 from scipy import stats
-from notebook import notebookapp
+from jupyter_server import serverapp
 from IPython.core.display import display, HTML
 from IPython.display import Javascript
 import geopandas as gpd
 
-#Create directory for Visualization 
-servers = list(notebookapp.list_running_servers())
+## Retrieve Server URL that Jupyter is running
 jupyter_envs = {k: v for k, v in os.environ.items() if k.startswith('JUPYTER')}
 temp_server = jupyter_envs['JUPYTER_INSTANCE_URL']
 
+# Define Paths for Visualization (Jupyter Lab)
+servers = list(serverapp.list_running_servers())
 servers1 = temp_server+servers[0]["base_url"]+ 'view'
 servers2 = temp_server+servers[0]["base_url"]+ 'edit'
 
