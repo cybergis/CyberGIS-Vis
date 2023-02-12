@@ -1381,30 +1381,33 @@ function drawAmap(mIDX, drawMode) {
 	ACSdata_render(mIDX);
 }
 
+var first = 0;
+
 function ACSdata_render(mIDX) {
 
 		var map = app[mIDX].map;
 		var item = app[mIDX].item;
 		
-        // control bing geocoder from https://github.com/sa3m/leaflet-control-bing-geocoder
-		if (app[mIDX].bingGeocoder != null) app[mIDX].bingGeocoder.remove();
-        var options = {
-            collapsed: true, /* Whether its collapsed or not */
-            position: 'topleft', /* The position of the control */
-            text: 'Locate', /* The text of the submit button */
-            //geocoderId: first,
-            callback: function (results) {
-				console.log("results:", results)
-                var bbox = results.resourceSets[0].resources[0].bbox,
-                    corner1 = new L.LatLng(bbox[0], bbox[1]),
-                    corner2 = new L.LatLng(bbox[2], bbox[3]),
-                    bounds = new L.LatLngBounds([corner1, corner2]);
-                    this._map.fitBounds(bounds);
-                    //this._map.setZoom(7);
-                }
-        };	
-        app[mIDX].bingGeocoder = new L.Control.BingGeocoder('AsaKzgbo2GW8wrcv0mLCyVvEx2Q8V1N54Gpmizw-fzHIKOAjAMMy4TdNfKdS71vs', options);
-		app[mIDX].bingGeocoder.addTo(map);
+        if (first < NumOfMaps) {
+            var options = {
+                collapsed: true, /* Whether its collapsed or not */
+                position: 'topleft', /* The position of the control */
+                text: 'Locate', /* The text of the submit button */
+                geocoderId: first,
+                callback: function (results) {
+                    var bbox = results.resourceSets[0].resources[0].bbox,
+                        first = new L.LatLng(bbox[0], bbox[1]),
+                        second = new L.LatLng(bbox[2], bbox[3]),
+                        bounds = new L.LatLngBounds([first, second]);
+                        this._map.fitBounds(bounds);
+                        //this._map.setZoom(7);
+                    }
+            };	
+
+            var bingGeocoder = new L.Control.BingGeocoder('AsaKzgbo2GW8wrcv0mLCyVvEx2Q8V1N54Gpmizw-fzHIKOAjAMMy4TdNfKdS71vs', options);
+            map.addControl(bingGeocoder);  
+        }
+        first += 1;
 		
 		//var metroInterval = $('input[type=checkbox][name="'+mIDX+'-checkbox"]').is(":checked");
 		var GorL = $('input[type=radio][name="'+mIDX+'-checkbox"]:checked').val();
@@ -2401,7 +2404,7 @@ function triggerStackedAreaChart() {
 //   1. when receive GeoJSON from server
 //   2. when 'Initialize all maps' button clicked
 function draw_all_maps() {
-
+	first = 0;
 	// draw titles area
 	for (var i=0; i<app.m; i++) {
 		var mapN = "map" + i;
