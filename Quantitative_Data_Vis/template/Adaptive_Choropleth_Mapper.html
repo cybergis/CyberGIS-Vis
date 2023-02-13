@@ -140,7 +140,7 @@ var app={
 	m: 2,                                        // number of maps in a web page shown
 	nPCPvariables: 7,							 // number of variable that you want to visaulize PCP chart.
 	nCLCvariables: 7,							 // number of variable that you want to visaulize Comparision Line chart.
-	nMLCvariables: 7,							 // number of variable that you want to visaulize Multiple Synchronized Line chart.
+	nMLCvariables: 7,							 // number of variable that you want to visaulize Multiple Line chart.
 	geokey: null,                                // global variable for GEO_JSON and GEO_VARIABLES (ex. tractid)
 	geoname: null,                               // global variable for GEO_JSON (ex. County, state or '')
 	firstDefinedLayers: [],                      // five layers for user defined layers
@@ -149,10 +149,10 @@ var app={
 	PCPvariables: [],                            // variables of PCP for selected variables
 	firstDefinedCLCVariables: [],                // variables of CLC for user defined variables
 	CLCvariables: [],                            // variables of CLC for selected variables
-	firstDefinedMLCVariables: [],                // variables of MLC(Multiple Synchronized Line Chart) for user defined variables
-	MLCvariables: [],                            // variables of MLC(Multiple Synchronized Line Chart) for selected variables
-	titlesOfMLC: [],							 // titles of MLC(Multiple Synchronized Line Chart) for selected variables
-	HighlightMLC: [],							 // highlighted areas of MLC(Multiple Synchronized Line Chart)
+	firstDefinedMLCVariables: [],                // variables of MLC(Multiple Line Chart) for user defined variables
+	MLCvariables: [],                            // variables of MLC(Multiple Line Chart) for selected variables
+	titlesOfMLC: [],							 // titles of MLC(Multiple Line Chart) for selected variables
+	HighlightMLC: [],							 // highlighted areas of MLC(Multiple Line Chart)
     HighlightCLC: [],							 // highlighted areas of CLC(Comparision Line Chart)
 	DefaultRegion_MLC: "17019",					 // Set default region of MLC
 	DefaultRegion_CLC: ["17019", "6073"],		 // Set default region of CLC	
@@ -165,7 +165,7 @@ var app={
 	ParallelCoordinatesPlot: true,               // draw parallel coordinates plot or not form configuration file (default: true)
 	Top10Chart: true,               			 // draw Top10 Bar chart or not form configuration file (default: true)
 	ComparisionLineChart: true,                  // draw Comparision Line Chart or not form configuration file (default: true)
-	MultipleLineChart: true,                     // draw Multiple Synchronized Line Chart or not form configuration file (default: true)
+	MultipleLineChart: true,                     // draw Multiple Line Chart or not form configuration file (default: true)
 	NumOfDecimalPlaces: 1,                       // the number of decimal places (default: 1)
 	MapWidth: "500px",                           // map width of each map (default: 500px)
 	MapHeight: "500px",                          // map height of each map (default: 500px)
@@ -190,7 +190,7 @@ var app={
 	sPointsScatter: [],                          // selected points in the scatter plots
 	sPointsTop10Chart: [],                       // selected points in the top 10 bar chart
 	sPointsComparisionLineChart: {},             // selected points in the Comparision Line Chart  (key:map_id, value:{ ... })
-	sPointsMultipleLineChart: {},             	 // selected points in the Multiple Synchronized Line Chart  (geoid: last lassoed geo_id, ... )
+	sPointsMultipleLineChart: {},             	 // selected points in the Multiple Line Chart  (geoid: last lassoed geo_id, ... )
 	sPointsParcoords: [],                        // selected points in the parallel coordinates plots
 	sPointsMaps: [],                             // selected points in all maps using lasso select
 	isLassoPushed: false,                        // states of lasso button in all maps
@@ -622,7 +622,7 @@ function draw_titleComparisionLineChart(mapN=null) {
 
 
 function draw_titleMultipleLineChart() {
-	var chartID = (app.subject) ? app.subject : "Multiple Synchronized Line Chart";
+	var chartID = (app.subject) ? app.subject : "Multiple Line Chart";
 	//$("#MLCchart .map_id").html('&nbsp;<b>'+chartID+'</b>');
 	$("#MLCchart .map_id").html('&nbsp;<b>'+chartID+'</b>');    
 }
@@ -1827,7 +1827,7 @@ $( document ).ready(function() {
 	//	"2012_VIRAL_SUPRESSION","2013_VIRAL_SUPRESSION","2014_VIRAL_SUPRESSION","2015_VIRAL_SUPRESSION", ...
 	if (GEO_VARIABLES[1][0] == "") {                    // 2 lines heading
 		var concatenatedHeader = [];
-		var variablesMLC = [];							// all variables for Multiple Synchronized Line Chart in GEO_VARIABLES[0]
+		var variablesMLC = [];							// all variables for Multiple Line Chart in GEO_VARIABLES[0]
 		for (var i=0; i<GEO_VARIABLES[1].length; i++) {
 			if (GEO_VARIABLES[1][i] == "") concatenatedHeader.push(GEO_VARIABLES[0][i]);
 			else {
@@ -1835,7 +1835,7 @@ $( document ).ready(function() {
 				variablesMLC.push(GEO_VARIABLES[0][i]);
 			}
 		}
-		app.MLCvariables = Array.from(new Set(variablesMLC));		// all variables for Multiple Synchronized Line Chart
+		app.MLCvariables = Array.from(new Set(variablesMLC));		// all variables for Multiple Line Chart
 		app.titlesOfMLC = app.MLCvariables.slice();					// deep copy
 		app.nMLCvariables = app.MLCvariables.length;
 		console.log("app.MLCvariables:", app.MLCvariables);
@@ -1845,14 +1845,14 @@ $( document ).ready(function() {
 		GEO_VARIABLES[0] = concatenatedHeader;
 		console.log("GEO_VARIABLES:", GEO_VARIABLES);
 	} else {                                            // 1 line heading
-        var variablesMLC = [];							// all variables for Multiple Synchronized Line Chart in GEO_VARIABLES[0]
+        var variablesMLC = [];							// all variables for Multiple Line Chart in GEO_VARIABLES[0]
         for (var i=1; i<GEO_VARIABLES[0].length; i++) {
             var p = GEO_VARIABLES[0][i].search("_");
             var s2 = (p >= 0) ? GEO_VARIABLES[0][i].substring(p+1) : GEO_VARIABLES[0][i];
             //console.log("s2:", s2);
             variablesMLC.push(s2);
         }
-        app.MLCvariables = Array.from(new Set(variablesMLC));		// all variables for Multiple Synchronized Line Chart
+        app.MLCvariables = Array.from(new Set(variablesMLC));		// all variables for Multiple Line Chart
 		app.titlesOfMLC = app.MLCvariables.slice();					// deep copy
         app.nMLCvariables = app.MLCvariables.length;
         console.log("app.MLCvariables:", app.MLCvariables);
@@ -2051,7 +2051,7 @@ $( document ).ready(function() {
 	}
 	//console.log(app.ComparisionLineChart);
 	
-	// set draw Multiple Synchronized Line Chart or not to global variable
+	// set draw Multiple Line Chart or not to global variable
 	if (typeof Multiple_Line_Chart !== 'undefined' && typeof Multiple_Line_Chart === 'boolean') {
 		app.MultipleLineChart = Multiple_Line_Chart;
 	}
@@ -2144,7 +2144,7 @@ $( document ).ready(function() {
 	app.firstDefinedCLCVariables = app.CLCvariables.slice();         // deep copy of array
 	//console.log(app.CLCvariables);
 	
-	// set default MLC variables (Multiple Synchronized Line Chart)
+	// set default MLC variables (Multiple Line Chart)
 	var selectedMLCvariables = [];
 	if (typeof InitialVariableMLC !== 'undefined' && InitialVariableMLC instanceof Array) {
 		for (var i=0; i<InitialVariableMLC.length; i++) {
@@ -2160,7 +2160,7 @@ $( document ).ready(function() {
 	if (app.MLCvariables.length > app.nMLCvariables) app.MLCvariables = app.MLCvariables.slice(0, app.nMLCvariables);
 	console.log(app.MLCvariables);
 	
-	// set default titles of MLC (Multiple Synchronized Line Chart)
+	// set default titles of MLC (Multiple Line Chart)
 	app.titlesOfMLC = app.MLCvariables.slice();						 // deep copy of array
 	if (typeof titlesOfMLC !== 'undefined' && titlesOfMLC instanceof Array) {
 		for (var i=0; i<titlesOfMLC.length; i++) {
@@ -2170,7 +2170,7 @@ $( document ).ready(function() {
 	}
 	//console.log(app.titlesOfMLC);
 	
-    // set highlighted areas of MLC (Multiple Synchronized Line Chart)						 // deep copy of array
+    // set highlighted areas of MLC (Multiple Line Chart)						 // deep copy of array
 	if (typeof HighlightMLC !== 'undefined' && HighlightMLC instanceof Array) {
 		app.HighlightMLC = HighlightMLC;
 	}
@@ -2548,7 +2548,7 @@ function draw_all_maps() {
 	// draw titles of Comparision Line Chart
 	draw_titleComparisionLineChart();
 	
-	// draw titles of Multiple Synchronized Line Chart
+	// draw titles of Multiple Line Chart
 	draw_titleMultipleLineChart();
 	
 	// draw titles of PCPchart
