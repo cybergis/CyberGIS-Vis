@@ -3599,8 +3599,6 @@ function paintComparisionLineChart({mapN="", lassoData="", lassoedMap="", eventD
     // append title with variable
     var chartID = (app.subject) ? app.subject : "Comparision Line Chart";
     //if (title_CLCvariables.length > 0) chartID += " of " + "<span style='color:blue;font-size:larger;'>&nbsp;" + title_CLCvariables + "</span>";
-    if (title_CLCvariables.length > 0) chartID += " of " + 
-        "<span style='color:blue;font-size:larger;'>&nbsp;" + title_CLCvariables + "</span>";
 	$("#CLCchart .map_id").html('&nbsp;<b>'+chartID+'</b>');
 	
 	//const arrAvg = arr => arr.reduce((a,b) => a + b, 0) / arr.length
