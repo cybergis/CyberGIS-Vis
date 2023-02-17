@@ -279,6 +279,7 @@ def Adaptive_Choropleth_Mapper_log(param):
     ofile.write('<head>\n')
     ofile.write('  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>\n')
     ofile.write('  <title>Neighborhood Analysis Logging</title>\n')
+    ofile.write('<script src="template/Adaptive_Choropleth_Mapper/lib/sweetalert/sweetalert.min.js"></script>')
     ofile.write('</head>\n')
     ofile.write('<body>\n')
     ofile.write('  <header>\n')
@@ -316,7 +317,7 @@ def Adaptive_Choropleth_Mapper_log(param):
         html += '  copyText.select();'                                 #Select the text field
         html += '  copyText.setSelectionRange(0, 99999);'              #For mobile devices
         html += '  navigator.clipboard.writeText(copyText.value);'     #Copy the text inside the text field
-        html += '  alert("The URL has been copied to the clipboard. Paste it to the browser to see your visualizations: " + copyText.value);'       #Alert the copied text
+        html += '  swal("Copied!","The URL has been copied to the clipboard. Paste it to the browser to see your visualizations.");'       #Alert the copied text
         html += '};'
         html += 'document.querySelectorAll(".utcToLocal").forEach('
         html += '  function (i) {'

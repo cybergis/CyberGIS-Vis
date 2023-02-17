@@ -3,6 +3,7 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
   <title>Neighborhood Analysis Logging</title>
+  <script src="template/Adaptive_Choropleth_Mapper/lib/sweetalert/sweetalert.min.js"></script>
 </head>
 <body>
   <header>
@@ -38,7 +39,11 @@
     </tr>
   </table>
 </div>
-<script>function myFunction1() {  var copyText = document.getElementById("myInput1");  copyText.select();  copyText.setSelectionRange(0, 99999);  navigator.clipboard.writeText(copyText.value);  alert("The URL has been copied to the clipboard. Paste it to the browser to see your visualizations: " + copyText.value);};document.querySelectorAll(".utcToLocal").forEach(  function (i) {    const options = {hour12: false, hour:"2-digit", minute:"2-digit", timeZoneName: "short", year: "numeric", month: "numeric", day: "numeric"};    i.innerHTML = new Date(i.innerText).toLocaleString("en-US",options);  });</script>
+<script>function myFunction1() {  var copyText = document.getElementById("myInput1");  copyText.select();  copyText.setSelectionRange(0, 99999);  navigator.clipboard.writeText(copyText.value);  
+
+swal("Copied!","The URL has been copied to the clipboard. Paste it to the browser to see your visualizations.");};
+
+document.querySelectorAll(".utcToLocal").forEach(  function (i) {    const options = {hour12: false, hour:"2-digit", minute:"2-digit", timeZoneName: "short", year: "numeric", month: "numeric", day: "numeric"};    i.innerHTML = new Date(i.innerText).toLocaleString("en-US",options);  });</script>
 
 <div style="margin:10px; float:left; border: 1px solid #99CCFF; border-radius: 5px;">
   <table>

@@ -39,6 +39,8 @@ L.Control.BingGeocoder = L.Control.extend({
 
 		var input = this._input = L.DomUtil.create('input', className + '-input', form);
 		input.type = 'text';
+        refID = className + '-' + this.options.geocoderId;
+        input.setAttribute("onkeydown", 'if (event.keyCode == 13) {geocoder_submit(\'' +this.options.geocoderId+'\','+'\''+refID+'\')}');
 
 		var submit = this._createButton(className, this.options.text);
 		form.appendChild(submit);
