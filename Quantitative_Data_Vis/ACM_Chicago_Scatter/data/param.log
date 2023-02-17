@@ -1,0 +1,16 @@
+2023-02-05 19:41:17 ACM_Chicago_Scatter
+
+  {'title': 'Adaptive Choropleth Mapper with Scatter Plot',
+   'filename_suffix': 'Chicago_Scatter',
+   'variables': ['% White', '% Black', '% Asian', '% Hispanic',
+                 '% Owner occupied housing', '% Foreign born',
+                 "% Bachelor's degree", '% Graduate or professional degree',
+                 '% High school graduate or higher', '% Service occupations',
+                 '% Manufacturing',
+                 '% Management, business, science, and arts occupations',
+                 '% Natural resources, construction, and maintenance occupations',
+                 '% Production, transportation, and material moving occupations',
+                 '% Poverty'],
+   'Map_width': '470px',
+   'Map_height': '450px',
+   'Scatter_Plot': True}
