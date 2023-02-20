@@ -49,15 +49,18 @@ CyberGIS-Vis integrates cutting-edge cyberGIS and online visualization capabilit
 ```
 4. Comment and uncomment out like below. These are related to create URLs in the Jupyter Server. 
 ```bash
-	#from notebook import notebookapp
-	#servers = list(notebookapp.list_running_servers())
-        #servers1 = 'https://cybergisx.cigi.illinois.edu'+servers[0]["base_url"]+ 'view'
-        #servers2 = 'https://cybergisx.cigi.illinois.edu'+servers[0]["base_url"]+ 'edit'
+	#jupyter_envs = {k: v for k, v in os.environ.items() if k.startswith('JUPYTER')}
+	#temp_server = jupyter_envs['JUPYTER_INSTANCE_URL']
+	
+	#servers = list(serverapp.list_running_servers())
+	#servers1 = temp_server+servers[0]["base_url"]+ 'view'
+	#servers2 = temp_server+servers[0]["base_url"]+ 'edit'
+	
 	local_dir1 = cwd
 	local_dir2 = cwd 
+	
 	#local_dir1 = servers1 + cwd + '/'
 	#local_dir2 = servers2 + cwd + '/' 
-
 ```   
 5. Open Jupyter notebook below and run.
 ```bash
