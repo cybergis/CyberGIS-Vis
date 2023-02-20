@@ -746,9 +746,10 @@ function getGlobalJoinfromMaps() {
 }
 
 function bound_error(map){
-    
+		console.dir("XXXXXXXXXXXXXXXXXX  map   ") 
+		console.dir(map);    
 	map.on('zoomend', function (e) {
-		
+
 		var currentZoom = map.getZoom();
 		console.log("XXXXXXXXXXXXXXXXXX  currentZoom   " + currentZoom);
 		switch (currentZoom) {
@@ -840,14 +841,14 @@ function isTwoBoundsEqual(map0, map1) {
 	var bounds = [];
 	for (var i=0; i<app.m; i++) {
 		var mapN = "map" + i;
-	//	bounds.push(app[mapN].map.getBounds());
+		//bounds.push(app[mapN].map.getBounds());
 	}
 	bounds.push(app[map0].map.getBounds());
 	bounds.push(app[map1].map.getBounds());
 	var j = 0;
 	var isAllSameBounds = true;
 	for (var i=1; i<bounds.length; i++) {
-		if (!boundsEqual(bounds[i], bounds[0]), app[mapN].map) {
+		if (!boundsEqual(bounds[i], bounds[0], app[map0].map)) {
 			isAllSameBounds = false;
 			j = i;
 			break;

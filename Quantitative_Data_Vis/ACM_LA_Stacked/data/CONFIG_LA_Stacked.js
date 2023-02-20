@@ -2,7 +2,7 @@
 var Subject = "";
 
 // Define the number of maps that you want to visualize. upto 15 maps are supported.
-var NumOfMaps = 4;
+var NumOfMaps = 2;
 
 
 // Define the number of variable that you want to visaulize Parallel Coordinates Plot. 
@@ -47,9 +47,9 @@ var InitialLayers = [];
 // It appears only when the map extent and the class intervals of all maps are same.
 // To make all maps have the same map extent and class intervals, 
 // enable "Grouping All" or click "Sync" on one of maps
-var Stacked_Chart = true;
+var Stacked_Chart = false;
 var Correlogram = false;
-var Scatter_Plot = false;
+var Scatter_Plot = true;
 var Top10_Chart = false;
 var Parallel_Coordinates_Plot = false;
 var Comparision_Chart = false;
