@@ -40,8 +40,8 @@ var HighlightMLC = []; //Set  highlighted ranges for x value
 var InitialLayers = [];
 
 /*Define initial map center and zoom level below. Map Extent and Zoom level will be automatically adjusted when you do not define map center and zoom level. Double-slashes  in the front need to be deleted to make them effective*/
-var Initial_map_center = null;  
-var Initial_map_zoom_level = null;
+//var Initial_map_center = [0,0];  
+//var Initial_map_zoom_level = 7;
 
 
 // It appears only when the map extent and the class intervals of all maps are same.
