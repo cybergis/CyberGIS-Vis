@@ -846,7 +846,7 @@ function isTwoBoundsEqual(map0, map1) {
 	var j = 0;
 	var isAllSameBounds = true;
 	for (var i=1; i<bounds.length; i++) {
-		if (!boundsEqual(bounds[i], bounds[0], app[map0].map) {
+		if (!boundsEqual(bounds[i], bounds[0], app[map0].map)) {
 			isAllSameBounds = false;
 			j = i;
 			break;
