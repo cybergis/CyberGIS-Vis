@@ -1,8 +1,8 @@
-2023-02-19 05:52:00 ACM_LA_Correlogram
+2023-02-26 15:07:38 ACM_LA_Correlogram
 
   {'title': 'Adaptive Choropleth Mapper with Correlogram',
    'filename_suffix': 'LA_Correlogram',
-   'NumOfMaps': 4,
+   'NumOfMaps': 6,
    'shortLabelCSV': 'attributes/LTDB_ShortLabel.csv',
    'variables': ['p_nonhisp_white_persons', 'p_nonhisp_black_persons',
                  'p_hispanic_persons', 'p_asian_persons', 'p_foreign_born_pop',

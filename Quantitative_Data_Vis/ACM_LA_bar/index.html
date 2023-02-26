@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-	<title>Adaptive Choropleth Mapper with Bar Chart</title>
+	<title>Adaptive Choropleth Mapper with Top 10 Bar Chart</title>
 
 	<script src="data/CONFIG_LA_bar.js"></script>
 	<script src="data/GEO_JSON_LA_bar.js"></script>
@@ -78,7 +78,7 @@
 <body style="height:1500px;">
 	
 	<header>
-		<h1>Adaptive Choropleth Mapper with Bar Chart</h1>	
+		<h1>Adaptive Choropleth Mapper with Top 10 Bar Chart</h1>	
 	</header>
 	
 	<br>
@@ -136,8 +136,10 @@ var CA = null;
 var app={
 	subject: "",								 // subject of this visualize
 	adjustBound: 0.25,							 // ratio to reduce rectangle size of intial bounds
-	maxZoom: 14,
+	maxZoom: 13,
+	minZoom: 2,	
 	m: 2,                                        // number of maps in a web page shown
+	diff: 1,									 // difference error                                        // number of maps in a web page shown
 	nPCPvariables: 7,							 // number of variable that you want to visaulize PCP chart.
 	nCLCvariables: 7,							 // number of variable that you want to visaulize Comparision Line chart.
 	nMLCvariables: 7,							 // number of variable that you want to visaulize Multiple Line chart.
@@ -298,7 +300,8 @@ function draw_basemap(mIDX) {
 	app[mIDX].map = L.map(selected_mapdiv, {
 		center: mapCenter,
 		zoom: mapZoomLevel,
-		//maxZoom: app.maxZoom,
+		maxZoom: app.maxZoom,
+		minZoom: app.minZoom,	
 		layers: [grayscale] /******************************************************************************************/
 	});
 	
@@ -364,7 +367,7 @@ function draw_titlemap(mIDX, layer) {
 		globalHeadingRestore();
 		
 		var nowBounds = app[mIDX].map.getBounds();
-		if (!boundsEqual(app.selectedBounds, nowBounds)) {
+		if (!boundsEqual(app.selectedBounds, nowBounds, app[mapN].map)) {
 			//console.log(getNow(), mIDX, 'mapN.map.getBounds() != app.selectedBounds', nowBounds, app.selectedBounds);
 			app.selectedBounds = nowBounds;
 			updateSelectedGeoJSON(mIDX);
@@ -741,16 +744,71 @@ function getGlobalJoinfromMaps() {
 	return join;
 }
 
+
+function bound_error(map){
+    
+	map.on('zoomend', function (e) {
+		
+		var currentZoom = map.getZoom();
+		//console.log("XXXXXXXXXXXXXXXXXX  currentZoom   " + currentZoom);
+		switch (currentZoom) {
+			case 1:
+				app.diff = 10
+				break;
+			case 2:
+				app.diff = 0.5
+				break;
+			case 3:
+				app.diff = 0.1
+				break;
+			case 4:
+				app.diff = 0.057
+				break;
+			case 5:
+				app.diff = 0.041
+				break;
+			case 6:
+				app.diff = 0.033
+				break;
+			case 7:
+				app.diff = 0.025
+				break;
+			case 8:
+				app.diff = 0.017
+				break;
+			case 9:
+				app.diff = 0.009
+				break;
+			case 10:
+				app.diff = 0.001
+				break;
+			case 11:
+				app.diff = 0.001
+				break;
+			case 12:
+				app.diff = 0.001
+				break;
+			case 13:
+				app.diff = 0.001
+				break;		
+		}
+	});
+	return app.diff
+}
+
 // bounds compare with toFixed(2)
-function boundsEqual(boundA, boundB) {
+function boundsEqual(boundA, boundB, map) {
+	let diff = bound_error(map);
 	var result = true;
-	if ((Math.abs(boundA.getNorth()-boundB.getNorth()) > 0.05) ||             
-		(Math.abs(boundA.getEast()-boundB.getEast()) > 0.05) ||               
-		(Math.abs(boundA.getSouth()-boundB.getSouth()) > 0.05) ||             
-		(Math.abs(boundA.getWest()-boundB.getWest()) > 0.05)) {               
+		//console.log("XXXXXXXXXXXXXXXXXX  diff   " + diff);	
+		if ((Math.abs(boundA.getNorth()-boundB.getNorth()) > diff) ||             
+		(Math.abs(boundA.getEast()-boundB.getEast()) > diff) ||               
+		(Math.abs(boundA.getSouth()-boundB.getSouth()) > diff) ||             
+		(Math.abs(boundA.getWest()-boundB.getWest()) > diff)) {               
 		return false;
 	}
 	return result;
+	//console.log("XXXXXXXXXXXXXXXXXX  result   " + result);	
 }
 
 // is bounds of five maps are all same
@@ -763,7 +821,7 @@ function isAllBoundsEqual() {
 	var j = 0;
 	var isAllSameBounds = true;
 	for (var i=1; i<bounds.length; i++) {
-		if (!boundsEqual(bounds[i], bounds[0])) {
+		if (!boundsEqual(bounds[i], bounds[0], app[mapN].map)) {
 			isAllSameBounds = false;
 			j = i;
 			break;
@@ -779,16 +837,16 @@ function isAllBoundsEqual() {
 // is bounds of two maps are all same
 function isTwoBoundsEqual(map0, map1) {
 	var bounds = [];
-	//for (var i=0; i<app.m; i++) {
-	//	var mapN = "map" + i;
+	for (var i=0; i<app.m; i++) {
+		var mapN = "map" + i;
 	//	bounds.push(app[mapN].map.getBounds());
-	//}
+	}
 	bounds.push(app[map0].map.getBounds());
 	bounds.push(app[map1].map.getBounds());
 	var j = 0;
 	var isAllSameBounds = true;
 	for (var i=1; i<bounds.length; i++) {
-		if (!boundsEqual(bounds[i], bounds[0])) {
+		if (!boundsEqual(bounds[i], bounds[0], app[map0].map)) {
 			isAllSameBounds = false;
 			j = i;
 			break;
@@ -874,8 +932,8 @@ function draw_globalSelection() {
 	// set drop-down list of 'global_class' 
 	var html_layer = 'Classification: <select name="globalClass" style="color:red;">' +
 					'<option value="equal" class="line_none">Equal</option>' +
-					'<option value="quantile" class="line_none" selected>Quantile</option>' +
-					'<option value="ckmeans" class="line_none">Natural Breaks</option>' +
+					'<option value="quantile" class="line_none" >Quantile</option>' +
+					'<option value="ckmeans" class="line_none" selected>Optimal</option>' +
 					'<option value="arithmetic" class="line_none">Arithmetic Progression</option>' +
 					'<option value="geometric" class="line_none">Geometric Progression</option>' +
 					'<option value="std" class="line_none">Std Deviation</option>' +
@@ -2630,7 +2688,7 @@ function draw_all_maps() {
 		for (i=0; i<app.m; i++) {
 			var mapN = "map" + i;
 			var alreadyFitted = false;
-			if (boundsEqual(app[mapN].map.getBounds(), fitBounds)) alreadyFitted = true;
+			if (boundsEqual(app[mapN].map.getBounds(), fitBounds, app[mapN].map)) alreadyFitted = true;
 			else app[mapN].map.fitBounds(fitBounds);
 
 			watchfitbounds[i] = setInterval(function(i, mapN) {
@@ -2638,7 +2696,7 @@ function draw_all_maps() {
 				var nowBounds = app[mapN].map.getBounds();
 				//console.log(getNow(), mapN, mapN+'.bounds:', app[mapN].bounds);
 				//console.log(getNow(), mapN, 'nowBounds:', nowBounds, duration / 1000);
-				if (alreadyFitted || !boundsEqual(app[mapN].bounds, nowBounds)) {
+				if (alreadyFitted || !boundsEqual(app[mapN].bounds, nowBounds, app[mapN].map)) {
 					//console.log(getNow(), mapN, 'after  fitBounds: ', nowBounds, 'duration:', duration/1000);
 					clearInterval(watchfitbounds[i]);
 					watchfitbounds[i] = false;
@@ -2918,7 +2976,7 @@ function mapON_contextmenu(e, mIDX) {
 	}
 	
 	var nowBounds = app[mIDX].map.getBounds();
-	if (!boundsEqual(app.selectedBounds, nowBounds)) {
+	if (!boundsEqual(app.selectedBounds, nowBounds, app[mIDX].map)) {
 		//console.log(getNow(), mIDX, 'mIDX.map.getBounds() != app.selectedBounds', nowBounds, app.selectedBounds);
 		app.selectedBounds = nowBounds;
 		updateSelectedGeoJSON(mIDX);
@@ -3123,7 +3181,7 @@ function redraw_all_maps(mIDX, drawMode, baseBounds) {
 	var this_sync = $('input[type=radio][name="'+mIDX+'-radio"]:checked').val();
 	
 	// determine witch maps need to fitBounds
-	var refitBoundableMaps = (!boundsEqual(mapBounds, app[mIDX].map.getBounds())) ? [mIDX] : [];
+	var refitBoundableMaps = (!boundsEqual(mapBounds, app[mIDX].map.getBounds(), app[mIDX].map)) ? [mIDX] : [];
 	for (i=0; i<app.m; i++) {
 		var mapN = "map" + i;
 		if (mapN == mIDX) continue;
@@ -3133,7 +3191,7 @@ function redraw_all_maps(mIDX, drawMode, baseBounds) {
 			if (this_sync == 'manual') continue;
 		}
 		//console.log(boundsEqual(mapBounds, app[mapN].map.getBounds()), mapBounds, app[mapN].map.getBounds())
-		if (!boundsEqual(mapBounds, app[mapN].map.getBounds())) {
+		if (!boundsEqual(mapBounds, app[mapN].map.getBounds(), app[mapN].map)) {
 			refitBoundableMaps.push(mapN);
 		}
 	}

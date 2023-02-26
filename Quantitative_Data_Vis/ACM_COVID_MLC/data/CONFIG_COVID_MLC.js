@@ -1,5 +1,5 @@
 // Define subject of this visaulize
-var Subject = "Temporal Patterns";
+var Subject = "Temporal Patterns of COVID-19 Risk Factors";
 
 // Define the number of maps that you want to visualize. upto 15 maps are supported.
 var NumOfMaps = 2;
@@ -25,7 +25,7 @@ var NumOfMLC = 3;
 var InitialVariableMLC = []
 // Define titles that you want to visualize at MLC (Multiple Synchronized Line Chart).
 //var titlesOfMLC = ["1. HIV Rate", "2. HIV Test (/100k pop)", "3. Rate of Illicit Drug Use", "4. Health Care Center (/100k pop)"];
-var titlesOfMLC = ["1. COVID-19 Confirmed Cases (/100k pop)", "2. COVID-19 Death Cases (/100k pop)", "3. The Number of Visitors"];
+var titlesOfMLC = ["1. COVID-19 Confirmed Cases (/100k pop)", "2. COVID-19 Death Cases (/100k pop)", "3. The Number of Visits from Outside to Inside of the selected MSA"];
 // Define beginning and ending of highlighted areas of MLC. You can do multiple times
 // [["begin_X_value","end_X_value","color"], ["begin_X_value","end_X_value","color"]…] 
 var DefaultRegion_MLC = "35620";
@@ -37,7 +37,7 @@ var HighlightMLC = []; //Set  highlighted ranges for x value
 
 // Define variables that you want to visualize at initial map views. For example, 
 // enter five variables when the NumOfMaps is equal to 5.
-var InitialLayers = ["2020-04-19_Confirmed Rate", "2020-11-01_Confirmed Rate"];
+var InitialLayers = ["2020-03-15_Confirmed Rate", "2020-12-27_Confirmed Rate"];
 
 /*Define initial map center and zoom level below. Map Extent and Zoom level will be automatically adjusted when you do not define map center and zoom level. Double-slashes  in the front need to be deleted to make them effective*/
 var Initial_map_center = [37, -97];
@@ -60,7 +60,7 @@ var Num_Of_Decimal_Places = 2;                              // default = 1
 
 //Adjust the size of maps
 var Map_width = "650px";
-var Map_height = "410px";
+var Map_height = "400px";
 
 //Adjust the size of the stacked chart. Double-slashes in the front need to be deleted to make them effective
 var Chart_width  = "350px";									// min 350px

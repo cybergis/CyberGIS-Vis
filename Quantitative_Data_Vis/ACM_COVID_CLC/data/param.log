@@ -1,8 +1,8 @@
-2023-02-19 05:50:47 ACM_COVID_CLC
+2023-02-26 15:09:31 ACM_COVID_CLC
 
   {'title': 'Comparison of COVID-19 Confirmed Rate between Metropolitan '
             'Statistical Areas, USA',
-   'Subject': 'Temporal Patterns',
+   'Subject': 'Temporal Patterns of COVID-19 Confirmed Rate',
    'filename_suffix': 'COVID_CLC',
    'variables': ['Confirmed Rate'],
    'NumOfMaps': 2,
@@ -10,7 +10,7 @@
    'Initial_map_center': [37, -97],
    'Initial_map_zoom_level': 4,
    'Map_width': '650px',
-   'Map_height': '410px',
+   'Map_height': '400px',
    'Top10_Chart': True,
    'Comparision_Chart': True,
    'NumOfCLC': 46,

@@ -2,7 +2,7 @@
 var Subject = "";
 
 // Define the number of maps that you want to visualize. upto 15 maps are supported.
-var NumOfMaps = 4;
+var NumOfMaps = 6;
 
 
 // Define the number of variable that you want to visaulize Parallel Coordinates Plot. 

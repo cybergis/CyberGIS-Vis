@@ -37,7 +37,7 @@ var HighlightMLC = []; //Set  highlighted ranges for x value
 
 // Define variables that you want to visualize at initial map views. For example, 
 // enter five variables when the NumOfMaps is equal to 5.
-var InitialLayers = [];
+var InitialLayers = ["2010_% edu college greater", "2010_% employed manufacturing"];
 
 /*Define initial map center and zoom level below. Map Extent and Zoom level will be automatically adjusted when you do not define map center and zoom level. Double-slashes  in the front need to be deleted to make them effective*/
 var Initial_map_center = null;  
@@ -59,8 +59,8 @@ var Multiple_Line_Chart = false;
 var Num_Of_Decimal_Places = 2;                              // default = 1 
 
 //Adjust the size of maps
-var Map_width  = "";                                   // min 350px
-var Map_height  = "";                             // min 300px
+var Map_width = "470px";
+var Map_height = "450px";
 
 //Adjust the size of the stacked chart. Double-slashes in the front need to be deleted to make them effective
 var Chart_width  = "350px";									// min 350px

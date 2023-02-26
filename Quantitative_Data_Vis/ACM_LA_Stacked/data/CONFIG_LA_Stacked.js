@@ -2,7 +2,7 @@
 var Subject = "";
 
 // Define the number of maps that you want to visualize. upto 15 maps are supported.
-var NumOfMaps = 2;
+var NumOfMaps = 4;
 
 
 // Define the number of variable that you want to visaulize Parallel Coordinates Plot. 
@@ -40,16 +40,16 @@ var HighlightMLC = []; //Set  highlighted ranges for x value
 var InitialLayers = [];
 
 /*Define initial map center and zoom level below. Map Extent and Zoom level will be automatically adjusted when you do not define map center and zoom level. Double-slashes  in the front need to be deleted to make them effective*/
-//var Initial_map_center = [0,0];  
-//var Initial_map_zoom_level = 7;
+var Initial_map_center = null;  
+var Initial_map_zoom_level = null;
 
 
 // It appears only when the map extent and the class intervals of all maps are same.
 // To make all maps have the same map extent and class intervals, 
 // enable "Grouping All" or click "Sync" on one of maps
-var Stacked_Chart = false;
+var Stacked_Chart = true;
 var Correlogram = false;
-var Scatter_Plot = true;
+var Scatter_Plot = false;
 var Top10_Chart = false;
 var Parallel_Coordinates_Plot = false;
 var Comparision_Chart = false;

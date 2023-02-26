@@ -133,14 +133,13 @@
 //global varible
 var getNow = function() { return moment().format('HH:mm:ss.SSS '); };
 var CA = null;
-
 var app={
 	subject: "",								 // subject of this visualize
 	adjustBound: 0.25,							 // ratio to reduce rectangle size of intial bounds
 	maxZoom: 13,
 	minZoom: 2,	
 	m: 2,                                        // number of maps in a web page shown
-	diff: 1,									 // difference error
+	diff: 1,									 // difference error                                        // number of maps in a web page shown
 	nPCPvariables: 7,							 // number of variable that you want to visaulize PCP chart.
 	nCLCvariables: 7,							 // number of variable that you want to visaulize Comparision Line chart.
 	nMLCvariables: 7,							 // number of variable that you want to visaulize Multiple Line chart.
@@ -302,7 +301,7 @@ function draw_basemap(mIDX) {
 		center: mapCenter,
 		zoom: mapZoomLevel,
 		maxZoom: app.maxZoom,
-		minZoom: app.minZoom,		
+		minZoom: app.minZoom,	
 		layers: [grayscale] /******************************************************************************************/
 	});
 	
@@ -745,13 +744,13 @@ function getGlobalJoinfromMaps() {
 	return join;
 }
 
-function bound_error(map){
-		console.dir("XXXXXXXXXXXXXXXXXX  map   ") 
-		console.dir(map);    
-	map.on('zoomend', function (e) {
 
+function bound_error(map){
+    
+	map.on('zoomend', function (e) {
+		
 		var currentZoom = map.getZoom();
-		console.log("XXXXXXXXXXXXXXXXXX  currentZoom   " + currentZoom);
+		//console.log("XXXXXXXXXXXXXXXXXX  currentZoom   " + currentZoom);
 		switch (currentZoom) {
 			case 1:
 				app.diff = 10
@@ -795,14 +794,13 @@ function bound_error(map){
 		}
 	});
 	return app.diff
-	
 }
 
 // bounds compare with toFixed(2)
 function boundsEqual(boundA, boundB, map) {
 	let diff = bound_error(map);
 	var result = true;
-		console.log("XXXXXXXXXXXXXXXXXX  diff   " + diff);	
+		//console.log("XXXXXXXXXXXXXXXXXX  diff   " + diff);	
 		if ((Math.abs(boundA.getNorth()-boundB.getNorth()) > diff) ||             
 		(Math.abs(boundA.getEast()-boundB.getEast()) > diff) ||               
 		(Math.abs(boundA.getSouth()-boundB.getSouth()) > diff) ||             
@@ -810,7 +808,7 @@ function boundsEqual(boundA, boundB, map) {
 		return false;
 	}
 	return result;
-	console.log("XXXXXXXXXXXXXXXXXX  result   " + result);	
+	//console.log("XXXXXXXXXXXXXXXXXX  result   " + result);	
 }
 
 // is bounds of five maps are all same
@@ -841,7 +839,7 @@ function isTwoBoundsEqual(map0, map1) {
 	var bounds = [];
 	for (var i=0; i<app.m; i++) {
 		var mapN = "map" + i;
-		//bounds.push(app[mapN].map.getBounds());
+	//	bounds.push(app[mapN].map.getBounds());
 	}
 	bounds.push(app[map0].map.getBounds());
 	bounds.push(app[map1].map.getBounds());

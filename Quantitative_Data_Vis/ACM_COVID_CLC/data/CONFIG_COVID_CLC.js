@@ -1,5 +1,5 @@
 // Define subject of this visaulize
-var Subject = "Temporal Patterns";
+var Subject = "Temporal Patterns of COVID-19 Confirmed Rate";
 
 // Define the number of maps that you want to visualize. upto 15 maps are supported.
 var NumOfMaps = 2;
@@ -60,7 +60,7 @@ var Num_Of_Decimal_Places = 2;                              // default = 1
 
 //Adjust the size of maps
 var Map_width = "650px";
-var Map_height = "410px";
+var Map_height = "400px";
 
 //Adjust the size of the stacked chart. Double-slashes in the front need to be deleted to make them effective
 var Chart_width  = "350px";									// min 350px
