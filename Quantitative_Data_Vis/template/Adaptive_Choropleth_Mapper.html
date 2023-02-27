@@ -3984,8 +3984,8 @@ function paintMultipleLineChart(zoomedData=[], {mapN="", lassoData="", lassoedMa
 	$("#MLCchart .map_layer").html('&nbsp;<b>'+geoIdName+'</b>');
 	
 	var MultipleLineChart_width = 1000;
-	if (app.sPointsMultipleLineChart[app.MLCvariables[0]]['key'].length > 20) MultipleLineChart_width = 1500;
-	if (app.sPointsMultipleLineChart[app.MLCvariables[0]]['key'].length > 100) MultipleLineChart_width = 2000;
+	if (app.sPointsMultipleLineChart[app.MLCvariables[0]]['key'].length > 20) MultipleLineChart_width = 1300;
+	if (app.sPointsMultipleLineChart[app.MLCvariables[0]]['key'].length > 100) MultipleLineChart_width = 1600;
 	$("#chart_MultipleLineChart").css("width", MultipleLineChart_width+'px');
 	
 	var nMultipleLineChart = app.titlesOfMLC.length;
