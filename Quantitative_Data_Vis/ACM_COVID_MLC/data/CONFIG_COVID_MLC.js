@@ -5,6 +5,10 @@ var Subject = "Temporal Patterns of COVID-19 Risk Factors";
 var NumOfMaps = 2;
 
 
+// Define the order to show the drop-down list fo the Layer. "compare" or "temporal" 
+var SortLayers = "compare";
+
+
 // Define the number of variable that you want to visaulize Parallel Coordinates Plot. 
 var NumOfPCP = 0;
 //Define variables that you want to visualize at PCP.
@@ -30,7 +34,7 @@ var titlesOfMLC = ["1. COVID-19 Confirmed Cases (/100k pop)", "2. COVID-19 Death
 // [["begin_X_value","end_X_value","color"], ["begin_X_value","end_X_value","color"]…] 
 var DefaultRegion_MLC = "35620";
 var HighlightMLC = []; //Set  highlighted ranges for x value
-
+var MultipleLineChart_width = "";
 
 //Define the geographic id or name to be display on the top-right corner of the map
 //var NameDisplayed = "geoname";

@@ -13,27 +13,37 @@
   <table>
     <tr>
       <td>
-      <span style="color:#CD5C5C;"><strong>1. ACM_Chicago_Scatter</strong></span>        <span style="display: inline-block; width:380px; text-align: right;"><span class="utcToLocal">2023-02-05T19:41:17+00:00</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;        <input type="text" value=https://cybergisx.cigi.illinois.edu/user/suhan2/view/CyberGIS-Vis/Quantitative_Data_Vis//ACM_Chicago_Scatter/index.html id="myInput1">        <button onclick="myFunction1()">Copy</button></span>
+      <span style="color:#CD5C5C;"><strong>1. ACM_COVID_MLC_SD</strong></span>        <span style="display: inline-block; width:380px; text-align: right;"><span class="utcToLocal">2023-04-02T23:18:31+00:00</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;        <input type="text" value=F:\Github\CyberGIS-Vis\Quantitative_Data_Vis/ACM_COVID_MLC_SD/index.html id="myInput1">        <button onclick="myFunction1()">Copy</button></span>
       </td>
     </tr>
     <tr>
       <td>
 <pre>
 
-  {'title': 'Adaptive Choropleth Mapper with Scatter Plot',
-   'filename_suffix': 'Chicago_Scatter',
-   'variables': ['% White', '% Black', '% Asian', '% Hispanic',
-                 '% Owner occupied housing', '% Foreign born',
-                 "% Bachelor's degree", '% Graduate or professional degree',
-                 '% High school graduate or higher', '% Service occupations',
-                 '% Manufacturing',
-                 '% Management, business, science, and arts occupations',
-                 '% Natural resources, construction, and maintenance occupations',
-                 '% Production, transportation, and material moving occupations',
-                 '% Poverty'],
-   'Map_width': '470px',
-   'Map_height': '450px',
-   'Scatter_Plot': True}
+  {'title': 'Visualizing the Impact of Covid-19: Temporal Trends in Crude and '
+            'Vaccination Rates by Zip Code in San Diego',
+   'Subject': 'Tracking Covid-19 Confirmed and Vaccination Rates over Time in '
+              "San Diego's Selected Zip Codes",
+   'filename_suffix': 'COVID_MLC_SD',
+   'variables': ['Confirmed_Cases_per_10k_pop', 'vaccinated_per_10k_pop',
+                 'Confirmed_total_per_10k_pop', 'vaccinated_total_per_10k_pop'],
+   'NumOfMaps': 2,
+   'SortLayers': 'temporal',
+   'InitialLayers': ['2020-04-01_Confirmed_Cases_per_10k_pop',
+                     '2020-12-27_Confirmed_Cases_per_10k_pop'],
+   'Initial_map_center': [33.01, -116.77],
+   'Initial_map_zoom_level': 9,
+   'Map_width': '550px',
+   'Map_height': '420px',
+   'Top10_Chart': True,
+   'Multiple_Line_Chart': True,
+   'NumOfMLC': 4,
+   'titlesOfMLC': ['1. COVID-19 Crude Rate (Confirmed Cases per 10k population)',
+                   '2. Vaccinated Rate (Vaccinated People per 10k population)',
+                   '3. Cumulative Confirmed Rate',
+                   '4. Cumulative Vaccinated Rate (Vaccinated People per 10k '
+                   'population)'],
+   'DefaultRegion_MLC': '92109'}
 </pre>
       </td>
     </tr>
@@ -45,36 +55,7 @@
   <table>
     <tr>
       <td>
-      <span style="color:#CD5C5C;"><strong>2. ACM_Chicago_PCP</strong></span>        <span style="display: inline-block; width:380px; text-align: right;"><span class="utcToLocal">2023-02-05T20:04:20+00:00</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;        <input type="text" value=https://cybergisx.cigi.illinois.edu/user/suhan2/view/CyberGIS-Vis/Quantitative_Data_Vis//ACM_Chicago_PCP/index.html id="myInput2">        <button onclick="myFunction2()">Copy</button></span>
-      </td>
-    </tr>
-    <tr>
-      <td>
-<pre>
-
-  {'title': 'Adaptive Choropleth Mapper with Paralle Coordinate Plot',
-   'filename_suffix': 'Chicago_PCP',
-   'variables': ['% White', '% Black', '% Asian', '% Hispanic',
-                 '% Owner occupied housing', '% Foreign born',
-                 '% Service occupations', '% Manufacturing'],
-   'NumOfMaps': 6,
-   'Map_width': '350px',
-   'Map_height': '350px',
-   'Top10_Chart': False,
-   'Parallel_Coordinates_Plot': True,
-   'NumOfPCP': 8}
-</pre>
-      </td>
-    </tr>
-  </table>
-</div>
-<script>function myFunction2() {  var copyText = document.getElementById("myInput2");  copyText.select();  copyText.setSelectionRange(0, 99999);  navigator.clipboard.writeText(copyText.value);  swal("Copied!","The URL has been copied to the clipboard. Paste it to the browser to see your visualizations.");};document.querySelectorAll(".utcToLocal").forEach(  function (i) {    const options = {hour12: false, hour:"2-digit", minute:"2-digit", timeZoneName: "short", year: "numeric", month: "numeric", day: "numeric"};    i.innerHTML = new Date(i.innerText).toLocaleString("en-US",options);  });</script>
-
-<div style="margin:10px; float:left; border: 1px solid #99CCFF; border-radius: 5px;">
-  <table>
-    <tr>
-      <td>
-      <span style="color:#CD5C5C;"><strong>3. ACM_HIV_MLC</strong></span>        <span style="display: inline-block; width:380px; text-align: right;"><span class="utcToLocal">2023-02-26T15:01:37+00:00</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;        <input type="text" value=https://cybergisx.cigi.illinois.edu/user/suhan2/view/CyberGIS-Vis/Quantitative_Data_Vis//ACM_HIV_MLC/index.html id="myInput3">        <button onclick="myFunction3()">Copy</button></span>
+      <span style="color:#CD5C5C;"><strong>2. ACM_HIV_MLC</strong></span>        <span style="display: inline-block; width:380px; text-align: right;"><span class="utcToLocal">2023-04-06T14:12:16+00:00</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;        <input type="text" value=F:\Github\CyberGIS-Vis\Quantitative_Data_Vis/ACM_HIV_MLC/index.html id="myInput2">        <button onclick="myFunction2()">Copy</button></span>
       </td>
     </tr>
     <tr>
@@ -99,13 +80,13 @@
     </tr>
   </table>
 </div>
-<script>function myFunction3() {  var copyText = document.getElementById("myInput3");  copyText.select();  copyText.setSelectionRange(0, 99999);  navigator.clipboard.writeText(copyText.value);  swal("Copied!","The URL has been copied to the clipboard. Paste it to the browser to see your visualizations.");};document.querySelectorAll(".utcToLocal").forEach(  function (i) {    const options = {hour12: false, hour:"2-digit", minute:"2-digit", timeZoneName: "short", year: "numeric", month: "numeric", day: "numeric"};    i.innerHTML = new Date(i.innerText).toLocaleString("en-US",options);  });</script>
+<script>function myFunction2() {  var copyText = document.getElementById("myInput2");  copyText.select();  copyText.setSelectionRange(0, 99999);  navigator.clipboard.writeText(copyText.value);  swal("Copied!","The URL has been copied to the clipboard. Paste it to the browser to see your visualizations.");};document.querySelectorAll(".utcToLocal").forEach(  function (i) {    const options = {hour12: false, hour:"2-digit", minute:"2-digit", timeZoneName: "short", year: "numeric", month: "numeric", day: "numeric"};    i.innerHTML = new Date(i.innerText).toLocaleString("en-US",options);  });</script>
 
 <div style="margin:10px; float:left; border: 1px solid #99CCFF; border-radius: 5px;">
   <table>
     <tr>
       <td>
-      <span style="color:#CD5C5C;"><strong>4. ACM_HIV_CLC</strong></span>        <span style="display: inline-block; width:380px; text-align: right;"><span class="utcToLocal">2023-02-26T15:01:47+00:00</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;        <input type="text" value=https://cybergisx.cigi.illinois.edu/user/suhan2/view/CyberGIS-Vis/Quantitative_Data_Vis//ACM_HIV_CLC/index.html id="myInput4">        <button onclick="myFunction4()">Copy</button></span>
+      <span style="color:#CD5C5C;"><strong>3. ACM_HIV_CLC</strong></span>        <span style="display: inline-block; width:380px; text-align: right;"><span class="utcToLocal">2023-04-06T14:12:24+00:00</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;        <input type="text" value=F:\Github\CyberGIS-Vis\Quantitative_Data_Vis/ACM_HIV_CLC/index.html id="myInput3">        <button onclick="myFunction3()">Copy</button></span>
       </td>
     </tr>
     <tr>
@@ -130,13 +111,13 @@
     </tr>
   </table>
 </div>
-<script>function myFunction4() {  var copyText = document.getElementById("myInput4");  copyText.select();  copyText.setSelectionRange(0, 99999);  navigator.clipboard.writeText(copyText.value);  swal("Copied!","The URL has been copied to the clipboard. Paste it to the browser to see your visualizations.");};document.querySelectorAll(".utcToLocal").forEach(  function (i) {    const options = {hour12: false, hour:"2-digit", minute:"2-digit", timeZoneName: "short", year: "numeric", month: "numeric", day: "numeric"};    i.innerHTML = new Date(i.innerText).toLocaleString("en-US",options);  });</script>
+<script>function myFunction3() {  var copyText = document.getElementById("myInput3");  copyText.select();  copyText.setSelectionRange(0, 99999);  navigator.clipboard.writeText(copyText.value);  swal("Copied!","The URL has been copied to the clipboard. Paste it to the browser to see your visualizations.");};document.querySelectorAll(".utcToLocal").forEach(  function (i) {    const options = {hour12: false, hour:"2-digit", minute:"2-digit", timeZoneName: "short", year: "numeric", month: "numeric", day: "numeric"};    i.innerHTML = new Date(i.innerText).toLocaleString("en-US",options);  });</script>
 
 <div style="margin:10px; float:left; border: 1px solid #99CCFF; border-radius: 5px;">
   <table>
     <tr>
       <td>
-      <span style="color:#CD5C5C;"><strong>5. ACM_Census_MLC</strong></span>        <span style="display: inline-block; width:380px; text-align: right;"><span class="utcToLocal">2023-02-26T15:01:54+00:00</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;        <input type="text" value=https://cybergisx.cigi.illinois.edu/user/suhan2/view/CyberGIS-Vis/Quantitative_Data_Vis//ACM_Census_MLC/index.html id="myInput5">        <button onclick="myFunction5()">Copy</button></span>
+      <span style="color:#CD5C5C;"><strong>4. ACM_Census_MLC</strong></span>        <span style="display: inline-block; width:380px; text-align: right;"><span class="utcToLocal">2023-04-06T14:12:31+00:00</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;        <input type="text" value=F:\Github\CyberGIS-Vis\Quantitative_Data_Vis/ACM_Census_MLC/index.html id="myInput4">        <button onclick="myFunction4()">Copy</button></span>
       </td>
     </tr>
     <tr>
@@ -164,13 +145,13 @@
     </tr>
   </table>
 </div>
-<script>function myFunction5() {  var copyText = document.getElementById("myInput5");  copyText.select();  copyText.setSelectionRange(0, 99999);  navigator.clipboard.writeText(copyText.value);  swal("Copied!","The URL has been copied to the clipboard. Paste it to the browser to see your visualizations.");};document.querySelectorAll(".utcToLocal").forEach(  function (i) {    const options = {hour12: false, hour:"2-digit", minute:"2-digit", timeZoneName: "short", year: "numeric", month: "numeric", day: "numeric"};    i.innerHTML = new Date(i.innerText).toLocaleString("en-US",options);  });</script>
+<script>function myFunction4() {  var copyText = document.getElementById("myInput4");  copyText.select();  copyText.setSelectionRange(0, 99999);  navigator.clipboard.writeText(copyText.value);  swal("Copied!","The URL has been copied to the clipboard. Paste it to the browser to see your visualizations.");};document.querySelectorAll(".utcToLocal").forEach(  function (i) {    const options = {hour12: false, hour:"2-digit", minute:"2-digit", timeZoneName: "short", year: "numeric", month: "numeric", day: "numeric"};    i.innerHTML = new Date(i.innerText).toLocaleString("en-US",options);  });</script>
 
 <div style="margin:10px; float:left; border: 1px solid #99CCFF; border-radius: 5px;">
   <table>
     <tr>
       <td>
-      <span style="color:#CD5C5C;"><strong>6. ACM_Census_CLC</strong></span>        <span style="display: inline-block; width:380px; text-align: right;"><span class="utcToLocal">2023-02-26T15:02:01+00:00</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;        <input type="text" value=https://cybergisx.cigi.illinois.edu/user/suhan2/view/CyberGIS-Vis/Quantitative_Data_Vis//ACM_Census_CLC/index.html id="myInput6">        <button onclick="myFunction6()">Copy</button></span>
+      <span style="color:#CD5C5C;"><strong>5. ACM_Census_CLC</strong></span>        <span style="display: inline-block; width:380px; text-align: right;"><span class="utcToLocal">2023-04-06T14:12:37+00:00</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;        <input type="text" value=F:\Github\CyberGIS-Vis\Quantitative_Data_Vis/ACM_Census_CLC/index.html id="myInput5">        <button onclick="myFunction5()">Copy</button></span>
       </td>
     </tr>
     <tr>
@@ -199,13 +180,77 @@
     </tr>
   </table>
 </div>
+<script>function myFunction5() {  var copyText = document.getElementById("myInput5");  copyText.select();  copyText.setSelectionRange(0, 99999);  navigator.clipboard.writeText(copyText.value);  swal("Copied!","The URL has been copied to the clipboard. Paste it to the browser to see your visualizations.");};document.querySelectorAll(".utcToLocal").forEach(  function (i) {    const options = {hour12: false, hour:"2-digit", minute:"2-digit", timeZoneName: "short", year: "numeric", month: "numeric", day: "numeric"};    i.innerHTML = new Date(i.innerText).toLocaleString("en-US",options);  });</script>
+
+<div style="margin:10px; float:left; border: 1px solid #99CCFF; border-radius: 5px;">
+  <table>
+    <tr>
+      <td>
+      <span style="color:#CD5C5C;"><strong>6. ACM_LA_Stacked</strong></span>        <span style="display: inline-block; width:380px; text-align: right;"><span class="utcToLocal">2023-09-09T13:09:04+00:00</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;        <input type="text" value=F:\Github\CyberGIS-Vis\Quantitative_Data_Vis/ACM_LA_Stacked/index.html id="myInput6">        <button onclick="myFunction6()">Copy</button></span>
+      </td>
+    </tr>
+    <tr>
+      <td>
+<pre>
+
+  {'title': 'Adaptive Choropleth Mapper with Stacked Chart',
+   'filename_suffix': 'LA_Stacked',
+   'NumOfMaps': 4,
+   'shortLabelCSV': 'attributes/LTDB_ShortLabel.csv',
+   'variables': ['p_nonhisp_white_persons', 'p_nonhisp_black_persons',
+                 'p_hispanic_persons', 'p_asian_persons',
+                 'p_employed_manufacturing', 'p_poverty_rate',
+                 'p_foreign_born_pop', 'p_persons_under_18', 'p_persons_over_60',
+                 'p_edu_college_greater', 'p_unemployment_rate',
+                 'p_employed_professional', 'p_vacant_housing_units',
+                 'p_owner_occupied_units', 'p_housing_units_multiunit_structures',
+                 'median_home_value', 'p_structures_30_old',
+                 'p_household_recent_move'],
+   'SortLayers': 'temporal',
+   'InitialLayers': ['1980_% nonhisp white persons',
+                     '1990_% nonhisp white persons',
+                     '2000_% nonhisp white persons',
+                     '2010_% nonhisp white persons'],
+   'Map_width': '350px',
+   'Map_height': '350px',
+   'Stacked_Chart': True}
+</pre>
+      </td>
+    </tr>
+  </table>
+</div>
 <script>function myFunction6() {  var copyText = document.getElementById("myInput6");  copyText.select();  copyText.setSelectionRange(0, 99999);  navigator.clipboard.writeText(copyText.value);  swal("Copied!","The URL has been copied to the clipboard. Paste it to the browser to see your visualizations.");};document.querySelectorAll(".utcToLocal").forEach(  function (i) {    const options = {hour12: false, hour:"2-digit", minute:"2-digit", timeZoneName: "short", year: "numeric", month: "numeric", day: "numeric"};    i.innerHTML = new Date(i.innerText).toLocaleString("en-US",options);  });</script>
 
 <div style="margin:10px; float:left; border: 1px solid #99CCFF; border-radius: 5px;">
   <table>
     <tr>
       <td>
-      <span style="color:#CD5C5C;"><strong>7. ACM_LA_Scatter</strong></span>        <span style="display: inline-block; width:380px; text-align: right;"><span class="utcToLocal">2023-02-26T15:07:31+00:00</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;        <input type="text" value=https://cybergisx.cigi.illinois.edu/user/suhan2/view/CyberGIS-Vis/Quantitative_Data_Vis//ACM_LA_Scatter/index.html id="myInput7">        <button onclick="myFunction7()">Copy</button></span>
+      <span style="color:#CD5C5C;"><strong>7. ACM_LA_bar</strong></span>        <span style="display: inline-block; width:380px; text-align: right;"><span class="utcToLocal">2023-09-09T13:09:10+00:00</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;        <input type="text" value=F:\Github\CyberGIS-Vis\Quantitative_Data_Vis/ACM_LA_bar/index.html id="myInput7">        <button onclick="myFunction7()">Copy</button></span>
+      </td>
+    </tr>
+    <tr>
+      <td>
+<pre>
+
+  {'title': 'Adaptive Choropleth Mapper with Top 10 Bar Chart',
+   'filename_suffix': 'LA_bar',
+   'NumOfMaps': 3,
+   'shortLabelCSV': 'attributes/LTDB_ShortLabel.csv',
+   'variables': ['p_other_language', 'p_female_headed_families',
+                 'per_capita_income'],
+   'Top10_Chart': True}
+</pre>
+      </td>
+    </tr>
+  </table>
+</div>
+<script>function myFunction7() {  var copyText = document.getElementById("myInput7");  copyText.select();  copyText.setSelectionRange(0, 99999);  navigator.clipboard.writeText(copyText.value);  swal("Copied!","The URL has been copied to the clipboard. Paste it to the browser to see your visualizations.");};document.querySelectorAll(".utcToLocal").forEach(  function (i) {    const options = {hour12: false, hour:"2-digit", minute:"2-digit", timeZoneName: "short", year: "numeric", month: "numeric", day: "numeric"};    i.innerHTML = new Date(i.innerText).toLocaleString("en-US",options);  });</script>
+
+<div style="margin:10px; float:left; border: 1px solid #99CCFF; border-radius: 5px;">
+  <table>
+    <tr>
+      <td>
+      <span style="color:#CD5C5C;"><strong>8. ACM_LA_Scatter</strong></span>        <span style="display: inline-block; width:380px; text-align: right;"><span class="utcToLocal">2023-09-09T13:09:17+00:00</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;        <input type="text" value=F:\Github\CyberGIS-Vis\Quantitative_Data_Vis/ACM_LA_Scatter/index.html id="myInput8">        <button onclick="myFunction8()">Copy</button></span>
       </td>
     </tr>
     <tr>
@@ -233,13 +278,13 @@
     </tr>
   </table>
 </div>
-<script>function myFunction7() {  var copyText = document.getElementById("myInput7");  copyText.select();  copyText.setSelectionRange(0, 99999);  navigator.clipboard.writeText(copyText.value);  swal("Copied!","The URL has been copied to the clipboard. Paste it to the browser to see your visualizations.");};document.querySelectorAll(".utcToLocal").forEach(  function (i) {    const options = {hour12: false, hour:"2-digit", minute:"2-digit", timeZoneName: "short", year: "numeric", month: "numeric", day: "numeric"};    i.innerHTML = new Date(i.innerText).toLocaleString("en-US",options);  });</script>
+<script>function myFunction8() {  var copyText = document.getElementById("myInput8");  copyText.select();  copyText.setSelectionRange(0, 99999);  navigator.clipboard.writeText(copyText.value);  swal("Copied!","The URL has been copied to the clipboard. Paste it to the browser to see your visualizations.");};document.querySelectorAll(".utcToLocal").forEach(  function (i) {    const options = {hour12: false, hour:"2-digit", minute:"2-digit", timeZoneName: "short", year: "numeric", month: "numeric", day: "numeric"};    i.innerHTML = new Date(i.innerText).toLocaleString("en-US",options);  });</script>
 
 <div style="margin:10px; float:left; border: 1px solid #99CCFF; border-radius: 5px;">
   <table>
     <tr>
       <td>
-      <span style="color:#CD5C5C;"><strong>8. ACM_LA_Correlogram</strong></span>        <span style="display: inline-block; width:380px; text-align: right;"><span class="utcToLocal">2023-02-26T15:07:38+00:00</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;        <input type="text" value=https://cybergisx.cigi.illinois.edu/user/suhan2/view/CyberGIS-Vis/Quantitative_Data_Vis//ACM_LA_Correlogram/index.html id="myInput8">        <button onclick="myFunction8()">Copy</button></span>
+      <span style="color:#CD5C5C;"><strong>9. ACM_LA_Correlogram</strong></span>        <span style="display: inline-block; width:380px; text-align: right;"><span class="utcToLocal">2023-09-09T13:09:23+00:00</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;        <input type="text" value=F:\Github\CyberGIS-Vis\Quantitative_Data_Vis/ACM_LA_Correlogram/index.html id="myInput9">        <button onclick="myFunction9()">Copy</button></span>
       </td>
     </tr>
     <tr>
@@ -266,13 +311,13 @@
     </tr>
   </table>
 </div>
-<script>function myFunction8() {  var copyText = document.getElementById("myInput8");  copyText.select();  copyText.setSelectionRange(0, 99999);  navigator.clipboard.writeText(copyText.value);  swal("Copied!","The URL has been copied to the clipboard. Paste it to the browser to see your visualizations.");};document.querySelectorAll(".utcToLocal").forEach(  function (i) {    const options = {hour12: false, hour:"2-digit", minute:"2-digit", timeZoneName: "short", year: "numeric", month: "numeric", day: "numeric"};    i.innerHTML = new Date(i.innerText).toLocaleString("en-US",options);  });</script>
+<script>function myFunction9() {  var copyText = document.getElementById("myInput9");  copyText.select();  copyText.setSelectionRange(0, 99999);  navigator.clipboard.writeText(copyText.value);  swal("Copied!","The URL has been copied to the clipboard. Paste it to the browser to see your visualizations.");};document.querySelectorAll(".utcToLocal").forEach(  function (i) {    const options = {hour12: false, hour:"2-digit", minute:"2-digit", timeZoneName: "short", year: "numeric", month: "numeric", day: "numeric"};    i.innerHTML = new Date(i.innerText).toLocaleString("en-US",options);  });</script>
 
 <div style="margin:10px; float:left; border: 1px solid #99CCFF; border-radius: 5px;">
   <table>
     <tr>
       <td>
-      <span style="color:#CD5C5C;"><strong>9. ACM_Census_PCP</strong></span>        <span style="display: inline-block; width:380px; text-align: right;"><span class="utcToLocal">2023-02-26T15:07:46+00:00</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;        <input type="text" value=https://cybergisx.cigi.illinois.edu/user/suhan2/view/CyberGIS-Vis/Quantitative_Data_Vis//ACM_Census_PCP/index.html id="myInput9">        <button onclick="myFunction9()">Copy</button></span>
+      <span style="color:#CD5C5C;"><strong>10. ACM_Census_PCP</strong></span>        <span style="display: inline-block; width:380px; text-align: right;"><span class="utcToLocal">2023-09-09T13:09:29+00:00</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;        <input type="text" value=F:\Github\CyberGIS-Vis\Quantitative_Data_Vis/ACM_Census_PCP/index.html id="myInput10">        <button onclick="myFunction10()">Copy</button></span>
       </td>
     </tr>
     <tr>
@@ -309,64 +354,13 @@
     </tr>
   </table>
 </div>
-<script>function myFunction9() {  var copyText = document.getElementById("myInput9");  copyText.select();  copyText.setSelectionRange(0, 99999);  navigator.clipboard.writeText(copyText.value);  swal("Copied!","The URL has been copied to the clipboard. Paste it to the browser to see your visualizations.");};document.querySelectorAll(".utcToLocal").forEach(  function (i) {    const options = {hour12: false, hour:"2-digit", minute:"2-digit", timeZoneName: "short", year: "numeric", month: "numeric", day: "numeric"};    i.innerHTML = new Date(i.innerText).toLocaleString("en-US",options);  });</script>
-
-<div style="margin:10px; float:left; border: 1px solid #99CCFF; border-radius: 5px;">
-  <table>
-    <tr>
-      <td>
-      <span style="color:#CD5C5C;"><strong>10. ACM_LA_Stacked</strong></span>        <span style="display: inline-block; width:380px; text-align: right;"><span class="utcToLocal">2023-02-26T15:07:51+00:00</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;        <input type="text" value=https://cybergisx.cigi.illinois.edu/user/suhan2/view/CyberGIS-Vis/Quantitative_Data_Vis//ACM_LA_Stacked/index.html id="myInput10">        <button onclick="myFunction10()">Copy</button></span>
-      </td>
-    </tr>
-    <tr>
-      <td>
-<pre>
-
-  {'title': 'Adaptive Choropleth Mapper with Stacked Chart',
-   'filename_suffix': 'LA_Stacked',
-   'NumOfMaps': 4,
-   'shortLabelCSV': 'attributes/LTDB_ShortLabel.csv',
-   'variables': ['p_nonhisp_white_persons'],
-   'Map_width': '350px',
-   'Map_height': '350px',
-   'Stacked_Chart': True}
-</pre>
-      </td>
-    </tr>
-  </table>
-</div>
 <script>function myFunction10() {  var copyText = document.getElementById("myInput10");  copyText.select();  copyText.setSelectionRange(0, 99999);  navigator.clipboard.writeText(copyText.value);  swal("Copied!","The URL has been copied to the clipboard. Paste it to the browser to see your visualizations.");};document.querySelectorAll(".utcToLocal").forEach(  function (i) {    const options = {hour12: false, hour:"2-digit", minute:"2-digit", timeZoneName: "short", year: "numeric", month: "numeric", day: "numeric"};    i.innerHTML = new Date(i.innerText).toLocaleString("en-US",options);  });</script>
 
 <div style="margin:10px; float:left; border: 1px solid #99CCFF; border-radius: 5px;">
   <table>
     <tr>
       <td>
-      <span style="color:#CD5C5C;"><strong>11. ACM_LA_bar</strong></span>        <span style="display: inline-block; width:380px; text-align: right;"><span class="utcToLocal">2023-02-26T15:07:58+00:00</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;        <input type="text" value=https://cybergisx.cigi.illinois.edu/user/suhan2/view/CyberGIS-Vis/Quantitative_Data_Vis//ACM_LA_bar/index.html id="myInput11">        <button onclick="myFunction11()">Copy</button></span>
-      </td>
-    </tr>
-    <tr>
-      <td>
-<pre>
-
-  {'title': 'Adaptive Choropleth Mapper with Top 10 Bar Chart',
-   'filename_suffix': 'LA_bar',
-   'NumOfMaps': 3,
-   'shortLabelCSV': 'attributes/LTDB_ShortLabel.csv',
-   'variables': ['p_other_language', 'p_female_headed_families',
-                 'per_capita_income'],
-   'Top10_Chart': True}
-</pre>
-      </td>
-    </tr>
-  </table>
-</div>
-<script>function myFunction11() {  var copyText = document.getElementById("myInput11");  copyText.select();  copyText.setSelectionRange(0, 99999);  navigator.clipboard.writeText(copyText.value);  swal("Copied!","The URL has been copied to the clipboard. Paste it to the browser to see your visualizations.");};document.querySelectorAll(".utcToLocal").forEach(  function (i) {    const options = {hour12: false, hour:"2-digit", minute:"2-digit", timeZoneName: "short", year: "numeric", month: "numeric", day: "numeric"};    i.innerHTML = new Date(i.innerText).toLocaleString("en-US",options);  });</script>
-
-<div style="margin:10px; float:left; border: 1px solid #99CCFF; border-radius: 5px;">
-  <table>
-    <tr>
-      <td>
-      <span style="color:#CD5C5C;"><strong>12. ACM_COVID_MLC</strong></span>        <span style="display: inline-block; width:380px; text-align: right;"><span class="utcToLocal">2023-02-26T15:08:47+00:00</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;        <input type="text" value=https://cybergisx.cigi.illinois.edu/user/suhan2/view/CyberGIS-Vis/Quantitative_Data_Vis//ACM_COVID_MLC/index.html id="myInput12">        <button onclick="myFunction12()">Copy</button></span>
+      <span style="color:#CD5C5C;"><strong>11. ACM_COVID_MLC</strong></span>        <span style="display: inline-block; width:380px; text-align: right;"><span class="utcToLocal">2023-09-09T13:10:28+00:00</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;        <input type="text" value=F:\Github\CyberGIS-Vis\Quantitative_Data_Vis/ACM_COVID_MLC/index.html id="myInput11">        <button onclick="myFunction11()">Copy</button></span>
       </td>
     </tr>
     <tr>
@@ -399,13 +393,13 @@
     </tr>
   </table>
 </div>
-<script>function myFunction12() {  var copyText = document.getElementById("myInput12");  copyText.select();  copyText.setSelectionRange(0, 99999);  navigator.clipboard.writeText(copyText.value);  swal("Copied!","The URL has been copied to the clipboard. Paste it to the browser to see your visualizations.");};document.querySelectorAll(".utcToLocal").forEach(  function (i) {    const options = {hour12: false, hour:"2-digit", minute:"2-digit", timeZoneName: "short", year: "numeric", month: "numeric", day: "numeric"};    i.innerHTML = new Date(i.innerText).toLocaleString("en-US",options);  });</script>
+<script>function myFunction11() {  var copyText = document.getElementById("myInput11");  copyText.select();  copyText.setSelectionRange(0, 99999);  navigator.clipboard.writeText(copyText.value);  swal("Copied!","The URL has been copied to the clipboard. Paste it to the browser to see your visualizations.");};document.querySelectorAll(".utcToLocal").forEach(  function (i) {    const options = {hour12: false, hour:"2-digit", minute:"2-digit", timeZoneName: "short", year: "numeric", month: "numeric", day: "numeric"};    i.innerHTML = new Date(i.innerText).toLocaleString("en-US",options);  });</script>
 
 <div style="margin:10px; float:left; border: 1px solid #99CCFF; border-radius: 5px;">
   <table>
     <tr>
       <td>
-      <span style="color:#CD5C5C;"><strong>13. ACM_COVID_CLC</strong></span>        <span style="display: inline-block; width:380px; text-align: right;"><span class="utcToLocal">2023-02-26T15:09:31+00:00</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;        <input type="text" value=https://cybergisx.cigi.illinois.edu/user/suhan2/view/CyberGIS-Vis/Quantitative_Data_Vis//ACM_COVID_CLC/index.html id="myInput13">        <button onclick="myFunction13()">Copy</button></span>
+      <span style="color:#CD5C5C;"><strong>12. ACM_COVID_CLC</strong></span>        <span style="display: inline-block; width:380px; text-align: right;"><span class="utcToLocal">2023-09-09T13:11:22+00:00</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;        <input type="text" value=F:\Github\CyberGIS-Vis\Quantitative_Data_Vis/ACM_COVID_CLC/index.html id="myInput12">        <button onclick="myFunction12()">Copy</button></span>
       </td>
     </tr>
     <tr>
@@ -432,13 +426,13 @@
     </tr>
   </table>
 </div>
-<script>function myFunction13() {  var copyText = document.getElementById("myInput13");  copyText.select();  copyText.setSelectionRange(0, 99999);  navigator.clipboard.writeText(copyText.value);  swal("Copied!","The URL has been copied to the clipboard. Paste it to the browser to see your visualizations.");};document.querySelectorAll(".utcToLocal").forEach(  function (i) {    const options = {hour12: false, hour:"2-digit", minute:"2-digit", timeZoneName: "short", year: "numeric", month: "numeric", day: "numeric"};    i.innerHTML = new Date(i.innerText).toLocaleString("en-US",options);  });</script>
+<script>function myFunction12() {  var copyText = document.getElementById("myInput12");  copyText.select();  copyText.setSelectionRange(0, 99999);  navigator.clipboard.writeText(copyText.value);  swal("Copied!","The URL has been copied to the clipboard. Paste it to the browser to see your visualizations.");};document.querySelectorAll(".utcToLocal").forEach(  function (i) {    const options = {hour12: false, hour:"2-digit", minute:"2-digit", timeZoneName: "short", year: "numeric", month: "numeric", day: "numeric"};    i.innerHTML = new Date(i.innerText).toLocaleString("en-US",options);  });</script>
 
 <div style="margin:10px; float:left; border: 1px solid #99CCFF; border-radius: 5px;">
   <table>
     <tr>
       <td>
-      <span style="color:#CD5C5C;"><strong>14. ACM_HIV_PCP</strong></span>        <span style="display: inline-block; width:380px; text-align: right;"><span class="utcToLocal">2023-02-26T15:09:42+00:00</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;        <input type="text" value=https://cybergisx.cigi.illinois.edu/user/suhan2/view/CyberGIS-Vis/Quantitative_Data_Vis//ACM_HIV_PCP/index.html id="myInput14">        <button onclick="myFunction14()">Copy</button></span>
+      <span style="color:#CD5C5C;"><strong>13. ACM_HIV_PCP</strong></span>        <span style="display: inline-block; width:380px; text-align: right;"><span class="utcToLocal">2023-09-09T13:11:31+00:00</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;        <input type="text" value=F:\Github\CyberGIS-Vis\Quantitative_Data_Vis/ACM_HIV_PCP/index.html id="myInput13">        <button onclick="myFunction13()">Copy</button></span>
       </td>
     </tr>
     <tr>
@@ -456,6 +450,45 @@
    'Top10_Chart': True,
    'Parallel_Coordinates_Plot': True,
    'NumOfPCP': 7}
+</pre>
+      </td>
+    </tr>
+  </table>
+</div>
+<script>function myFunction13() {  var copyText = document.getElementById("myInput13");  copyText.select();  copyText.setSelectionRange(0, 99999);  navigator.clipboard.writeText(copyText.value);  swal("Copied!","The URL has been copied to the clipboard. Paste it to the browser to see your visualizations.");};document.querySelectorAll(".utcToLocal").forEach(  function (i) {    const options = {hour12: false, hour:"2-digit", minute:"2-digit", timeZoneName: "short", year: "numeric", month: "numeric", day: "numeric"};    i.innerHTML = new Date(i.innerText).toLocaleString("en-US",options);  });</script>
+
+<div style="margin:10px; float:left; border: 1px solid #99CCFF; border-radius: 5px;">
+  <table>
+    <tr>
+      <td>
+      <span style="color:#CD5C5C;"><strong>14. ACM_LA</strong></span>        <span style="display: inline-block; width:380px; text-align: right;"><span class="utcToLocal">2023-09-11T16:55:00+00:00</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;        <input type="text" value=F:\Github\CyberGIS-Vis\Quantitative_Data_Vis/ACM_LA/index.html id="myInput14">        <button onclick="myFunction14()">Copy</button></span>
+      </td>
+    </tr>
+    <tr>
+      <td>
+<pre>
+
+  {'title': 'Adaptive Choropleth Mapper with Stacked Chart',
+   'filename_suffix': 'LA',
+   'shortLabelCSV': 'attributes/LTDB_ShortLabel.csv',
+   'variables': ['p_nonhisp_white_persons', 'p_nonhisp_black_persons',
+                 'p_hispanic_persons', 'p_asian_persons',
+                 'p_employed_manufacturing', 'p_poverty_rate',
+                 'p_foreign_born_pop', 'p_persons_under_18', 'p_persons_over_60',
+                 'p_edu_college_greater', 'p_unemployment_rate',
+                 'p_employed_professional', 'p_vacant_housing_units',
+                 'p_owner_occupied_units', 'p_housing_units_multiunit_structures',
+                 'median_home_value', 'p_structures_30_old',
+                 'p_household_recent_move'],
+   'NumOfMaps': 4,
+   'SortLayers': 'temporal',
+   'InitialLayers': ['1980_% nonhisp white persons',
+                     '1990_% nonhisp white persons',
+                     '2000_% nonhisp white persons',
+                     '2010_% nonhisp white persons'],
+   'Map_width': '350px',
+   'Map_height': '350px',
+   'Stacked_Chart': False}
 </pre>
       </td>
     </tr>

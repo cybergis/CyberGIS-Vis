@@ -1,0 +1,26 @@
+2023-04-02 23:18:31 ACM_COVID_MLC_SD
+
+  {'title': 'Visualizing the Impact of Covid-19: Temporal Trends in Crude and '
+            'Vaccination Rates by Zip Code in San Diego',
+   'Subject': 'Tracking Covid-19 Confirmed and Vaccination Rates over Time in '
+              "San Diego's Selected Zip Codes",
+   'filename_suffix': 'COVID_MLC_SD',
+   'variables': ['Confirmed_Cases_per_10k_pop', 'vaccinated_per_10k_pop',
+                 'Confirmed_total_per_10k_pop', 'vaccinated_total_per_10k_pop'],
+   'NumOfMaps': 2,
+   'SortLayers': 'temporal',
+   'InitialLayers': ['2020-04-01_Confirmed_Cases_per_10k_pop',
+                     '2020-12-27_Confirmed_Cases_per_10k_pop'],
+   'Initial_map_center': [33.01, -116.77],
+   'Initial_map_zoom_level': 9,
+   'Map_width': '550px',
+   'Map_height': '420px',
+   'Top10_Chart': True,
+   'Multiple_Line_Chart': True,
+   'NumOfMLC': 4,
+   'titlesOfMLC': ['1. COVID-19 Crude Rate (Confirmed Cases per 10k population)',
+                   '2. Vaccinated Rate (Vaccinated People per 10k population)',
+                   '3. Cumulative Confirmed Rate',
+                   '4. Cumulative Vaccinated Rate (Vaccinated People per 10k '
+                   'population)'],
+   'DefaultRegion_MLC': '92109'}

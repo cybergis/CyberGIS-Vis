@@ -5,6 +5,10 @@ var Subject = "";
 var NumOfMaps = 4;
 
 
+// Define the order to show the drop-down list fo the Layer. "compare" or "temporal" 
+var SortLayers = "temporal";
+
+
 // Define the number of variable that you want to visaulize Parallel Coordinates Plot. 
 var NumOfPCP = 0;
 //Define variables that you want to visualize at PCP.
@@ -30,14 +34,14 @@ var titlesOfMLC = [];
 // [["begin_X_value","end_X_value","color"], ["begin_X_value","end_X_value","color"]…] 
 var DefaultRegion_MLC = ""; //Set Default region
 var HighlightMLC = []; //Set  highlighted ranges for x value
-
+var MultipleLineChart_width = "";
 
 //Define the geographic id or name to be display on the top-right corner of the map
 //var NameDisplayed = "geoname";
 
 // Define variables that you want to visualize at initial map views. For example, 
 // enter five variables when the NumOfMaps is equal to 5.
-var InitialLayers = [];
+var InitialLayers = ["1980_% nonhisp white persons", "1990_% nonhisp white persons", "2000_% nonhisp white persons", "2010_% nonhisp white persons"];
 
 /*Define initial map center and zoom level below. Map Extent and Zoom level will be automatically adjusted when you do not define map center and zoom level. Double-slashes  in the front need to be deleted to make them effective*/
 var Initial_map_center = null;  

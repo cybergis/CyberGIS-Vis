@@ -49,6 +49,8 @@ CyberGIS-Vis integrates cutting-edge cyberGIS and online visualization capabilit
 ```
 4. Comment and uncomment out like below. These are related to create URLs in the Jupyter Server. 
 ```bash
+	#from jupyter_server import serverapp
+
 	#jupyter_envs = {k: v for k, v in os.environ.items() if k.startswith('JUPYTER')}
 	#temp_server = jupyter_envs['JUPYTER_INSTANCE_URL']
 	

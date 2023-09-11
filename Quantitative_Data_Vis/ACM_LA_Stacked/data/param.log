@@ -1,10 +1,23 @@
-2023-02-26 15:07:51 ACM_LA_Stacked
+2023-09-09 13:09:04 ACM_LA_Stacked
 
   {'title': 'Adaptive Choropleth Mapper with Stacked Chart',
    'filename_suffix': 'LA_Stacked',
    'NumOfMaps': 4,
    'shortLabelCSV': 'attributes/LTDB_ShortLabel.csv',
-   'variables': ['p_nonhisp_white_persons'],
+   'variables': ['p_nonhisp_white_persons', 'p_nonhisp_black_persons',
+                 'p_hispanic_persons', 'p_asian_persons',
+                 'p_employed_manufacturing', 'p_poverty_rate',
+                 'p_foreign_born_pop', 'p_persons_under_18', 'p_persons_over_60',
+                 'p_edu_college_greater', 'p_unemployment_rate',
+                 'p_employed_professional', 'p_vacant_housing_units',
+                 'p_owner_occupied_units', 'p_housing_units_multiunit_structures',
+                 'median_home_value', 'p_structures_30_old',
+                 'p_household_recent_move'],
+   'SortLayers': 'temporal',
+   'InitialLayers': ['1980_% nonhisp white persons',
+                     '1990_% nonhisp white persons',
+                     '2000_% nonhisp white persons',
+                     '2010_% nonhisp white persons'],
    'Map_width': '350px',
    'Map_height': '350px',
    'Stacked_Chart': True}

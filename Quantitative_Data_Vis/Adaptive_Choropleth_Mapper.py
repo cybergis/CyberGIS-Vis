@@ -15,9 +15,8 @@ import pprint
 from sklearn.preprocessing import minmax_scale
 import numpy as np
 from scipy import stats
+#This is for CyberGISX. Uncomment a command line below when you run in CyberGIX Environmen
 from jupyter_server import serverapp
-from IPython.core.display import display, HTML
-from IPython.display import Javascript
 import geopandas as gpd
 
 ## Retrieve Server URL that Jupyter is running
@@ -34,8 +33,8 @@ prefix_cwd = "/home/jovyan/work"
 cwd = cwd.replace(prefix_cwd, "")
 
 # This is for Jupyter notebbok installed in your PC
-#local_dir1 = cwd
-#local_dir2 = cwd  
+local_dir1 = cwd
+local_dir2 = cwd  
 
 #This is for CyberGISX. Uncomment two command lines below when you run in CyberGIX Environment
 local_dir1 = servers1 + cwd + '/'
@@ -779,6 +778,8 @@ if __name__ == '__main__':
         ],
         'Top10_Chart': True,  #Comment out if you do not want to visualize this chart      
     }
+    
+    '''
     Covid_Visits = pd.read_csv("attributes/Covid_Visits_old.csv", dtype={'geoid':str})
     Covid_Visits = Covid_Visits.rename(columns={'geoid': 'geoid'})
      
@@ -811,7 +812,47 @@ if __name__ == '__main__':
         'HighlightMLC': [["2020-02-16", "2020-04-05", "#fdff32"],["2020-10-04", "2020-12-27", "#fdff32"]],
         'DefaultRegion_MLC':"35620" 
     }
-
+    '''
+    
+    Covid = pd.read_csv("attributes/SD_Confirmed_Vaccine_Final_v5.csv", dtype={'Zipcode':str})
+    Covid = Covid.astype({'Zipcode':'string'})
+    Covid = Covid.rename(columns={'Zipcode': 'geoid','variable': 'period'})
+    
+    shapefile_SD = gpd.read_file("shp/San_Diego_Zip/SanDiego_Zip_COVID.shp", dtype={'zipcode':str, 'community':str})
+    shapefile_SD = shapefile_SD.rename(columns={'zipcode': 'geoid', 'community':'name'})
+    
+    param_MLC_COVID_San_Diego = {
+        'title': "Visualizing the Impact of Covid-19: Temporal Trends in Crude and Vaccination Rates by Zip Code in San Diego",
+        'Subject': "Tracking Covid-19 Confirmed and Vaccination Rates over Time in San Diego's Selected Zip Codes",
+        'filename_suffix': "COVID_MLC_SD",  # max 30 character      
+        'inputCSV': Covid,   
+        'shapefile': shapefile_SD, 
+        'periods': "All",
+        'variables': [         #enter variable names of the column you entered above.
+                "Confirmed_Cases_per_10k_pop", 
+                "vaccinated_per_10k_pop",    
+                "Confirmed_total_per_10k_pop",        
+                "vaccinated_total_per_10k_pop",
+            ],
+        'NumOfMaps':2,
+        'SortLayers': "temporal",  #Enter “compare” or “temporal”.  compare mode is for comparing variables at a specific point of time.
+                                                    # temporal mode is for displaying spatiotemporal patterns of the same variable using multiple maps.            
+        
+        'InitialLayers':["2020-04-01_Confirmed_Cases_per_10k_pop" , "2020-12-27_Confirmed_Cases_per_10k_pop"],
+        'Initial_map_center':[33.01, -116.77],
+        'Initial_map_zoom_level':9,  
+        'Map_width':"550px",
+        'Map_height':"420px", 
+        'Top10_Chart': True,     
+        'Multiple_Line_Chart': True,
+        'NumOfMLC':4,
+        'titlesOfMLC':[],
+        'titlesOfMLC':["1. COVID-19 Crude Rate (Confirmed Cases per 10k population)", "2. Vaccinated Rate (Vaccinated People per 10k population)", "3. Cumulative Confirmed Rate", "4. Cumulative Vaccinated Rate (Vaccinated People per 10k population)"],
+        'DefaultRegion_MLC':"92109",
+        #'MultipleLineChart_width':"300px"        
+    }
+    
+    '''
     param_CLC_COVID = {
         'title': "Comparison of COVID-19 Confirmed Rate between Metropolitan Statistical Areas, USA",
         'Subject': "Temporal Patterns",
@@ -833,6 +874,7 @@ if __name__ == '__main__':
         'HighlightCLC': [["2020-02-16", "2020-04-05", "#fdff32"],["2020-10-04", "2020-12-27", "#fdff32"]],
         'DefaultRegion_CLC': ["35620", "16980"] 
     }
+    '''
     
     # param_MLC, param_CLC, param_PCP, 
     # param_MLC_HIV, param_CLC_hiv, 
@@ -840,8 +882,11 @@ if __name__ == '__main__':
     
     #Adaptive_Choropleth_Mapper_viz(param_Scatter)
     
-    Adaptive_Choropleth_Mapper_viz(param_MLC_HIV)
+    #Adaptive_Choropleth_Mapper_viz(param_MLC_HIV)
     #Adaptive_Choropleth_Mapper_viz(param_CLC_hiv)
+    
+    Adaptive_Choropleth_Mapper_viz(param_MLC_COVID_San_Diego)
+    Adaptive_Choropleth_Mapper_log(param_MLC_COVID_San_Diego)
     
     #Adaptive_Choropleth_Mapper_viz(param_MLC_COVID)
     #Adaptive_Choropleth_Mapper_log(param_MLC_COVID)

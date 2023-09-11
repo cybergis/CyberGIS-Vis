@@ -136,7 +136,7 @@ var CA = null;
 var app={
 	subject: "",								 // subject of this visualize
 	adjustBound: 0.25,							 // ratio to reduce rectangle size of intial bounds
-	maxZoom: 13,
+	maxZoom: 15,
 	minZoom: 2,	
 	m: 2,                                        // number of maps in a web page shown
 	diff: 1,									 // difference error                                        // number of maps in a web page shown
@@ -183,6 +183,8 @@ var app={
 	values: [],                                  // global area for the values of title index [L001, L002, ....]
 	labdic: {},                                  // key: values[n], value: titles[n]
 	titdic: {},                                  // key: titles[n], value: values[n]
+	titles_default: [],                          // default order of options in the drop-down list of the Layer
+	titles_temporal: [],						 // temporal order of options in the drop-down list of the Layer
 	inputType: '',                               // input type from web page (ex 'Link button', :Set Globally button' ... )
 	receivedGeoJSON: null,                       // global area for full GeoJSON data from the server
 	selectedGeoJSON: null,                       // global area for selected GeoJSON data from full GeoJSON data
@@ -196,6 +198,7 @@ var app={
 	sPointsParcoords: [],                        // selected points in the parallel coordinates plots
 	sPointsMaps: [],                             // selected points in all maps using lasso select
 	isLassoPushed: false,                        // states of lasso button in all maps
+	sortLayers: 'compare',						 // 'compare' or 'temporal' -> order to show the drop-down list
 	maps: {map: null, bounds: null, geojson: null, bingGeocoder: null, lasso: null, info: null, legend: null, layers: null, layerscontrol:null, lastHighlightedTractid: null, classification: null, item: null, items: null, zIntervals: null, mIntervals: null, nPolygonbyClass: [0,0,0,0,0,0,0,0,0,0,0]},
 	map0: {map: null, bounds: null, geojson: null, bingGeocoder: null, lasso: null, info: null, legend: null, layers: null, layerscontrol:null, lastHighlightedTractid: null, classification: null, item: null, items: null, zIntervals: null, mIntervals: null, nPolygonbyClass: []},
 	map1: {map: null, bounds: null, geojson: null, bingGeocoder: null, lasso: null, info: null, legend: null, layers: null, layerscontrol:null, lastHighlightedTractid: null, classification: null, item: null, items: null, zIntervals: null, mIntervals: null, nPolygonbyClass: []},
@@ -272,14 +275,39 @@ var COLOR_CLASS = {
 };
 
 
-	var mbAttr = '<font size = "1">Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, ' +
-			'Imagery © <a href="https://www.mapbox.com/">Mapbox</a></font>',
-		mbUrl = 'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw';
-
-
+	var cartodbAttr = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="https://carto.com/attribution">CARTO</a>';
+	var openAttr = '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>';
+	
+	var cartoURL = 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png';
+	var openURL = 'https://tile.openstreetmap.org/{z}/{x}/{y}.png'
 
 	var FakeBaseLayers = {
 	};	
+
+/*
+ *	create html source for drop-down list of the Layer
+ *	app.sortLayers      : 'compare' or 'temporal'
+ *	app.titles_default  : default order of options in the drop-down list of the Layer
+ *	app.titles_temporal : temporal order of options in the drop-down list of the Layer
+*/
+function get_dropdownoptions_Layer(html_layer, theLayer, theItem) {
+	
+	var titles = app.titles_default;
+	if (app.sortLayers == 'temporal') titles = app.titles_temporal;
+	
+	$.each(titles, function(gIdx, title) {
+		//if (gIdx < 1) return true;
+		if (gIdx < 1 && theLayer != title) return true;
+		var titleCode = app.titdic[title];
+		if (theLayer == title || theItem == titleCode) {
+			html_layer += '<option value="' + titleCode + '" class="line_none" selected>' + title + '</option>';
+		} else {
+			html_layer += '<option value="' + titleCode + '" class="line_none">' + title + '</option>';
+		}
+	});
+
+	return html_layer;
+}
 
 	
 function draw_basemap(mIDX) {
@@ -290,8 +318,8 @@ function draw_basemap(mIDX) {
 	
 	var selected_mapdiv = document.getElementById(mIDX).getElementsByClassName("map")[0];
 
-	var grayscale   = L.tileLayer(mbUrl, {id: 'mapbox/light-v9', tileSize: 512, zoomOffset: -1, attribution: mbAttr}),
-		streets  = L.tileLayer(mbUrl, {id: 'mapbox/streets-v11', tileSize: 512, zoomOffset: -1, attribution: mbAttr});
+	var grayscale   = L.tileLayer(cartoURL, {attribution: cartodbAttr});
+	var	streets  = L.tileLayer(openURL, {attribution: openAttr});
 	
 	var mapCenter = [37.09024, -95.712891];
 	var mapZoomLevel = 4;
@@ -325,6 +353,10 @@ function set_decoration_to_auto(mapN) {
 	}
 }
 
+/*
+	called by map0, map1, ...
+	called by Scatterchart 
+*/
 function draw_titlemap(mIDX, layer) {
 	//var html_layer = ' Map'+(mIDX.replace('map','')*1+1)+' &nbsp; &nbsp;Layer: <select name="ACSdata" class="ACSdataSelect" onChange="layer_change(\'' + mIDX + '\')">';
 	
@@ -332,14 +364,18 @@ function draw_titlemap(mIDX, layer) {
 		$("#"+mIDX+" .map_id").html('&nbsp;<b>Map'+(mIDX.replace('map','')*1+1)+'</b>');
 	
 	var html_layer = 'Layer: <select name="ACSdata" class="ACSdataSelect" onChange="layer_change(\'' + mIDX + '\')">';
-	$.each(app.titles, function(gIdx, title) {
-		if (gIdx < 1 && layer != title) return true;
-		if (title != layer) {
-			html_layer += '<option value="' + app.values[gIdx] + '" class="line_none">' + title + '</option>';
-		} else {
-			html_layer += '<option value="' + app.values[gIdx] + '" class="line_none" selected>' + title + '</option>';
-		}
-	});
+	//console.log(mIDX, layer, html_layer)
+	//$.each(app.titles, function(gIdx, title) {
+	//	if (gIdx < 1 && layer != title) return true;
+	//	var titleCode = app.titdic[title];
+	//	if (title != layer) {
+	//		html_layer += '<option value="' + app.values[gIdx] + '" class="line_none">' + title + '</option>';
+	//	} else {
+	//		html_layer += '<option value="' + app.values[gIdx] + '" class="line_none" selected>' + title + '</option>';
+	//	}
+	//});
+	//console.log(html_layer)
+	html_layer = get_dropdownoptions_Layer(html_layer, layer, null);
 	if (html_layer.length < 100) 
 	html_layer += '<option value="None">No Data</option>';
 	html_layer += '</select>'
@@ -556,25 +592,15 @@ function draw_titleTop10chart(mapN=null) {
 	}
 	console.log("selectedItem:", selectedItem)
 	var html_layer = '<b>TOP10 Regions of</b>: <select name="ACSdata" class="ACSdataSelect" onChange="layer_change(\'' + 'Top10Chart' + '\')">';
-	//html_layer += '<option value="' + app.values[0] + '" class="line_none">' + app.titles[0] + '</option>';
-	//for (var i=0; i<app.m; i++) {
-	//	var mapN = "map" + i;
-	//	var item  = $("#"+mapN+" select[name=ACSdata]").val();
-	//	var layer = $("#"+mapN+" select[name=ACSdata]").find("option:selected").text();
-	//	if (item != selectedItem) {
-	//		html_layer += '<option value="' + item + '" class="line_none">' + layer + '</option>';
+	//$.each(app.titles, function(gIdx, title) {
+	//	if (gIdx < 1) return true;
+	//	if (app.values[gIdx] != selectedItem) {
+	//		html_layer += '<option value="' + app.values[gIdx] + '" class="line_none">' + title + '</option>';
 	//	} else {
-	//		html_layer += '<option value="' + item + '" class="line_none" selected>' + layer + '</option>';
+	//		html_layer += '<option value="' + app.values[gIdx] + '" class="line_none" selected>' + title + '</option>';
 	//	}
-	//}
-	$.each(app.titles, function(gIdx, title) {
-		if (gIdx < 1) return true;
-		if (app.values[gIdx] != selectedItem) {
-			html_layer += '<option value="' + app.values[gIdx] + '" class="line_none">' + title + '</option>';
-		} else {
-			html_layer += '<option value="' + app.values[gIdx] + '" class="line_none" selected>' + title + '</option>';
-		}
-	});
+	//});
+	html_layer = get_dropdownoptions_Layer(html_layer, null, selectedItem);
 	if (html_layer.length < 100) 
 	html_layer += '<option value="None">No Data</option>';
 	html_layer += '</select>'
@@ -644,25 +670,15 @@ function draw_titlePCPchart(mapN=null) {
 	}
 	console.log("selectedItem:", selectedItem)
 	var html_layer = 'Layer: <select name="ACSdata" class="ACSdataSelect" onChange="layer_change(\'' + 'PCPchart' + '\')">';
-	//html_layer += '<option value="' + app.values[0] + '" class="line_none">' + app.titles[0] + '</option>';
-	//for (var i=0; i<app.m; i++) {
-	//	var mapN = "map" + i;
-	//	var item  = $("#"+mapN+" select[name=ACSdata]").val();
-	//	var layer = $("#"+mapN+" select[name=ACSdata]").find("option:selected").text();
-	//	if (item != selectedItem) {
-	//		html_layer += '<option value="' + item + '" class="line_none">' + layer + '</option>';
+	//$.each(app.titles, function(gIdx, title) {
+	//	if (gIdx < 1) return true;
+	//	if (app.values[gIdx] != selectedItem) {
+	//		html_layer += '<option value="' + app.values[gIdx] + '" class="line_none">' + title + '</option>';
 	//	} else {
-	//		html_layer += '<option value="' + item + '" class="line_none" selected>' + layer + '</option>';
+	//		html_layer += '<option value="' + app.values[gIdx] + '" class="line_none" selected>' + title + '</option>';
 	//	}
-	//}
-	$.each(app.titles, function(gIdx, title) {
-		if (gIdx < 1) return true;
-		if (app.values[gIdx] != selectedItem) {
-			html_layer += '<option value="' + app.values[gIdx] + '" class="line_none">' + title + '</option>';
-		} else {
-			html_layer += '<option value="' + app.values[gIdx] + '" class="line_none" selected>' + title + '</option>';
-		}
-	});
+	//});
+	html_layer = get_dropdownoptions_Layer(html_layer, null, selectedItem);
 	if (html_layer.length < 100) 
 	html_layer += '<option value="None">No Data</option>';
 	html_layer += '</select>'
@@ -790,7 +806,13 @@ function bound_error(map){
 				break;
 			case 13:
 				app.diff = 0.001
-				break;		
+				break;
+			case 14:
+				app.diff = 0.0005
+				break;
+			case 15:
+				app.diff = 0.0005
+				break;				
 		}
 	});
 	return app.diff
@@ -904,15 +926,16 @@ function draw_globalSelection() {
 	var html_layer = 'Layer: <select name="globalLayer" class="ACSdataSelect" style="color:red;">';
 	html_layer += '<option value="none" class="line_none">No Select</option>';
 	html_layer += '<option value="each" class="line_none">Default </option>';
-	var theLayer = "";
-	$.each(app.titles, function(gIdx, title) {
-		if (gIdx < 1) return true;
-		if (title != theLayer) {
-			html_layer += '<option value="' + app.values[gIdx] + '" class="line_none">' + title + '</option>';
-		} else {
-			html_layer += '<option value="' + app.values[gIdx] + '" class="line_none" selected>' + title + '</option>';
-		}
-	});
+	//var theLayer = "";
+	//$.each(app.titles, function(gIdx, title) {
+	//	if (gIdx < 1) return true;
+	//	if (title != theLayer) {
+	//		html_layer += '<option value="' + app.values[gIdx] + '" class="line_none">' + title + '</option>';
+	//	} else {
+	//		html_layer += '<option value="' + app.values[gIdx] + '" class="line_none" selected>' + title + '</option>';
+	//	}
+	//});
+	html_layer = get_dropdownoptions_Layer(html_layer, "", null);
 	if (html_layer.length < 100) 
 	html_layer += '<option value="None">No Data</option>';
 	html_layer += '</select>' 
@@ -1338,7 +1361,8 @@ function geostats_classification(classification, nClass, geojson, items) {
 		if (classification == 'arithmetic') ranges = serie.getClassArithmeticProgression(maxInterval);
 		if (classification == 'geometric')  ranges = serie.getClassGeometricProgression(maxInterval);
 		if (classification != 'quantile') {
-			intervals = ranges.slice(0, -1);
+			//intervals = ranges.slice(0, -1);
+			if (typeof(ranges) == "object") intervals = ranges.slice(0, -1);
 		} else {
 			intervals = [0, ranges[0]];								 // 0 is the special class for quantile
 			var r = 1;
@@ -1736,9 +1760,13 @@ function ACSdata_render(mIDX) {
 							//['<center><strong>Global</strong><font size="1"></br></font></center>'] : 
 							//['<center><strong>Local</strong><font size="1"></br></font></center>']; 
 			var classValue;
+			//console.log(intervals);
 			for (var i = 0; i < app.colorGradient1[zm].length; i++) {
-				if (i < intervals.length) classValue = intervals[i].toFixed(app.NumOfDecimalPlaces);
-				else                      classValue = "&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;";
+				//if (i < intervals.length) classValue = intervals[i].toFixed(app.NumOfDecimalPlaces);
+				//else                      classValue = "&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;";
+				if (i < intervals.length && intervals[i] !== null && intervals[i] !== undefined)
+					 classValue = intervals[i].toFixed(app.NumOfDecimalPlaces);
+				else classValue = "&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;";
 				labels.push('<i style="background:' + app.colorGradient1[zm][i] + '"></i> ' + classValue);
 			}
 			labels.push('<i style="background:' + getColor1(-9999) + '"></i> ' + 'No Data'+ '<br> ');    // last legend	
@@ -1955,7 +1983,23 @@ $( document ).ready(function() {
 		app.labdic[value] = {'shortName': app.titles[i].substr(5), 'fullName': app.titles[i]};
 		app.titdic[app.titles[i]] = value;
 	}
-	//console.log(app.titles, app.values, app.titdic)
+	app.titles_default = app.titles;
+	app.titles_temporal = app.titles.slice(1);
+	// "2020-03-31_Confirmed_Cases_per_10k_pop"
+	// "2020-03-31_vaccinated_per_10k_pop"
+	app.titles_temporal.sort(function(a, b) {
+		var titleA = a;
+		var titleB = b;
+		var pA = a.indexOf('_');
+		var pB = b.indexOf('_');
+		if (pA > 1) titleA = a.substring(pA+1) + a.substring(0, pA);
+		if (pB > 1) titleB = b.substring(pB+1) + b.substring(0, pB);
+		if (titleA < titleB) return -1;
+		if (titleA > titleB) return +1;
+		return 0;
+	});
+	app.titles_temporal = [app.titles[0]].concat(app.titles_temporal)
+	//console.log(app.titles, app.values, app.titdic, app.titles_default, app.titles_temporal)
 	var geokey = app.geokey;
 	
 	if (!('features' in GEO_JSON) || GEO_JSON.features.length < 1) {
@@ -2062,6 +2106,12 @@ $( document ).ready(function() {
 		if (NumOfMaps >= 1 && NumOfMaps <= 15) app.m = NumOfMaps;
 	}
 	if (app.titles.length <= app.m) app.m = app.titles.length - 1;								   // ???
+	
+	// set sortLayers to app.sortLayers
+	app.sortLayers = "compare";			// default
+	if (typeof SortLayers !== 'undefined' && typeof SortLayers === 'string') {
+		app.sortLayers = SortLayers;
+	}
 	
 	app.nPCPvariables = app.m;                                       // default same as app.m
 	if (typeof NumOfPCP !== 'undefined' && typeof NumOfPCP === 'number') {
@@ -2239,6 +2289,13 @@ $( document ).ready(function() {
 	if (typeof DefaultRegion_MLC !== 'undefined' && typeof DefaultRegion_MLC === 'string') {
 		app.DefaultRegion_MLC = DefaultRegion_MLC;
 	}
+	
+	if (typeof MultipleLineChart_width !== 'undefined' && typeof MultipleLineChart_width === 'string' && 
+	    MultipleLineChart_width.substring(MultipleLineChart_width.length-2) == 'px' && $.isNumeric(MultipleLineChart_width.replace('px',''))) {
+			app.MultipleLineChart_width = MultipleLineChart_width;
+			//alert(app.MultipleLineChart_width);
+	}
+	
     // set highlighted areas of CLC (Comparision Line Chart)						 // deep copy of array
 	if (typeof HighlightCLC !== 'undefined' && HighlightCLC instanceof Array) {
 		app.HighlightCLC = HighlightCLC;
@@ -3983,9 +4040,14 @@ function paintMultipleLineChart(zoomedData=[], {mapN="", lassoData="", lassoedMa
 	var geoIdName = app.sPointsMultipleLineChart[app.geokey] + "&nbsp;&nbsp;" + app.sPointsMultipleLineChart[app.geoname];
 	$("#MLCchart .map_layer").html('&nbsp;<b>'+geoIdName+'</b>');
 	
-	var MultipleLineChart_width = 1000;
-	if (app.sPointsMultipleLineChart[app.MLCvariables[0]]['key'].length > 20) MultipleLineChart_width = 1500;
-	if (app.sPointsMultipleLineChart[app.MLCvariables[0]]['key'].length > 100) MultipleLineChart_width = 2000;
+	var MultipleLineChart_width;
+	if (app.MultipleLineChart_width == null) {
+		if (app.sPointsMultipleLineChart[app.MLCvariables[0]]['key'].length <= 20) MultipleLineChart_width = 1000;
+		if (app.sPointsMultipleLineChart[app.MLCvariables[0]]['key'].length > 20) MultipleLineChart_width = 1300;
+		if (app.sPointsMultipleLineChart[app.MLCvariables[0]]['key'].length > 100) MultipleLineChart_width = 1600;
+	} else {
+		MultipleLineChart_width = app.MultipleLineChart_width;
+	}
 	$("#chart_MultipleLineChart").css("width", MultipleLineChart_width+'px');
 	
 	var nMultipleLineChart = app.titlesOfMLC.length;

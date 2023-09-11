@@ -251,10 +251,11 @@ var COLOR_CLASS = {
 	"Pink8"   : [ "#fde0dd", "#fcc5c0", "#fa9fb5", "#f768a1", "#dd3497", "#ae017e", "#7a0177", "#49006a"],
 	"Gray8"   : ["#cccccc", "#bfbfbf", "#b3b3b3", "#a6a6a6", "#999999", "#8c8c8c", "#808080", "#737373"],
 };
-	var mbAttr = 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, ' +
-			'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-	mbUrl = 'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw';
-
+	var cartodbAttr = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="https://carto.com/attribution">CARTO</a>';
+	var openAttr = '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>';
+	
+	var cartoURL = 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png';
+	var openURL = 'https://tile.openstreetmap.org/{z}/{x}/{y}.png'
 
 var FakeBaseLayers = {
 };
@@ -268,9 +269,9 @@ function draw_basemap(mIDX) {
 
 	var selected_mapdiv = document.getElementById(mIDX).getElementsByClassName("map")[0];
 
-	var grayscale   = L.tileLayer(mbUrl, {id: 'mapbox/light-v9', tileSize: 512, zoomOffset: -1, attribution: mbAttr}),
-		streets  = L.tileLayer(mbUrl, {id: 'mapbox/streets-v11', tileSize: 512, zoomOffset: -1, attribution: mbAttr});
-
+	var grayscale   = L.tileLayer(cartoURL, {attribution: cartodbAttr});
+	var	streets  = L.tileLayer(openURL, {attribution: openAttr});
+	
 	var mapCenter = [37.09024, -95.712891];
 	var mapZoomLevel = 4;
 	if (app.InitialMapCenter != null) mapCenter = app.InitialMapCenter;
@@ -1671,6 +1672,36 @@ function ACSdata_render(mIDX) {
 			};
 
 			app[mIDX].legend.addTo(map);
+		}else{
+			if (app[mIDX].legend != null) app[mIDX].legend.remove();
+			app[mIDX].legend = L.control({position: 'bottomright'});
+
+			app[mIDX].legend.onAdd = function (map) {
+				var div = L.DomUtil.create('div', 'info legend'),
+					//grades = zIntervals,
+					labels = [],
+					//labels = ['<font size="1" face="Arial Narrow">' + app.subjectName + '</font>'],
+					//labels = [''],
+					zClass, mClass;
+				var spaces = "&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;";
+				for (var i = 0; i < colorGradient.length; i++) {
+					//zClass = (i < zIntervals.length) ? zIntervals[i].toFixed(app.NumOfDecimalPlaces) : spaces;
+					//mClass = (i < mIntervals.length) ? mIntervals[i].toFixed(app.NumOfDecimalPlaces) : spaces;
+					zClass = (i < zIntervals.length) ? zIntervals[i] : spaces;
+					mClass = (i < mIntervals.length) ? mIntervals[i]: spaces;					
+					labels.push(
+						//'<font size="1" face="Arial Narrow"><i style="background:' + colorGradient[i] + '"><font></i> ' + mClass 
+						'<font size="1" face="Arial Narrow"><i style="background:' + colorGradient[i] + '"><font></i> ' + mClass 
+						 +((localInterval) ? '&nbsp; (' + zClass + ')' : '')	
+				);}
+				labels.push(                                         // last legend is always 'No Data'
+						'<i style="background:' + getColor1(-9999) + '"></i> ' +
+						'No Data');
+				div.innerHTML = labels.join('<br>');
+				return div;
+			};
+
+			app[mIDX].legend.addTo(map);	
 		}
 }	// end of ACSdata_render(mIDX)
 
