@@ -409,7 +409,7 @@ function draw_titlemap(mIDX, layer) {
 		globalHeadingRestore();
 		
 		var nowBounds = app[mIDX].map.getBounds();
-		if (!boundsEqual(app.selectedBounds, nowBounds, app[mapN].map)) {
+		if (!boundsEqual(app.selectedBounds, nowBounds, app[mIDX].map)) {
 			//console.log(getNow(), mIDX, 'mapN.map.getBounds() != app.selectedBounds', nowBounds, app.selectedBounds);
 			app.selectedBounds = nowBounds;
 			updateSelectedGeoJSON(mIDX);
