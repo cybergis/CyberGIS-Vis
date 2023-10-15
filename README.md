@@ -111,7 +111,7 @@ Images below show visualizations that you can create using CyberGIS-Vis. Click t
 			</li></ul> 	
 		</li>
         <img height=200px src="http://su-gis.iptime.org/CyberGIS-Vis/images/ACM_MLC.PNG" alt="ACM_MLC"/>
-		<li>Adaptive Choropleth Mapper with Comparison Linke Chart (CLC)
+		<li>Adaptive Choropleth Mapper with Comparison Line Chart (CLC)
 	        <ul><li> Click to see 
 			 <a href="http://su-gis.iptime.org/CyberGIS-Vis/videos/ACM_CLC.mp4"> Demo </a> 
 			</li></ul> 	
