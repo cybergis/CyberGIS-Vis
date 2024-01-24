@@ -77,62 +77,62 @@ Images below show visualizations that you can create using CyberGIS-Vis. Click t
 ###  Quntitative Data Visualization
 <ul>
         <li>Adaptive Choropleth Mapper (ACM)</li>
-        <ul><li><a href="http://su-gis.iptime.org/ACM">Click to see more information</a></li></ul>   
+        <ul><li><a href="https://su-gis.org/ACM">Click to see more information</a></li></ul>   
 		<li>Adaptive Choropleth Mapper with Stacked Chart
 	        <ul><li> The Stacked Chart visualizes the temporal change. Click to see 
-			 <a href="http://su-gis.iptime.org/CyberGIS-Vis/videos/VIZ_Stacked_Chart.mp4"> demo.</a>
+			 <a href="https://su-gis.org/CyberGIS-Vis/videos/VIZ_Stacked_Chart.mp4"> demo.</a>
 			</li></ul>    
        </li> 
-        <img height=100px src="http://su-gis.iptime.org/CyberGIS-Vis/images/ACM.PNG" alt="ACM"/>
+        <img height=100px src="https://su-gis.org/CyberGIS-Vis/images/ACM.PNG" alt="ACM"/>
 		<li>Adaptive Choropelth Mapper with Correlogram
 	        <ul><li> Click to see 
-			 <a href="http://su-gis.iptime.org/CyberGIS-Vis/videos/VIZ_Correlogram_Tutorial.mp4"> Tutorial </a> and 
-			 <a href="http://su-gis.iptime.org/CyberGIS-Vis/videos/VIZ_Correlogram_demo.mp4"> Demo </a> 
+			 <a href="https://su-gis.org/CyberGIS-Vis/videos/VIZ_Correlogram_Tutorial.mp4"> Tutorial </a> and 
+			 <a href="https://su-gis.org/CyberGIS-Vis/videos/VIZ_Correlogram_demo.mp4"> Demo </a> 
 			</li></ul> 		
 		</li>
-        <img height=250px src="http://su-gis.iptime.org/CyberGIS-Vis/images/ACM_Correlogram.PNG" alt="ACM_Correlogram"/>
+        <img height=250px src="https://su-gis.org/CyberGIS-Vis/images/ACM_Correlogram.PNG" alt="ACM_Correlogram"/>
         <li>Adaptive Choropleth Mapper with Scatter Plot
 	        <ul><li> Click to see 
-			 <a href="http://su-gis.iptime.org/CyberGIS-Vis/videos/VIZ_Scatter_Tutorial.mp4"> Tutorial </a> and 
-			 <a href="http://su-gis.iptime.org/CyberGIS-Vis/videos/VIZ_Scatter_Demo.mp4"> Demo </a> 
+			 <a href="https://su-gis.org/CyberGIS-Vis/videos/VIZ_Scatter_Tutorial.mp4"> Tutorial </a> and 
+			 <a href="https://su-gis.org/CyberGIS-Vis/videos/VIZ_Scatter_Demo.mp4"> Demo </a> 
 			</li></ul> 	
 		</li>
-		<img height=150px src="http://su-gis.iptime.org/CyberGIS-Vis/images/ACM_Scatter.png" alt="ACM_Scatter"/>
+		<img height=150px src="https://su-gis.org/CyberGIS-Vis/images/ACM_Scatter.png" alt="ACM_Scatter"/>
         <li>Adaptive Choropleth Mapper with Parallel Coordinate Plot (PCP) 
 	        <ul><li> Click to see 
-			 <a href="http://su-gis.iptime.org/CyberGIS-Vis/videos/VIZ_PCP_Tutorial.mp4"> Tutorial </a> and 
-			 <a href="http://su-gis.iptime.org/CyberGIS-Vis/videos/VIZ_PCP_demo.mp4"> Demo </a> 
+			 <a href="https://su-gis.org/CyberGIS-Vis/videos/VIZ_PCP_Tutorial.mp4"> Tutorial </a> and 
+			 <a href="https://su-gis.org/CyberGIS-Vis/videos/VIZ_PCP_demo.mp4"> Demo </a> 
 			</li></ul> 	
 		</li>
-        <img height=200px src="http://su-gis.iptime.org/CyberGIS-Vis/images/ACM_PCP.PNG" alt="ACM_PCP"/>
+        <img height=200px src="https://su-gis.org/CyberGIS-Vis/images/ACM_PCP.PNG" alt="ACM_PCP"/>
         <li>Adaptive Choropleth Mapper with Multiple Linked Chart (MLC) 
 	        <ul><li> Click to see 
-			 <a href="http://su-gis.iptime.org/CyberGIS-Vis/videos/ACM_MLC.mp4"> Demo </a> 
+			 <a href="https://su-gis.org/CyberGIS-Vis/videos/ACM_MLC.mp4"> Demo </a> 
 			</li></ul> 	
 		</li>
-        <img height=200px src="http://su-gis.iptime.org/CyberGIS-Vis/images/ACM_MLC.PNG" alt="ACM_MLC"/>
+        <img height=200px src="https://su-gis.org/CyberGIS-Vis/images/ACM_MLC.PNG" alt="ACM_MLC"/>
 		<li>Adaptive Choropleth Mapper with Comparison Line Chart (CLC)
 	        <ul><li> Click to see 
-			 <a href="http://su-gis.iptime.org/CyberGIS-Vis/videos/ACM_CLC.mp4"> Demo </a> 
+			 <a href="https://su-gis.org/CyberGIS-Vis/videos/ACM_CLC.mp4"> Demo </a> 
 			</li></ul> 	
 		</li>
-        <img height=200px src="http://su-gis.iptime.org/CyberGIS-Vis/images/ACM_CLC.PNG" alt="ACM_CLC"/>
+        <img height=200px src="https://su-gis.org/CyberGIS-Vis/images/ACM_CLC.PNG" alt="ACM_CLC"/>
 </ul>     
              
 ###  Categorical Data Visualization
 
 <ul>
         <li>Qualitative_Analysis_Mapper</li>
-        <img height=100px src="http://su-gis.iptime.org/CyberGIS-Vis/images/Qual.PNG" alt="Qual"/>
+        <img height=100px src="https://su-gis.org/CyberGIS-Vis/images/Qual.PNG" alt="Qual"/>
         <li>Qualitative_Analysis_Mapper with Stacked Chart</li>
-        <ul><li> The Stacked Chart visualizes the temporal change of categorical data in a quantitative way.  <a href="http://su-gis.iptime.org/GEOSNAP/NAM_SD_1_neighborhood">Click to see demo.</a></li></ul>    
-        <img height=100px src="http://su-gis.iptime.org/CyberGIS-Vis/images/Qual_Stacked.PNG" alt="Qual_Stacked"/>
+        <ul><li> The Stacked Chart visualizes the temporal change of categorical data in a quantitative way.  <a href="https://su-gis.org/GEOSNAP/NAM_SD_1_neighborhood">Click to see demo.</a></li></ul>    
+        <img height=100px src="https://su-gis.org/CyberGIS-Vis/images/Qual_Stacked.PNG" alt="Qual_Stacked"/>
         <li>Qualitative_Analysis_Mapper with Parallel Categories Diagram</li>
-             <ul><li> Parallel Categories Diagram represents how the categorical data changes over time in quantity. <a href="http://su-gis.iptime.org/GEOSNAP/NAM_SD_3_sequence_neighborhood_categoriesDiagram">Click to see demo.</a></li></ul>    
-      <img height=200px src="http://su-gis.iptime.org/CyberGIS-Vis/images/Qual_PCD.PNG" alt="Qual_PCD"/>
+             <ul><li> Parallel Categories Diagram represents how the categorical data changes over time in quantity. <a href="https://su-gis.org/GEOSNAP/NAM_SD_3_sequence_neighborhood_categoriesDiagram">Click to see demo.</a></li></ul>    
+      <img height=200px src="https://su-gis.org/CyberGIS-Vis/images/Qual_PCD.PNG" alt="Qual_PCD"/>
         <li>Qualitative_Analysis_Mapper with Chord Diagram</li>
-        <ul><li> The Chord Diagram quantifies changes of categorical data between the two periods. <a href="http://su-gis.iptime.org/GEOSNAP/NAM_SD_4_sequence_neighborhood_chordDiagram">Click to see demo.</a></li></ul></li></ul> 
-         <img height=200px src="http://su-gis.iptime.org/CyberGIS-Vis/images/Qual_CD.PNG" alt="Qual_CD"/> 
+        <ul><li> The Chord Diagram quantifies changes of categorical data between the two periods. <a href="https://su-gis.org/GEOSNAP/NAM_SD_4_sequence_neighborhood_chordDiagram">Click to see demo.</a></li></ul></li></ul> 
+         <img height=200px src="https://su-gis.org/CyberGIS-Vis/images/Qual_CD.PNG" alt="Qual_CD"/> 
 </ul> 
 
 ## Data
