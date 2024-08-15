@@ -29,7 +29,8 @@
 	<script src="../template/Adaptive_Choropleth_Mapper/lib/leaflet@1.5.1/leaflet-src.js"></script>
 	<script src="../template/Adaptive_Choropleth_Mapper/lib/Leaflet.markercluster-master@1.4.1/dist/leaflet.markercluster.js"></script>
 
-	<script src="../template/Adaptive_Choropleth_Mapper/lib/leaflet-lasso-master@2.0.4/dist/leaflet-lasso.umd.min.js"></script>
+	<!--script src="../template/Adaptive_Choropleth_Mapper/lib/leaflet-lasso-master@2.0.4/dist/leaflet-lasso.umd.min.js"></script-->
+	<script src="../template/Adaptive_Choropleth_Mapper/lib/leaflet-lasso-master@2.0.4m/dist/leaflet-lasso.umd.js"></script>
 	<script src="../template/Adaptive_Choropleth_Mapper/lib/sweetalert/sweetalert.min.js"></script>
     <link rel="stylesheet" href="../template/Adaptive_Choropleth_Mapper/lib/geocode/Control.BingGeocoder.css" />
 	<script src="../template/Adaptive_Choropleth_Mapper/lib/geocode/Control.BingGeocoder.js" type="text/javascript" ></script>
@@ -1532,8 +1533,15 @@ function ACSdata_render(mIDX) {
 			initializeLassoButtons(mIDX);
 			app[mIDX].lasso.remove();
 		}
-		if (app.ScatterPlot == true || app.ParallelCoordinatesPlot == true || app.Top10Chart == true || app.ComparisionLineChart == true || app.MultipleLineChart == true) {
-			app[mIDX].lasso = L.control.lasso({intersect: true,  position: 'topleft'}).addTo(map);
+		//if (app.ScatterPlot == true || app.ParallelCoordinatesPlot == true || app.Top10Chart == true || app.ComparisionLineChart == true || app.MultipleLineChart == true) {
+		//	app[mIDX].lasso = L.control.lasso({intersect: true,  position: 'topleft'}).addTo(map);
+		var selectedIcon = '';
+		if (app.ScatterPlot == true || app.ParallelCoordinatesPlot == true)
+			selectedIcon = 'lasso';
+		if (app.ComparisionLineChart == true || app.MultipleLineChart == true)
+			selectedIcon = 'globe';
+		if (selectedIcon != '') {
+			app[mIDX].lasso = L.control.lasso({intersect: true, position: 'topleft', icon: selectedIcon}).addTo(map);
 			//app[mIDX].lasso = L.control.lasso({position: 'topleft'}).addTo(map);
 			$("#"+mIDX+" .leaflet-control-lasso").css('background-color', RGBwhite);
             // to solve the problem that the current page is moved to "#" when lasso button is clicked
@@ -2819,7 +2827,8 @@ function fadeOutWindow(mIDX) {
 
 
 function mapOn_lasso_event_set() {
-	if (app.ScatterPlot == false && app.ParallelCoordinatesPlot == false && app.Top10Chart == false && app.ComparisionLineChart == false && app.MultipleLineChart == false) return;
+	//if (app.ScatterPlot == false && app.ParallelCoordinatesPlot == false && app.Top10Chart == false && app.ComparisionLineChart == false && app.MultipleLineChart == false) return;
+	if (app.ScatterPlot == false && app.ParallelCoordinatesPlot == false && app.ComparisionLineChart == false && app.MultipleLineChart == false) return;
 	j = null;
 	for (i=0; i<app.m; i++) {
 		var mIDX = "map" + i;
@@ -2867,6 +2876,17 @@ function mapOn_lasso_event_set() {
 				$("#Scatterchart select[name=ACSdata]").val("L000");
 				paintScatter('map0', 'map1', {lassoData:app.sPointsMaps});
 				
+				// check app.sPointsMaps.length for ComparisionLineChart
+				if ($('#CLCchart').length != 0)
+				if (app.sPointsMaps instanceof Array && app.sPointsMaps.length > 1) {
+					swal({
+						title: "Attention!",
+						text: "The comparision line chart cannot be drawn because there are too many lasso selected areas to draw.\nPlease click only one area.\n\nProceed anyway?",
+						icon: "warning",
+						button: "CONTINUE",
+					});
+				}
+				
 				// save lassoData to app.sPointsComparisionLineChart
 				if (app.sPointsMaps instanceof Array && app.sPointsMaps.length == 1) {
 					var geokey = app.sPointsMaps[0];
@@ -2884,6 +2904,17 @@ function mapOn_lasso_event_set() {
 					}
 				}
 				console.log("app.sPointsComparisionLineChart:", app.sPointsComparisionLineChart)
+				
+				// check app.sPointsMaps.length for MultipleLineChart
+				if ($('#MLCchart').length != 0)
+				if (app.sPointsMaps instanceof Array && app.sPointsMaps.length > 1) {
+					swal({
+						title: "Attention!",
+						text: "Please select only one area by clicking the left mouse button.",
+						icon: "warning",
+						button: "OK",
+					});
+				}
 				
 				// save lassoData to app.sPointsMultipleLineChart
 				if (app.sPointsMaps instanceof Array && app.sPointsMaps.length == 1) {
