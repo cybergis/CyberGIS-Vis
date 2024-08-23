@@ -147,7 +147,7 @@ Visualizations created by CyberGIS-Vis are using a small subset of [LTDB](https:
 
 ## Contributors
 
-The lead developer of CyberGIS-Vis is Dr. Su Yeon Han at the [CyberGIS Center for Advanced Digital and Spatial Studies (CyberGIS Center)](https://cybergis.illinois.edu/) and the Principal Investigator of CyberGIS-Vis is Dr. Shaowen Wang at CyberGIS Center. This software repository is primarily maintained by [CyberGIS Center](https://cybergis.illinois.edu/). Please email any questions to [help@cybergis.org](mailto:help@cybergis.org).
+Dr. Su Yeon Han, a leading developer and faculty member in the Department of Geography and Environmental Studies at Texas State University, has spearheaded the development of CyberGIS-Vis. This repository hosts the advanced version of CyberGIS-Vis, which can be accessed at: https://github.com/cybergis/CyberGIS-Vis.
 
 ## License
 
@@ -155,7 +155,7 @@ The lead developer of CyberGIS-Vis is Dr. Su Yeon Han at the [CyberGIS Center fo
 
 ## Funding
 
-The CyberGIS-Vis project is supported by the CyberGIS Center for Advanced Digital and Spatial Studies at the University of Illinois at Urbana-Champaign.
+The CyberGIS-Vis project is supported by Department of Geography and Environmental Studies at Texas State University and CyberGIS Center for Advanced Digital and Spatial Studies at the University of Illinois at Urbana-Champaign.
 
 
 
