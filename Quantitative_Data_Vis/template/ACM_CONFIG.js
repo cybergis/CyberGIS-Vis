@@ -6,7 +6,7 @@ var NumOfMaps = 2;
 
 
 // Define the order to show the drop-down list fo the Layer. "compare" or "temporal" 
-var SortLayers = "compare";
+var SortLayers = "";
 
 
 // Define the number of variable that you want to visaulize Parallel Coordinates Plot. 
