@@ -17,18 +17,18 @@ import numpy as np
 from scipy import stats
 import geopandas as gpd
 #This is for CyberGISX. Uncomment a command line below when you run in CyberGIX Environment
-#from jupyter_server import serverapp
+from jupyter_server import serverapp
 
 #This is for CyberGISX. Uncomment a command line below when you run in CyberGIX Environment
-## Retrieve Server URL that Jupyter is running
-#jupyter_envs = {k: v for k, v in os.environ.items() if k.startswith('JUPYTER')}
-#temp_server = jupyter_envs['JUPYTER_INSTANCE_URL']
+# Retrieve Server URL that Jupyter is running
+jupyter_envs = {k: v for k, v in os.environ.items() if k.startswith('JUPYTER')}
+temp_server = jupyter_envs['JUPYTER_INSTANCE_URL']
 
 #This is for CyberGISX. Uncomment a command line below when you run in CyberGIX Environment
 # Define Paths for Visualization (Jupyter Lab)
-#servers = list(serverapp.list_running_servers())
-#servers1 = temp_server+servers[0]["base_url"]+ 'view'
-#servers2 = temp_server+servers[0]["base_url"]+ 'edit'
+servers = list(serverapp.list_running_servers())
+servers1 = temp_server+servers[0]["base_url"]+ 'view'
+servers2 = temp_server+servers[0]["base_url"]+ 'edit'
 
 cwd = os.getcwd()
 prefix_cwd = "/home/jovyan/work"
@@ -39,8 +39,8 @@ local_dir1 = cwd
 local_dir2 = cwd  
 
 #This is for CyberGISX. Uncomment two command lines below when you run in CyberGIX Environment
-#local_dir1 = servers1 + cwd + '/'
-#local_dir2 = servers2 + cwd + '/' 
+local_dir1 = servers1 + cwd + '/'
+local_dir2 = servers2 + cwd + '/' 
 
 def write_INDEX_html(param, oDir):
     #open Adaptive_Choropleth_Mapper.html (the excutable file for the visualization)
