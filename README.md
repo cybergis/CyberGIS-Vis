@@ -147,7 +147,7 @@ Visualizations created by CyberGIS-Vis are using a small subset of [LTDB](https:
 
 ## Contributors
 
-Dr. Su Yeon Han, a leading developer and faculty member in the Department of Geography and Environmental Studies at Texas State University, has spearheaded the development of CyberGIS-Vis. This repository hosts the advanced version of CyberGIS-Vis, which can be accessed at: https://github.com/cybergis/CyberGIS-Vis.
+Dr. Su Yeon Han, a leading developer and faculty member in the Department of Geography and Environmental Studies at Texas State University, has spearheaded the development of CyberGIS-Vis. This repository is the advanced version of CyberGIS-Vis, which can be accessed at: https://github.com/cybergis/CyberGIS-Vis.
 
 ## License
 
