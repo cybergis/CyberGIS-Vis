@@ -35,8 +35,8 @@ prefix_cwd = "/home/jovyan/work"
 cwd = cwd.replace(prefix_cwd, "")
 
 # This is for Jupyter notebbok installed in your PC
-local_dir1 = cwd
-local_dir2 = cwd  
+#local_dir1 = cwd
+#local_dir2 = cwd  
 
 #This is for CyberGISX. Uncomment two command lines below when you run in CyberGIX Environment
 local_dir1 = servers1 + cwd + '/'
