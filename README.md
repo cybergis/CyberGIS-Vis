@@ -25,8 +25,7 @@ CyberGIS-Vis integrates cutting-edge cyberGIS and online visualization capabilit
 1. If you do not have a CyerGISX account, create a CyberGISX account with your GitHub id at https://cybergisxhub.cigi.illinois.edu
 2. Begin by clicking the yellow 'Open with CyberGISX' button in this published notebook, available at this [link](https://cybergisxhub.cigi.illinois.edu/notebook/cybergis-viz-for-democratizing-access-to-scalable-geovisualization-2nd-version/).
    
-``` 
-<br/><br/>
+
 **To run in the loca environment, follow steps below.**
 1. Download and install Anaconda at https://www.anaconda.com/.
 2. After installation is done, open "Anaconda Prompt" and enter command lines below to create an environment.
