@@ -140,7 +140,8 @@ Visualizations created by CyberGIS-Vis are using following datasets:
 * [PlotlyJS](https://plot.ly/javascript/) 
 * [D3](https://d3js.org/) 
 * [GEOSNAP VIZ](https://github.com/spatialucr/geosnap-viz)
-* [geostats](https://github.com/simogeo/geostats?tab=readme-ov-file) 
+* [geostats](https://github.com/simogeo/geostats?tab=readme-ov-file)
+* [Simple Statistics ](https://simple-statistics.github.io/) 
 
 ## Contributors
 
