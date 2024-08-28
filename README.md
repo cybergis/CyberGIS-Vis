@@ -128,7 +128,10 @@ Images below show visualizations that you can create using CyberGIS-Vis. Click t
 </ul> 
 
 ## Data
-Visualizations created by CyberGIS-Vis are using a small subset of [LTDB](https://s4.ad.brown.edu/projects/diversity/researcher/LTDB.htm). [LTDB](https://s4.ad.brown.edu/projects/diversity/researcher/LTDB.htm) provides socioeconomic and demographic data with harmonized boundaries from 1970 to 2010 decennially. If you need the entire dataset, visit this [website](https://s4.ad.brown.edu/projects/diversity/researcher/LTDB.htm) to download.
+Visualizations created by CyberGIS-Vis are using following datasets:
+
+1. a small subset of [LTDB](https://s4.ad.brown.edu/projects/diversity/researcher/LTDB.htm). [LTDB](https://s4.ad.brown.edu/projects/diversity/researcher/LTDB.htm) provides socioeconomic and demographic data with harmonized boundaries from 1970 to 2010 decennially. If you need the entire dataset, visit this [website](https://s4.ad.brown.edu/projects/diversity/researcher/LTDB.htm) to download.
+2. The New York Times. (2021). Coronavirus (Covid-19) Data in the United States. Retrieved [08/01/2024], from https://github.com/nytimes/covid-19-data
 
 ## Related Resources
 * [CyberGISX](https://cybergisxhub.cigi.illinois.edu/) 
