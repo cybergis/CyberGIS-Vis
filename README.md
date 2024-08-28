@@ -18,6 +18,8 @@ CyberGIS-Vis integrates cutting-edge cyberGIS and online visualization capabilit
 *	Quantitative_Data_Vis <br/>
 *	Categorical_Data_Vis <br/>
 
+<br/><br/>
+
 ## CyberGISX
 **You can run CyberGIS-Vis in your Jupyter Notebook installed on your PC as well as in CybearGISX. We recommend that you use CyberGISX because all the required packages have been integrated in CyberGISX.**<br/><br/>
 
