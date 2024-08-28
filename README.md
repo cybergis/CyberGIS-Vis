@@ -164,7 +164,7 @@ Images below show visualizations that you can create using CyberGIS-Vis. Click t
 |--------------------------------|:--------:|--------------------------------------------------------------------------------------------------------------------------------------------------|
 | **titlesOfMLC**           || Enter a title for each line chart to be displayed at the top of the chart in the Multiple Line Chart. If left blank, a line chart will be created for each variable in your input attribute file.|
 | **NumOfMLC**              |          | Specify the number of line charts to include in the Multiple Line Chart. If left blank, the number of charts will default to the number of variables entered in the 'Variables' parameter above. |
-| **InitialVariableMLC** ||Select the variables to be displayed on the line chart. If left blank, the variables in your input attribute file will be visualized in order.|
+| **InitialVariableMLC** ||Specify the variables to be displayed on the line chart. If left blank, the variables in your input attribute file will be visualized in order.|
 | **DefaultRegion_MLC**     || Enter the 'id' from your attribute table to specify the default region displayed in the Multiple Line Chart. If left blank, the first region listed in your attribute table will be used.                         |
 | **HighlightMLC** ||Define the highlighted ranges for the x-axis values (periods) by specifying the start and end periods for the range you emphasize. |
 
@@ -172,7 +172,7 @@ Images below show visualizations that you can create using CyberGIS-Vis. Click t
 | Parameter                      | Required  | Description                                                                                                                                      |
 |--------------------------------|:--------:|--------------------------------------------------------------------------------------------------------------------------------------------------|
 | **NumOfCLC**              |          | Specify the number of line charts to include in the Comparision Line Chart. If left blank, the number of charts will default to the number of variables entered in the 'Variables' parameter above. |
-| **InitialVariableCLC** ||Select the variables to be displayed on the line chart. If left blank, the variables in your input attribute file will be visualized in order.|
+| **InitialVariableCLC** ||Specify the variables to be displayed on the line chart. If left blank, the variables in your input attribute file will be visualized in order.|
 | **DefaultRegion_CLC**     |          | Enter the 'id' of two regions to display the temporal patterns of the selected variable in the Comparison Line Chart. If left blank, the first two regions in your attribute table will be used. |
 | **HighlightCLC** ||Define the highlighted ranges for the x-axis values (periods) by specifying the start and end periods for the range you emphasize. |
 
@@ -180,7 +180,7 @@ Images below show visualizations that you can create using CyberGIS-Vis. Click t
 | Parameter                      | Required  | Description                                                                                                                                      |
 |--------------------------------|:--------:|--------------------------------------------------------------------------------------------------------------------------------------------------|
 | **NumOfPCP**     |          | Enter `True` or `False`. Set to `True` to display a Parallel Coordinates Plot. If `False`, it will not be displayed. If left blank, `False` is the default. |
-| **InitialVariablePCP**     |          | Select the variables to be displayed on Parallel Coordinates Plot. If left blank, the variables in your input attribute file will be visualized in order. |
+| **InitialVariablePCP**     |          | Specify the variables to be displayed on Parallel Coordinates Plot. If left blank, the variables in your input attribute file will be visualized in order. |
 
 
 
