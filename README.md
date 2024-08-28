@@ -132,6 +132,7 @@ Visualizations created by CyberGIS-Vis are using following datasets:
 
 1. A small subset of [LTDB](https://s4.ad.brown.edu/projects/diversity/researcher/LTDB.htm). The LTDB offers decennial socioeconomic and demographic data with harmonized boundaries from 1970 to 2010. For access to the complete dataset, please visit the [official website for download](https://s4.ad.brown.edu/projects/diversity/researcher/LTDB.htm) 
 2. The New York Times. (2021). Coronavirus (Covid-19) Data in the United States. Retrieved [08/01/2024], from https://github.com/nytimes/covid-19-data
+3. [American Community Survey (ACS) - U.S. Census Bureau](https://www.census.gov/programs-surveys/acs)
 
 ## Related Resources
 * [CyberGISX](https://cybergisxhub.cigi.illinois.edu/) 
