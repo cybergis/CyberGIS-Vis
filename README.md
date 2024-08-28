@@ -24,6 +24,7 @@ CyberGIS-Vis integrates cutting-edge cyberGIS and online visualization capabilit
 **To use it in CyberGISX, follow steps below:**
 1. If you do not have a CyerGISX account, create a CyberGISX account with your GitHub id at https://cybergisxhub.cigi.illinois.edu
 2. Begin by clicking the yellow 'Open with CyberGISX' button in this published notebook, available at this [link](https://cybergisxhub.cigi.illinois.edu/notebook/cybergis-viz-for-democratizing-access-to-scalable-geovisualization-2nd-version/).
+   
 ``` 
 <br/><br/>
 **To run in the loca environment, follow steps below.**
