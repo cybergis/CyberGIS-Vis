@@ -1,0 +1,19 @@
+2024-08-28 09:48:26 ACM_COVID_CLC_US_2020_2021
+
+  {'title': 'Comparison of Temporal Patterns of Covid-19 Confirmed Rate between '
+            'US Counties',
+   'Subject': 'Temporal Patterns of COVID-19 Cases per 10,000 Population in Two '
+              'Selected Regions',
+   'filename_suffix': 'COVID_CLC_US_2020_2021',
+   'variables': ['confirmed_rate'],
+   'NumOfMaps': 2,
+   'SortLayers': 'temporal',
+   'InitialLayers': ['2020-04-06_confirmed_rate', '2020-07-20_confirmed_rate'],
+   'Initial_map_center': [38, -97],
+   'Initial_map_zoom_level': 4,
+   'Map_width': '650px',
+   'Map_height': '450px',
+   'Top10_Chart': True,
+   'Comparision_Chart': True,
+   'DefaultRegion_CLC': ['777777', '12086'],
+   'NumOfCLC': 91}

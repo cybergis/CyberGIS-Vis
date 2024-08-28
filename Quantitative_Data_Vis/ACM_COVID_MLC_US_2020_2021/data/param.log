@@ -1,0 +1,22 @@
+2024-08-28 09:46:31 ACM_COVID_MLC_US_2020_2021
+
+  {'title': 'Spatiotemporal Dynamics of COVID-19 Cases and Deaths in U.S. '
+            'Counties',
+   'Subject': 'Temporal Patterns of COVID-19 Risk Factors',
+   'filename_suffix': 'COVID_MLC_US_2020_2021',
+   'variables': ['confirmed_rate', 'death_rate', 'confirmed_rate_total',
+                 'death_rate_tatal'],
+   'NumOfMaps': 2,
+   'SortLayers': 'temporal',
+   'InitialLayers': ['2020-04-06_confirmed_rate', '2020-07-20_confirmed_rate'],
+   'Initial_map_center': [38, -97],
+   'Initial_map_zoom_level': 4,
+   'Map_width': '650px',
+   'Map_height': '450px',
+   'Top10_Chart': True,
+   'Multiple_Line_Chart': True,
+   'NumOfMLC': 4,
+   'titlesOfMLC': ['1. Confirmed Rate (Confirmed Cases per 10k population)',
+                   '2. Death Rate (Deaths per 10k population)',
+                   '3. Cumulative Confirmed Rate', '4. Cumulative Death Rate'],
+   'DefaultRegion_MLC': '12086'}

@@ -6,7 +6,7 @@ var NumOfMaps = 2;
 
 
 // Define the order to show the drop-down list fo the Layer. "compare" or "temporal" 
-var SortLayers = "";
+var SortLayers = "compare";
 
 
 // Define the number of variable that you want to visaulize Parallel Coordinates Plot. 
@@ -22,6 +22,7 @@ var NumOfCLC = 0;
 var InitialVariableCLC = []; 
 var DefaultRegion_CLC = ""; //Set Defaul Region
 
+
 // Define the number of variable that you want to visualize Multiple Synchronized Line Chart. 
 var NumOfMLC = 0;
 // Define variables that you want to visualize at MLC (Multiple Synchronized Line Chart).
@@ -34,7 +35,7 @@ var titlesOfMLC = [];
 // [["begin_X_value","end_X_value","color"], ["begin_X_value","end_X_value","color"]…] 
 var DefaultRegion_MLC = ""; //Set Default region
 var HighlightMLC = []; //Set  highlighted ranges for x value
-var MultipleLineChart_width = "";
+
 
 //Define the geographic id or name to be display on the top-right corner of the map
 //var NameDisplayed = "geoname";
