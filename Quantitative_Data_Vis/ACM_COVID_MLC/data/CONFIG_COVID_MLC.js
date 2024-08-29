@@ -6,7 +6,7 @@ var NumOfMaps = 2;
 
 
 // Define the order to show the drop-down list fo the Layer. "compare" or "temporal" 
-var SortLayers = "compare";
+var SortLayers = "temporal";
 
 
 // Define the number of variable that you want to visaulize Parallel Coordinates Plot. 
@@ -22,29 +22,30 @@ var NumOfCLC = 0;
 var InitialVariableCLC = []; 
 var DefaultRegion_CLC = ""; //Set Defaul Region
 
+
 // Define the number of variable that you want to visualize Multiple Synchronized Line Chart. 
-var NumOfMLC = 3;
+var NumOfMLC = 4;
 // Define variables that you want to visualize at MLC (Multiple Synchronized Line Chart).
 //var InitialVariableMLC = ["HIV Rate", "HIV Test (/100k pop)", "Rate of Illicit Drug Use", "Health Care Center (/100k pop)"]
 var InitialVariableMLC = []
 // Define titles that you want to visualize at MLC (Multiple Synchronized Line Chart).
 //var titlesOfMLC = ["1. HIV Rate", "2. HIV Test (/100k pop)", "3. Rate of Illicit Drug Use", "4. Health Care Center (/100k pop)"];
-var titlesOfMLC = ["1. COVID-19 Confirmed Cases (/100k pop)", "2. COVID-19 Death Cases (/100k pop)", "3. The Number of Visits from Outside to Inside of the selected MSA"];
+var titlesOfMLC = ["1. Confirmed Rate (Confirmed Cases per 10k population)", "2. Death Rate (Deaths per 10k population)", "3. Cumulative Confirmed Rate", "4. Cumulative Death Rate"];
 // Define beginning and ending of highlighted areas of MLC. You can do multiple times
 // [["begin_X_value","end_X_value","color"], ["begin_X_value","end_X_value","color"]…] 
-var DefaultRegion_MLC = "35620";
+var DefaultRegion_MLC = "12086";
 var HighlightMLC = []; //Set  highlighted ranges for x value
-var MultipleLineChart_width = "";
+
 
 //Define the geographic id or name to be display on the top-right corner of the map
 //var NameDisplayed = "geoname";
 
 // Define variables that you want to visualize at initial map views. For example, 
 // enter five variables when the NumOfMaps is equal to 5.
-var InitialLayers = ["2020-03-15_Confirmed Rate", "2020-12-27_Confirmed Rate"];
+var InitialLayers = ["2020-04-06_confirmed_rate", "2020-07-20_confirmed_rate"];
 
 /*Define initial map center and zoom level below. Map Extent and Zoom level will be automatically adjusted when you do not define map center and zoom level. Double-slashes  in the front need to be deleted to make them effective*/
-var Initial_map_center = [37, -97];
+var Initial_map_center = [38, -97];
 var Initial_map_zoom_level = 4;
 
 
@@ -64,7 +65,7 @@ var Num_Of_Decimal_Places = 2;                              // default = 2
 
 //Adjust the size of maps
 var Map_width = "650px";
-var Map_height = "400px";
+var Map_height = "450px";
 
 
 

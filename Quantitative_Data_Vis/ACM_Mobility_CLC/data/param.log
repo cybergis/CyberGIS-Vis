@@ -1,0 +1,17 @@
+2024-08-29 08:39:13 ACM_Mobility_CLC
+
+  {'title': 'Comparison of COVID-19 Confirmed Rate between Metropolitan '
+            'Statistical Areas, USA',
+   'Subject': 'Temporal Patterns of COVID-19 Confirmed Rate',
+   'filename_suffix': 'Mobility_CLC',
+   'variables': ['Confirmed Rate'],
+   'NumOfMaps': 2,
+   'InitialLayers': ['2020-04-19_Confirmed Rate', '2020-11-01_Confirmed Rate'],
+   'Initial_map_center': [37, -97],
+   'Initial_map_zoom_level': 4,
+   'Map_width': '650px',
+   'Map_height': '400px',
+   'Top10_Chart': True,
+   'Comparision_Chart': True,
+   'NumOfCLC': 46,
+   'DefaultRegion_CLC': ['35620', '16980']}
