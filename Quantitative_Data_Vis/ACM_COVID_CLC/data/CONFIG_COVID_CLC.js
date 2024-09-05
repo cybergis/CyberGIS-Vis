@@ -20,7 +20,7 @@ var NumOfCLC = 91;
 // Define variables that you want to visualize at CLC (Comparision Line Chart).
 //var InitialVariableCLC = ["2012_HIV Rate", "2013_HIV Rate", "2014_HIV Rate", "2015_HIV Rate", "2016_HIV Rate", "2017_HIV Rate", "2018_HIV Rate", "2019_HIV Rate", "2020_HIV Rate", "2021_HIV Rate", "2022_HIV Rate"]
 var InitialVariableCLC = []; 
-var DefaultRegion_CLC = ["777777", "12086"];
+var DefaultRegion_CLC = ["777777", "53033"];
 
 
 // Define the number of variable that you want to visualize Multiple Synchronized Line Chart. 
@@ -45,7 +45,7 @@ var HighlightMLC = []; //Set  highlighted ranges for x value
 var InitialLayers = ["2020-04-06_confirmed_rate", "2020-07-20_confirmed_rate"];
 
 /*Define initial map center and zoom level below. Map Extent and Zoom level will be automatically adjusted when you do not define map center and zoom level. Double-slashes  in the front need to be deleted to make them effective*/
-var Initial_map_center = [38, -97];
+var Initial_map_center = [38, -99.5];
 var Initial_map_zoom_level = 4;
 
 
