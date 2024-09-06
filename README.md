@@ -79,7 +79,7 @@ https://github.com/user-attachments/assets/a22fb804-f56b-4e10-a663-14ca331abe1d
 
 **Explore spatiotemporal patterns of your data using the Comparison Line Chart**<br/>
 
-https://github.com/user-attachments/assets/41fa492b-8175-496f-92d2-f835e85545e0
+https://github.com/user-attachments/assets/e756c346-d8fd-4309-aaeb-a8f147a8cf6f
 
 <br/><br/>
 
