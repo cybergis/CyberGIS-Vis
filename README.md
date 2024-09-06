@@ -73,7 +73,7 @@ https://github.com/user-attachments/assets/1a9d833d-e5d3-429a-b142-9d7fb784522b
 
 **Explore spatiotemporal patterns of your data using the Multiple Linked Chart**<br/>
 
-https://github.com/user-attachments/assets/a22fb804-f56b-4e10-a663-14ca331abe1d
+https://github.com/user-attachments/assets/c2eb3dde-44f1-4f56-813a-45a8c1304b31
 
 <br/><br/>
 
