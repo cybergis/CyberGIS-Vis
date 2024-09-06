@@ -66,7 +66,9 @@ CyberGIS-Vis integrates cutting-edge cyberGIS and online visualization capabilit
 ## Getting Started with Spatiotemporal Modules in CyberGIS-Vis: Tutorial Videos
 
 **Start from the published notebook**<br/>
+
 https://github.com/user-attachments/assets/1a9d833d-e5d3-429a-b142-9d7fb784522b
+
 <br/><br/>
 
 **Explore spatiotemporal patterns of your data using the Multiple Linked Chart**<br/>
