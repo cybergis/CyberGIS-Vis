@@ -62,6 +62,28 @@ CyberGIS-Vis integrates cutting-edge cyberGIS and online visualization capabilit
         Categorical_Data_Vis/Qualitative_Analysis_Mapper.ipynb
 ``` 
 <br/><br/>
+
+## Getting Started with Spatiotemporal Modules in CyberGIS-Vis: Tutorial Videos
+
+**Start from the published notebook**<br/>
+
+https://github.com/user-attachments/assets/1a9d833d-e5d3-429a-b142-9d7fb784522b
+
+<br/><br/>
+
+**Explore spatiotemporal patterns of your data using the Multiple Linked Chart**<br/>
+
+https://github.com/user-attachments/assets/a22fb804-f56b-4e10-a663-14ca331abe1d
+
+<br/><br/>
+
+**Explore spatiotemporal patterns of your data using the Comparison Line Chart**<br/>
+
+https://github.com/user-attachments/assets/41fa492b-8175-496f-92d2-f835e85545e0
+
+<br/><br/>
+
+
 ## Visualization Modules
 <font color="green">
 Images below show visualizations that you can create using CyberGIS-Vis. Click the image to see the full size.</font >
