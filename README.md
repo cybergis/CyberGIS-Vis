@@ -67,7 +67,7 @@ CyberGIS-Vis integrates cutting-edge cyberGIS and online visualization capabilit
 
 **Start from the published notebook**<br/>
 
-https://github.com/user-attachments/assets/1a9d833d-e5d3-429a-b142-9d7fb784522b
+https://github.com/user-attachments/assets/e9cd4622-2022-4e28-aa58-3142ce477459
 
 <br/><br/>
 
