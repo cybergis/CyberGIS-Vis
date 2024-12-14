@@ -35,8 +35,7 @@ var titlesOfMLC = ["1. Confirmed Rate (Confirmed Cases per 10k population)", "2.
 // [["begin_X_value","end_X_value","color"], ["begin_X_value","end_X_value","color"]…] 
 var DefaultRegion_MLC = "12086";
 var HighlightMLC = []; //Set  highlighted ranges for x value
-
-
+var MultipleLineChart_width = "";
 //Define the geographic id or name to be display on the top-right corner of the map
 //var NameDisplayed = "geoname";
 

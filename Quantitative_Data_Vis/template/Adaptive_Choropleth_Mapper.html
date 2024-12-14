@@ -170,6 +170,7 @@ var app={
 	Top10Chart: true,               			 // draw Top10 Bar chart or not form configuration file (default: true)
 	ComparisionLineChart: true,                  // draw Comparision Line Chart or not form configuration file (default: true)
 	MultipleLineChart: true,                     // draw Multiple Line Chart or not form configuration file (default: true)
+	MultipleLineChart_width: null,
 	NumOfDecimalPlaces: 1,                       // the number of decimal places (default: 1)
 	MapWidth: "500px",                           // map width of each map (default: 500px)
 	MapHeight: "500px",                          // map height of each map (default: 500px)
@@ -587,48 +588,32 @@ function draw_titleScatterchart(mapN=null) {
 
 
 function draw_titleTop10chart(mapN=null) {
-	//var chartID = (app.subject) ? "TOP10 Bar Chart" + " of " + app.subject : "TOP10 Bar Chart";
+
 	var chartID = (app.subject) ? "TOP10 Bar Chart" + " of " + app.subject : "TOP10 Bar Chart";
-	//$("#Top10Chart .map_id").html('&nbsp;<b>'+chartID+'</b>');
-	//var html_check = '	 <input id="parcoords-fixAxes" type="checkbox" name="parcoords_fixAxes" value="Fix Axes">' +
-	//				 '   <label for="fixAxes">Fix Axes</label>';
-	//$("#PCPchart .map_fixAxes").html(html_check);
 	var selectedItem = mapN;
 	if (mapN) {
 		selectedItem = $("#"+mapN+" select[name=ACSdata]").val();
-		//var layer = $("#"+mapN+" select[name=ACSdata]").find("option:selected").text();
 	}
 	console.log("selectedItem:", selectedItem)
-    var html_layer ='<select >' +
+    var html_layer ='<select name="sortOrder" onchange="paintTop10Chart({mapN: \'' + mapN + '\'})">' +
                         '<option value="TOP" selected>Top </option>' +
                         '<option value="Bottom" >Bottom </option>' +
                     '</select>&nbsp;&nbsp;&nbsp;' +
-                    '<select>' +
-                        '<option value="10" selected>10</option>' +
+                    '<select name="nBars" onchange="paintTop10Chart({mapN: \'' + mapN + '\'})">' +
+                        '<option value="5" selected>5</option>' +
+						'<option value="10" selected>10</option>' +
                         '<option value="15" >15</option>' +
                         '<option value="20" >20</option>' +
-                        '<option value="25" >15</option>' +
-                        '<option value="25" >20</option>' +
                         '<option value="25" >25</option>' +
-                        '<option value="25" >30</option>' +          
                     '</select>' +        
                     ' Regions of: ' 
-                    
                     + '<select name="ACSdata" class="ACSdataSelect" onChange="layer_change(\'' + 'Top10Chart' + '\')">';
-
-
+	
 	html_layer = get_dropdownoptions_Layer(html_layer, null, selectedItem);
 	if (html_layer.length < 100) 
 	html_layer += '<option value="None">No Data</option>';
 	html_layer += '</select>'
 	$("#Top10Chart .map_layer").html(html_layer);
-	
-	//$('input[type=checkbox][id="parcoords-fixAxes"]').change(function() {
-	//	//var fixAxes = $(this).is(":checked");
-	//	var fixAxes = $('input[type=checkbox][id="parcoords-fixAxes"]').is(":checked");
-	//	console.log(getNow(), "parcoords-fixAxes changed:", fixAxes);
-	//	paintParcoords();
-	//});
 }
 
 
@@ -972,7 +957,7 @@ function draw_globalSelection() {
 	// set drop-down list of 'global_class' 
 	var html_layer = 'Classification: <select name="globalClass" style="color:red;">' +
 					'<option value="equal" class="line_none">Equal</option>' +
-					'<option value="quantile" class="line_none" >Quantile</option>' +
+					'<option value="quantile" class="line_none">Quantile</option>' +
 					'<option value="ckmeans" class="line_none">Optimal</option>' +
 					'<option value="arithmetic" class="line_none">Arithmetic Progression</option>' +
 					'<option value="geometric" class="line_none" selected>Geometric Progression</option>' +
@@ -2018,10 +2003,17 @@ $( document ).ready(function() {
 		app.labdic[value] = {'shortName': app.titles[i].substr(5), 'fullName': app.titles[i]};
 		app.titdic[app.titles[i]] = value;
 	}
-	app.titles_default = app.titles;
+	app.titles_default = app.titles.slice(1);
 	app.titles_temporal = app.titles.slice(1);
 	// "2020-03-31_Confirmed_Cases_per_10k_pop"
 	// "2020-03-31_vaccinated_per_10k_pop"
+    app.titles_default.sort(function(a, b) {
+		var titleA = a;
+		var titleB = b;
+		if (titleA < titleB) return -1;
+		if (titleA > titleB) return +1;
+		return 0;
+	});
 	app.titles_temporal.sort(function(a, b) {
 		var titleA = a;
 		var titleB = b;
@@ -2033,6 +2025,7 @@ $( document ).ready(function() {
 		if (titleA > titleB) return +1;
 		return 0;
 	});
+    app.titles_default = [app.titles[0]].concat(app.titles_default)
 	app.titles_temporal = [app.titles[0]].concat(app.titles_temporal)
 	//console.log(app.titles, app.values, app.titdic, app.titles_default, app.titles_temporal)
 	var geokey = app.geokey;
@@ -2306,14 +2299,43 @@ $( document ).ready(function() {
 	console.log(app.MLCvariables);
 	
 	// set default titles of MLC (Multiple Line Chart)
-	app.titlesOfMLC = app.MLCvariables.slice();						 // deep copy of array
+    //app.MLCvariables  = ["Custom 1", "Custom 2", "Custom 3", "death_rate_tatal", "visitor_flows_to_selected_area"]
+	/*
+    app.titlesOfMLC = app.MLCvariables.slice();						 // deep copy of array
 	if (typeof titlesOfMLC !== 'undefined' && titlesOfMLC instanceof Array) {
 		for (var i=0; i<titlesOfMLC.length; i++) {
 			if (typeof titlesOfMLC[i] === 'string' && i < app.titlesOfMLC.length) 
 				app.titlesOfMLC[i] = titlesOfMLC[i];
 		}
 	}
-	//console.log(app.titlesOfMLC);
+    */
+    console.log("////////////////////////////////////////////////////////////////////**********************************")    
+
+    // Set default titles of MLC (Multiple Line Chart)
+    app.titlesOfMLC = app.MLCvariables.slice(); // Deep copy of app.MLCvariables
+    
+    // Debug: Initial state
+    console.log("Initial app.titlesOfMLC:", app.titlesOfMLC);
+    console.log("titlesOfMLC:", titlesOfMLC);
+    
+    // Check if titlesOfMLC is defined and is an array
+    if (Array.isArray(titlesOfMLC)) {
+        for (var i = 0; i < app.titlesOfMLC.length; i++) {
+            // Update only if titlesOfMLC[i] is a non-empty string
+            if (titlesOfMLC[i] && typeof titlesOfMLC[i] === 'string') {
+                console.log(`--> Updating app.titlesOfMLC[${i}] to`, titlesOfMLC[i]);
+                app.titlesOfMLC[i] = titlesOfMLC[i];
+            } else {
+                console.log(`--> Skipping update for app.titlesOfMLC[${i}]`);
+            }
+        }
+    }
+    
+    // Debug: Final state
+    console.log("Final app.titlesOfMLC:", app.titlesOfMLC);
+
+    
+    console.log("//////////////////////////////////////////////////////////////////////////////////////////////////////////")
 	
     // set highlighted areas of MLC (Multiple Line Chart)						 // deep copy of array
 	if (typeof HighlightMLC !== 'undefined' && HighlightMLC instanceof Array) {
@@ -3620,11 +3642,27 @@ function paintTop10Chart({mapN="", lassoData="", lassoedMap="", eventData="", gl
 					feature.properties[selectedItem], rIdx]);
 		}
 	});
-	sortedValues = selectedValues.sort((a, b) => b[2] - a[2])		// descending sort by value of selectedItem
+
+	var selectedSortOrder = $("#Top10Chart select[name=sortOrder]").val();
+	
+	
+	if (selectedSortOrder === "TOP") {
+		sortedValues = selectedValues.sort((a, b) => b[2] - a[2]); // descending sort by value of selectedItem
+		//sortedValues = selectedValues.sort((a, b) => b[2] - a[2])
+	} else {
+		sortedValues = selectedValues.sort((a, b) => a[2] - b[2]); // ascending sort by value of selectedItem
+	}
+	
+	//sortedValues = selectedValues.sort((a, b) => a[2] - b[2]);
+	
 	//console.log(mapN, selectedValues)
 	console.log(mapN, sortedValues)
 	
-	var nBars = 10;
+
+	//var nBars = 20;  //Top10Chart select[name=ACSdata] option:selected"
+	var nBars = parseInt($("#Top10Chart select[name=nBars]").val()) || 10;
+		console.log('nBars nBars nBars nBars nBars nBars nBars  '  + nBars)
+
 	var xValues = [];
 	var yValues = [];
 	var sValues = [];
@@ -3639,13 +3677,15 @@ function paintTop10Chart({mapN="", lassoData="", lassoedMap="", eventData="", gl
 	sValues.reverse();
 	console.log("xValues:", xValues)
 	console.log("yValues:", yValues)
+
+	var barColor = (selectedSortOrder === "TOP") ? '#ff99ff': '#89CFF0' ;
 	
 	var data = [{
 		type: 'bar',
 		x: xValues,
 		y: yValues,
 		mydata: sValues,
-		marker: {color: '#ff99ff', line: {color: '#08306B', width: 0.2}},
+		marker: {color: barColor, line: {color: '#08306B', width: 0.2}},
 		orientation: 'h'
 	}];
 
@@ -3853,14 +3893,14 @@ function paintComparisionLineChart({mapN="", lassoData="", lassoedMap="", eventD
 			type: 'line',
 			connectgaps: true,
 			name: series1_name,
-			marker: {color: '#375E97'}
+			marker: {color: '#4980d1'}
 		},
 		{
 			x: date, 
 			y: date.map(a => series1_ave),
 			mode: 'lines',
 			name: 'Average',
-			line: {color: '#375E97', dash: 'dash'},
+			line: {color: '#4980d1', dash: 'dash'},
 			visible: false
 		},
 		{
@@ -3870,7 +3910,7 @@ function paintComparisionLineChart({mapN="", lassoData="", lassoedMap="", eventD
 			//mode: 'lines',
 			type: 'line',
 			connectgaps: true,
-			marker: {color: '#FB6542'}
+			marker: {color: '#F06A6A'}
 		},
 		{
 			x: date, 
@@ -3878,7 +3918,7 @@ function paintComparisionLineChart({mapN="", lassoData="", lassoedMap="", eventD
 			mode: 'lines',
 			name: 'Average',
 			visible: false,
-			line: {color: '#FB6542', dash: 'dash'}
+			line: {color: '#F06A6A', dash: 'dash'}
 		},
 		{
 			x: date, 
@@ -3887,7 +3927,7 @@ function paintComparisionLineChart({mapN="", lassoData="", lassoedMap="", eventD
 			type: 'line',
 			connectgaps: true,
 			name: series1_name,
-			marker: {color: '#375E97'},
+			marker: {color: '#4980d1'},
 			visible: false
 		},
 		{
@@ -3895,7 +3935,7 @@ function paintComparisionLineChart({mapN="", lassoData="", lassoedMap="", eventD
 			y: date.map(a => series1_normalized_ave),
 			mode: 'lines',
 			name: 'Average',
-			line: {color: '#375E97', dash: 'dash'},
+			line: {color: '#4980d1', dash: 'dash'},
 			visible: false,
 		},
 		{
@@ -3905,7 +3945,7 @@ function paintComparisionLineChart({mapN="", lassoData="", lassoedMap="", eventD
 			//mode: 'lines',
 			type: 'line',
 			connectgaps: true,
-			marker: {color: '#FB6542'},
+			marker: {color: '#F06A6A'},
 			visible: false
 		},
 		{
@@ -3914,7 +3954,7 @@ function paintComparisionLineChart({mapN="", lassoData="", lassoedMap="", eventD
 			mode: 'lines',
 			name: 'Average',
 			visible: false,
-			line: {color: '#FB6542', dash: 'dash'}
+			line: {color: '#F06A6A', dash: 'dash'}
 		}
 	]
 	
@@ -4127,9 +4167,12 @@ function paintMultipleLineChart(zoomedData=[], {mapN="", lassoData="", lassoedMa
 	
 	var MultipleLineChart_width;
 	if (app.MultipleLineChart_width == null) {
+    //console.log("app.sPointsMultipleLineChart[app.MLCvariables[0]]['key'].length #########################################################################               ", app.sPointsMultipleLineChart[app.MLCvariables[0]]['key'].length)
 		if (app.sPointsMultipleLineChart[app.MLCvariables[0]]['key'].length <= 20) MultipleLineChart_width = 1000;
 		if (app.sPointsMultipleLineChart[app.MLCvariables[0]]['key'].length > 20) MultipleLineChart_width = 1300;
-		if (app.sPointsMultipleLineChart[app.MLCvariables[0]]['key'].length > 100) MultipleLineChart_width = 1600;
+		if (app.sPointsMultipleLineChart[app.MLCvariables[0]]['key'].length > 50) MultipleLineChart_width = 1500; 
+		if (app.sPointsMultipleLineChart[app.MLCvariables[0]]['key'].length > 80) MultipleLineChart_width = 1700;          
+		if (app.sPointsMultipleLineChart[app.MLCvariables[0]]['key'].length > 100) MultipleLineChart_width = 1800;
 	} else {
 		MultipleLineChart_width = app.MultipleLineChart_width;
 	}

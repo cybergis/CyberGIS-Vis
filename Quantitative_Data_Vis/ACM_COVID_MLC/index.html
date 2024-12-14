@@ -587,50 +587,32 @@ function draw_titleScatterchart(mapN=null) {
 
 
 function draw_titleTop10chart(mapN=null) {
-	//var chartID = (app.subject) ? "TOP10 Bar Chart" + " of " + app.subject : "TOP10 Bar Chart";
+
 	var chartID = (app.subject) ? "TOP10 Bar Chart" + " of " + app.subject : "TOP10 Bar Chart";
-	//$("#Top10Chart .map_id").html('&nbsp;<b>'+chartID+'</b>');
-	//var html_check = '	 <input id="parcoords-fixAxes" type="checkbox" name="parcoords_fixAxes" value="Fix Axes">' +
-	//				 '   <label for="fixAxes">Fix Axes</label>';
-	//$("#PCPchart .map_fixAxes").html(html_check);
 	var selectedItem = mapN;
 	if (mapN) {
 		selectedItem = $("#"+mapN+" select[name=ACSdata]").val();
-		//var layer = $("#"+mapN+" select[name=ACSdata]").find("option:selected").text();
 	}
 	console.log("selectedItem:", selectedItem)
     var html_layer ='<select >' +
                         '<option value="TOP" selected>Top </option>' +
                         '<option value="Bottom" >Bottom </option>' +
                     '</select>&nbsp;&nbsp;&nbsp;' +
-                    '<select>' +
+                    '<select name="nBars" onchange="paintTop10Chart({mapN: \'' + mapN + '\'})">' +
                         '<option value="10" selected>10</option>' +
                         '<option value="15" >15</option>' +
                         '<option value="20" >20</option>' +
-                        '<option value="25" >15</option>' +
-                        '<option value="25" >20</option>' +
                         '<option value="25" >25</option>' +
-                        '<option value="25" >30</option>' +          
                     '</select>' +        
                     ' Regions of: ' 
-                    
                     + '<select name="ACSdata" class="ACSdataSelect" onChange="layer_change(\'' + 'Top10Chart' + '\')">';
-
-
+	
 	html_layer = get_dropdownoptions_Layer(html_layer, null, selectedItem);
 	if (html_layer.length < 100) 
 	html_layer += '<option value="None">No Data</option>';
 	html_layer += '</select>'
 	$("#Top10Chart .map_layer").html(html_layer);
-	
-	//$('input[type=checkbox][id="parcoords-fixAxes"]').change(function() {
-	//	//var fixAxes = $(this).is(":checked");
-	//	var fixAxes = $('input[type=checkbox][id="parcoords-fixAxes"]').is(":checked");
-	//	console.log(getNow(), "parcoords-fixAxes changed:", fixAxes);
-	//	paintParcoords();
-	//});
 }
-
 
 function draw_titleComparisionLineChart(mapN=null) {
 	var chartID = (app.subject) ? "<div style=font-size:18px;>" + app.subject + "</div>" : "Comparision Line Chart";
@@ -3624,7 +3606,10 @@ function paintTop10Chart({mapN="", lassoData="", lassoedMap="", eventData="", gl
 	//console.log(mapN, selectedValues)
 	console.log(mapN, sortedValues)
 	
-	var nBars = 10;
+
+	//var nBars = 20;  //Top10Chart select[name=ACSdata] option:selected"
+	var nBars = parseInt($("#Top10Chart select[name=nBars]").val()) || 10;
+		console.log('nBars nBars nBars nBars nBars nBars nBars  '  + nBars)
 	var xValues = [];
 	var yValues = [];
 	var sValues = [];
