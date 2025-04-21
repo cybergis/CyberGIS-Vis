@@ -188,7 +188,7 @@ Images below show visualizations that you can create using CyberGIS-Vis. Click t
 | **NumOfMLC**              |          | Specify the number of line charts to include in the Multiple Line Chart. If left blank, the number of charts will default to the number of variables entered in the 'Variables' parameter above. |
 | **InitialVariableMLC** ||Specify the variables to be displayed on the line chart. If left blank, the variables in your input attribute file will be visualized in order.|
 | **DefaultRegion_MLC**     || Enter the 'id' from your attribute table to specify the default region displayed in the Multiple Line Chart. If left blank, the first region listed in your attribute table will be used.                         |
-| **HighlightMLC** ||Define the highlighted ranges for the x-axis values (periods) by specifying the start and end periods for the range you emphasize. |
+| **HighlightMLC** ||Define the highlighted ranges for the x-axis values (periods) by specifying the start, end periods and color for the range you emphasize - e.g.,  [['2025-01-06', '2025-01-30', "#fdff32"]] |
 
 #### Input parameters for visualizing 'Comparison Line Chart'.
 | Parameter                      | Required  | Description                                                                                                                                      |
