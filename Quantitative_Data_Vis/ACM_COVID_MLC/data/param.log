@@ -1,23 +1,22 @@
-2024-07-01 00:36:31 ACM_COVID_MLC
+2024-08-29 08:55:56 ACM_COVID_MLC
 
-  {'title': 'Covid-19 Risk Assessment using Twitter, Metropolitan Statistical '
-            'Areas, USA',
+  {'title': 'Spatiotemporal Dynamics of COVID-19 Cases and Deaths in U.S. '
+            'Counties',
    'Subject': 'Temporal Patterns of COVID-19 Risk Factors',
    'filename_suffix': 'COVID_MLC',
-   'variables': ['Confirmed Rate', 'Death Rate',
-                 'The Number of Visits from Outside to Inside of the selected '
-                 'MSA'],
+   'variables': ['confirmed_rate', 'death_rate', 'confirmed_rate_total',
+                 'death_rate_tatal'],
    'NumOfMaps': 2,
-   'InitialLayers': ['2020-03-15_Confirmed Rate', '2020-12-27_Confirmed Rate'],
-   'Initial_map_center': [37, -97],
+   'SortLayers': 'temporal',
+   'InitialLayers': ['2020-04-06_confirmed_rate', '2020-07-20_confirmed_rate'],
+   'Initial_map_center': [38, -97],
    'Initial_map_zoom_level': 4,
    'Map_width': '650px',
-   'Map_height': '400px',
+   'Map_height': '450px',
    'Top10_Chart': True,
    'Multiple_Line_Chart': True,
-   'NumOfMLC': 3,
-   'titlesOfMLC': ['1. COVID-19 Confirmed Cases (/100k pop)',
-                   '2. COVID-19 Death Cases (/100k pop)',
-                   '3. The Number of Visits from Outside to Inside of the '
-                   'selected MSA'],
-   'DefaultRegion_MLC': '35620'}
+   'NumOfMLC': 4,
+   'titlesOfMLC': ['1. Confirmed Rate (Confirmed Cases per 10k population)',
+                   '2. Death Rate (Deaths per 10k population)',
+                   '3. Cumulative Confirmed Rate', '4. Cumulative Death Rate'],
+   'DefaultRegion_MLC': '12086'}

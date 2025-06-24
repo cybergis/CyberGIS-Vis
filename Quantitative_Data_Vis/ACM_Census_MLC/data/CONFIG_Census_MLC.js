@@ -34,7 +34,7 @@ var titlesOfMLC = [];
 // [["begin_X_value","end_X_value","color"], ["begin_X_value","end_X_value","color"]…] 
 var DefaultRegion_MLC = "06037237201";
 var HighlightMLC = []; //Set  highlighted ranges for x value
-var MultipleLineChart_width = "";
+
 
 //Define the geographic id or name to be display on the top-right corner of the map
 //var NameDisplayed = "geoname";
@@ -56,8 +56,8 @@ var Correlogram = false;
 var Scatter_Plot = false;
 var Top10_Chart = true;
 var Parallel_Coordinates_Plot = false;
-var Comparision_Chart = false;
-var Multiple_Line_Chart = true;
+var Comparision_Chart = true;
+var Multiple_Line_Chart = false;
 
 // The number of digit after the decial point.
 var Num_Of_Decimal_Places = 2;                              // default = 1 

@@ -170,6 +170,7 @@ var app={
 	Top10Chart: true,               			 // draw Top10 Bar chart or not form configuration file (default: true)
 	ComparisionLineChart: true,                  // draw Comparision Line Chart or not form configuration file (default: true)
 	MultipleLineChart: true,                     // draw Multiple Line Chart or not form configuration file (default: true)
+	MultipleLineChart_width: null,
 	NumOfDecimalPlaces: 1,                       // the number of decimal places (default: 1)
 	MapWidth: "500px",                           // map width of each map (default: 500px)
 	MapHeight: "500px",                          // map height of each map (default: 500px)
@@ -253,7 +254,8 @@ var COLOR_CLASS = {
 	"Yellow_to_Red_6"    : ["#ffffb2", "#fed976", "#feb24c", "#fd8d3c", "#f03b20", "#bd0026"],
 	"Yellow_to_Red_7"    : ["#ffffb2", "#fed976", "#feb24c", "#fd8d3c", "#fc4e2a", "#e31a1c", "#b10026"],
 	"Yellow_to_Red_8"    : ["#ffffcc" ,"#ffeda0", "#fed976", "#feb24c", "#fd8d3c", "#fc4e2a", "#e31a1c", "#b10026"],
-   	"Yellow_to_Red_9"    : ["#ffffcc" ,"#ffeda0", "#fed976", "#feb24c", "#fd8d3c", "#fc4e2a", "#e31a1c", "#bd0026", "#800026"],
+   	//"Yellow_to_Red_9"    : ["#ffffcc" ,"#ffeda0", "#fed976", "#feb24c", "#fd8d3c", "#fc4e2a", "#e31a1c", "#bd0026", "#800026"],
+   	"Yellow_to_Red_9"    : ["#ffffdd" ,"#fff8c4", "#ffefa6", "#ffd982", "#fdbf70", "#fa9251", "#f45630", "#bd1f29", "#780000"], 
 	"Yellow_to_Green_5"  : ["#ffffcc", "#c2e699", "#78c679", "#31a354", "#006837"],
 	"Yellow_to_Green_6"  : ["#ffffcc", "#d9f0a3", "#addd8e", "#78c679", "#31a354", "#006837"],
 	"Yellow_to_Green_7"  : ["#ffffcc", "#d9f0a3", "#addd8e", "#78c679", "#41ab5d", "#238443", "#005a32"],
@@ -586,44 +588,37 @@ function draw_titleScatterchart(mapN=null) {
 
 
 function draw_titleTop10chart(mapN=null) {
-	//var chartID = (app.subject) ? "TOP10 Bar Chart" + " of " + app.subject : "TOP10 Bar Chart";
+
 	var chartID = (app.subject) ? "TOP10 Bar Chart" + " of " + app.subject : "TOP10 Bar Chart";
-	//$("#Top10Chart .map_id").html('&nbsp;<b>'+chartID+'</b>');
-	//var html_check = '	 <input id="parcoords-fixAxes" type="checkbox" name="parcoords_fixAxes" value="Fix Axes">' +
-	//				 '   <label for="fixAxes">Fix Axes</label>';
-	//$("#PCPchart .map_fixAxes").html(html_check);
 	var selectedItem = mapN;
 	if (mapN) {
 		selectedItem = $("#"+mapN+" select[name=ACSdata]").val();
-		//var layer = $("#"+mapN+" select[name=ACSdata]").find("option:selected").text();
 	}
 	console.log("selectedItem:", selectedItem)
-	var html_layer = '<b>TOP10 Regions of</b>: <select name="ACSdata" class="ACSdataSelect" onChange="layer_change(\'' + 'Top10Chart' + '\')">';
-	//$.each(app.titles, function(gIdx, title) {
-	//	if (gIdx < 1) return true;
-	//	if (app.values[gIdx] != selectedItem) {
-	//		html_layer += '<option value="' + app.values[gIdx] + '" class="line_none">' + title + '</option>';
-	//	} else {
-	//		html_layer += '<option value="' + app.values[gIdx] + '" class="line_none" selected>' + title + '</option>';
-	//	}
-	//});
+    var html_layer ='<select name="sortOrder" onchange="paintTop10Chart({mapN: \'' + mapN + '\'})">' +
+                        '<option value="TOP" selected>Top </option>' +
+                        '<option value="Bottom" >Bottom </option>' +
+                    '</select>&nbsp;&nbsp;&nbsp;' +
+                    '<select name="nBars" onchange="paintTop10Chart({mapN: \'' + mapN + '\'})">' +
+                        '<option value="5" selected>5</option>' +
+						'<option value="10" selected>10</option>' +
+                        '<option value="15" >15</option>' +
+                        '<option value="20" >20</option>' +
+                        '<option value="25" >25</option>' +
+                    '</select>' +        
+                    ' Regions of: ' 
+                    + '<select name="ACSdata" class="ACSdataSelect" onChange="layer_change(\'' + 'Top10Chart' + '\')">';
+	
 	html_layer = get_dropdownoptions_Layer(html_layer, null, selectedItem);
 	if (html_layer.length < 100) 
 	html_layer += '<option value="None">No Data</option>';
 	html_layer += '</select>'
 	$("#Top10Chart .map_layer").html(html_layer);
-	
-	//$('input[type=checkbox][id="parcoords-fixAxes"]').change(function() {
-	//	//var fixAxes = $(this).is(":checked");
-	//	var fixAxes = $('input[type=checkbox][id="parcoords-fixAxes"]').is(":checked");
-	//	console.log(getNow(), "parcoords-fixAxes changed:", fixAxes);
-	//	paintParcoords();
-	//});
 }
 
 
 function draw_titleComparisionLineChart(mapN=null) {
-	var chartID = (app.subject) ? "Comparision Line Chart of " + app.subject : "Comparision Line Chart";
+	var chartID = (app.subject) ? "<div style=font-size:18px;>" + app.subject + "</div>" : "Comparision Line Chart";
 	$("#CLCchart .map_id").html('&nbsp;<b>'+chartID+'</b>');
 	//var html_check = '	 <input id="CLCchart-fixAxes" type="checkbox" name="CLCchart_fixAxes" value="Fix Axes">' +
 	//				 '   <label for="fixAxes">Fix Axes</label>';
@@ -658,7 +653,7 @@ function draw_titleComparisionLineChart(mapN=null) {
 
 
 function draw_titleMultipleLineChart() {
-	var chartID = (app.subject) ? app.subject : "Multiple Line Chart";
+	var chartID = (app.subject) ? "<div style=font-size:20px;>" + app.subject + "</div>" : "Multiple Line Chart";
 	//$("#MLCchart .map_id").html('&nbsp;<b>'+chartID+'</b>');
 	$("#MLCchart .map_id").html('&nbsp;<b>'+chartID+'</b>');    
 }
@@ -962,10 +957,10 @@ function draw_globalSelection() {
 	// set drop-down list of 'global_class' 
 	var html_layer = 'Classification: <select name="globalClass" style="color:red;">' +
 					'<option value="equal" class="line_none">Equal</option>' +
-					'<option value="quantile" class="line_none" >Quantile</option>' +
-					'<option value="ckmeans" class="line_none" selected>Optimal</option>' +
+					'<option value="quantile" class="line_none">Quantile</option>' +
+					'<option value="ckmeans" class="line_none">Optimal</option>' +
 					'<option value="arithmetic" class="line_none">Arithmetic Progression</option>' +
-					'<option value="geometric" class="line_none">Geometric Progression</option>' +
+					'<option value="geometric" class="line_none" selected>Geometric Progression</option>' +
 					'<option value="std" class="line_none">Std Deviation</option>' +
 					'</select>';
 	$("#global_class").html(html_layer);
@@ -976,8 +971,8 @@ function draw_globalSelection() {
 					'<option value="5" class="line_none">5</option>' +
 					'<option value="6" class="line_none">6</option>' + 
 					'<option value="7" class="line_none">7</option>' +
-					'<option value="8" class="line_none" selected>8</option>' +
-					'<option value="9" class="line_none">9</option>' +
+					'<option value="8" class="line_none">8</option>' +
+					'<option value="9" class="line_none" selected>9</option>' +
 					'</select>';
 	$("#global_count").html(html_count);
 	app.globalCount = $("#global_count select[name=globalCount]").val();
@@ -1324,7 +1319,7 @@ function geostats_classification(classification, nClass, geojson, items) {
 
 	var values = [];
 	var j=0;
-	if (classification != "quantile") {
+	if (classification != "quantile" && classification != "geometric") {
 		for (var l=0; l<items.length; l++) {
 			item = items[l];
 			for (var i=0; i<geojson.features.length; i++) {
@@ -1352,7 +1347,7 @@ function geostats_classification(classification, nClass, geojson, items) {
 	var maxInterval = nClass * 1;
 	if (maxInterval > values.length) {
 		maxInterval = values.length;
-		if (classification == "quantile") maxInterval = values.length - 1;
+		if (classification == "quantile" && classification == "geometric") maxInterval = values.length - 1;
 	}
 	
 	values.sort(function(a,b){return a-b});
@@ -1366,12 +1361,11 @@ function geostats_classification(classification, nClass, geojson, items) {
 		if (classification == 'quantile')   ranges = serie.getClassQuantile(maxInterval - 1);			// for a class that value is 0.
 		if (classification == 'std')        ranges = serie.getClassStdDeviation(maxInterval);
 		if (classification == 'arithmetic') ranges = serie.getClassArithmeticProgression(maxInterval);
-		if (classification == 'geometric')  ranges = serie.getClassGeometricProgression(maxInterval);
-		if (classification != 'quantile') {
-			//intervals = ranges.slice(0, -1);
-			if (typeof(ranges) == "object") intervals = ranges.slice(0, -1);
-		} else {
-			intervals = [0, ranges[0]];								 // 0 is the special class for quantile
+		if (classification == 'geometric')  ranges = serie.getClassGeometricProgression(maxInterval-1);
+        
+		if (classification == 'quantile') {
+			//console.log("%%%quantile%%%%%%%%%%%%%%%%%%%%%%%%%%% ranges 1:", ranges) 			
+            intervals = [0, ranges[0]];								 // 0 is the special class for quantile
 			var r = 1;
 			for (var v=0; v<values.length; v++) {
 				if (values[v] == ranges[r]) {
@@ -1382,11 +1376,23 @@ function geostats_classification(classification, nClass, geojson, items) {
 					if (++r >= ranges.length) break;
 				}
 			}
+			//console.log("%%%quantile%%%%%%%%%%%%%%%%%%%%%%%%%%% intervals 2:", intervals)             
 			intervals.sort(function(a,b){return a-b});				 // sort for negative values
-			//console.log(items, "items:", classification,  nClass)
-			//console.log("ranges:", ranges)
-			//console.log("intervals:", intervals)
-		}
+		} else if (classification == 'geometric'){
+            var roundedranges = []; 
+              // Use map to create a new array with rounded values
+              var roundedranges = ranges.map(value => {
+              // Round to 2 decimal points and convert back to number
+              return parseFloat(value.toFixed(2))*1.0;
+            });
+			if (typeof(roundedranges) == "object") intervals = roundedranges.slice(0, -1);
+            intervals.unshift(0);
+			//nsole.log("%%%quantile%%%%%%%%%%%%%%%%%%%%%%%%%%% intervals 2:", intervals)    
+        }
+        else  {
+			//intervals = ranges.slice(0, -1);
+			if (typeof(ranges) == "object") intervals = ranges.slice(0, -1);
+		} 
 	}
 	
 	if (classification == 'ckmeans') {                               // using simple-statistics
@@ -1479,8 +1485,8 @@ function ACSdata_render(mIDX) {
 		
         if (first < NumOfMaps) {
             var options = {
-                collapsed: true, /* Whether its collapsed or not */
-                position: 'topleft', /* The position of the control */
+                collapsed: false, /* Whether its collapsed or not */
+                position: 'bottomleft', /* The position of the control */
                 text: 'Locate', /* The text of the submit button */
                 geocoderId: first,
                 callback: function (results) {
@@ -1997,10 +2003,17 @@ $( document ).ready(function() {
 		app.labdic[value] = {'shortName': app.titles[i].substr(5), 'fullName': app.titles[i]};
 		app.titdic[app.titles[i]] = value;
 	}
-	app.titles_default = app.titles;
+	app.titles_default = app.titles.slice(1);
 	app.titles_temporal = app.titles.slice(1);
 	// "2020-03-31_Confirmed_Cases_per_10k_pop"
 	// "2020-03-31_vaccinated_per_10k_pop"
+    app.titles_default.sort(function(a, b) {
+		var titleA = a;
+		var titleB = b;
+		if (titleA < titleB) return -1;
+		if (titleA > titleB) return +1;
+		return 0;
+	});
 	app.titles_temporal.sort(function(a, b) {
 		var titleA = a;
 		var titleB = b;
@@ -2012,6 +2025,7 @@ $( document ).ready(function() {
 		if (titleA > titleB) return +1;
 		return 0;
 	});
+    app.titles_default = [app.titles[0]].concat(app.titles_default)
 	app.titles_temporal = [app.titles[0]].concat(app.titles_temporal)
 	//console.log(app.titles, app.values, app.titdic, app.titles_default, app.titles_temporal)
 	var geokey = app.geokey;
@@ -2285,14 +2299,43 @@ $( document ).ready(function() {
 	console.log(app.MLCvariables);
 	
 	// set default titles of MLC (Multiple Line Chart)
-	app.titlesOfMLC = app.MLCvariables.slice();						 // deep copy of array
+    //app.MLCvariables  = ["Custom 1", "Custom 2", "Custom 3", "death_rate_tatal", "visitor_flows_to_selected_area"]
+	/*
+    app.titlesOfMLC = app.MLCvariables.slice();						 // deep copy of array
 	if (typeof titlesOfMLC !== 'undefined' && titlesOfMLC instanceof Array) {
 		for (var i=0; i<titlesOfMLC.length; i++) {
 			if (typeof titlesOfMLC[i] === 'string' && i < app.titlesOfMLC.length) 
 				app.titlesOfMLC[i] = titlesOfMLC[i];
 		}
 	}
-	//console.log(app.titlesOfMLC);
+    */
+    console.log("////////////////////////////////////////////////////////////////////**********************************")    
+
+    // Set default titles of MLC (Multiple Line Chart)
+    app.titlesOfMLC = app.MLCvariables.slice(); // Deep copy of app.MLCvariables
+    
+    // Debug: Initial state
+    console.log("Initial app.titlesOfMLC:", app.titlesOfMLC);
+    console.log("titlesOfMLC:", titlesOfMLC);
+    
+    // Check if titlesOfMLC is defined and is an array
+    if (Array.isArray(titlesOfMLC)) {
+        for (var i = 0; i < app.titlesOfMLC.length; i++) {
+            // Update only if titlesOfMLC[i] is a non-empty string
+            if (titlesOfMLC[i] && typeof titlesOfMLC[i] === 'string') {
+                console.log(`--> Updating app.titlesOfMLC[${i}] to`, titlesOfMLC[i]);
+                app.titlesOfMLC[i] = titlesOfMLC[i];
+            } else {
+                console.log(`--> Skipping update for app.titlesOfMLC[${i}]`);
+            }
+        }
+    }
+    
+    // Debug: Final state
+    console.log("Final app.titlesOfMLC:", app.titlesOfMLC);
+
+    
+    console.log("//////////////////////////////////////////////////////////////////////////////////////////////////////////")
 	
     // set highlighted areas of MLC (Multiple Line Chart)						 // deep copy of array
 	if (typeof HighlightMLC !== 'undefined' && HighlightMLC instanceof Array) {
@@ -2308,6 +2351,13 @@ $( document ).ready(function() {
 	    MultipleLineChart_width.substring(MultipleLineChart_width.length-2) == 'px' && $.isNumeric(MultipleLineChart_width.replace('px',''))) {
 			app.MultipleLineChart_width = MultipleLineChart_width;
 			//alert(app.MultipleLineChart_width);
+	}
+	
+	//parcoords_width
+	if (typeof Comparision_Chart_width !== 'undefined' && typeof Comparision_Chart_width === 'string' && 
+	    Comparision_Chart_width.substring(Comparision_Chart_width.length-2) == 'px' && $.isNumeric(Comparision_Chart_width.replace('px',''))) {
+			app.parcoords_width = Comparision_Chart_width;
+			//alert(app.parcoords_width);
 	}
 	
     // set highlighted areas of CLC (Comparision Line Chart)						 // deep copy of array
@@ -3592,11 +3642,27 @@ function paintTop10Chart({mapN="", lassoData="", lassoedMap="", eventData="", gl
 					feature.properties[selectedItem], rIdx]);
 		}
 	});
-	sortedValues = selectedValues.sort((a, b) => b[2] - a[2])		// descending sort by value of selectedItem
+
+	var selectedSortOrder = $("#Top10Chart select[name=sortOrder]").val();
+	
+	
+	if (selectedSortOrder === "TOP") {
+		sortedValues = selectedValues.sort((a, b) => b[2] - a[2]); // descending sort by value of selectedItem
+		//sortedValues = selectedValues.sort((a, b) => b[2] - a[2])
+	} else {
+		sortedValues = selectedValues.sort((a, b) => a[2] - b[2]); // ascending sort by value of selectedItem
+	}
+	
+	//sortedValues = selectedValues.sort((a, b) => a[2] - b[2]);
+	
 	//console.log(mapN, selectedValues)
 	console.log(mapN, sortedValues)
 	
-	var nBars = 10;
+
+	//var nBars = 20;  //Top10Chart select[name=ACSdata] option:selected"
+	var nBars = parseInt($("#Top10Chart select[name=nBars]").val()) || 10;
+		console.log('nBars nBars nBars nBars nBars nBars nBars  '  + nBars)
+
 	var xValues = [];
 	var yValues = [];
 	var sValues = [];
@@ -3611,19 +3677,27 @@ function paintTop10Chart({mapN="", lassoData="", lassoedMap="", eventData="", gl
 	sValues.reverse();
 	console.log("xValues:", xValues)
 	console.log("yValues:", yValues)
+
+	var barColor = (selectedSortOrder === "TOP") ? '#ff99ff': '#89CFF0' ;
 	
 	var data = [{
 		type: 'bar',
 		x: xValues,
 		y: yValues,
 		mydata: sValues,
-		marker: {color: '#ff99ff', line: {color: '#08306B', width: 0.2}},
+		marker: {color: barColor, line: {color: '#08306B', width: 0.2}},
 		orientation: 'h'
 	}];
 
 	var layout = {
 		//title: 'Top 10 US Counties of HIV Rate',
 		margin: {l:120, r:50, b:40, t:40, pad:4},
+		xaxis: {
+			tickfont: {
+			size: 14,
+			color: '#7f7f7f'
+			}
+		},		
 		barmode: 'stack',
 		paper_bgcolor: '#FAFAFA',
 		plot_bgcolor: '#FAFAFA',
@@ -3819,14 +3893,14 @@ function paintComparisionLineChart({mapN="", lassoData="", lassoedMap="", eventD
 			type: 'line',
 			connectgaps: true,
 			name: series1_name,
-			marker: {color: '#33CFA5'}
+			marker: {color: '#4980d1'}
 		},
 		{
 			x: date, 
 			y: date.map(a => series1_ave),
 			mode: 'lines',
 			name: 'Average',
-			line: {color: '#33CFA5', dash: 'dash'},
+			line: {color: '#4980d1', dash: 'dash'},
 			visible: false
 		},
 		{
@@ -3853,7 +3927,7 @@ function paintComparisionLineChart({mapN="", lassoData="", lassoedMap="", eventD
 			type: 'line',
 			connectgaps: true,
 			name: series1_name,
-			marker: {color: '#33CFA5'},
+			marker: {color: '#4980d1'},
 			visible: false
 		},
 		{
@@ -3861,7 +3935,7 @@ function paintComparisionLineChart({mapN="", lassoData="", lassoedMap="", eventD
 			y: date.map(a => series1_normalized_ave),
 			mode: 'lines',
 			name: 'Average',
-			line: {color: '#33CFA5', dash: 'dash'},
+			line: {color: '#4980d1', dash: 'dash'},
 			visible: false,
 		},
 		{
@@ -3968,7 +4042,7 @@ function paintComparisionLineChart({mapN="", lassoData="", lassoedMap="", eventD
 					args: [{'visible': [false, false, false, false, true, true, true, true]},
 						{//'title': 'Yahoo',
 							'annotations': [...Temporal_Area2_Compare, ...Temporal_Area1_Compare]}],
-					label: 'Trend Comparision',
+					label: 'Trend Comparison',
 					method: 'update'
 				},			
 				{
@@ -4014,7 +4088,21 @@ function paintComparisionLineChart({mapN="", lassoData="", lassoedMap="", eventD
     
 	var layout = {
         shapes: shapes,
-		//title: "Comparision of " + app.subject + " between "+ series1_name + " and " + series2_name,
+		xaxis: {
+			tickfont: {
+			size: 16,
+			color: '#7f7f7f'}
+		},
+		yaxis: {
+			tickfont: {
+			size: 16,
+			color: '#7f7f7f'}
+		},
+        font: {
+         // family: 'Arial',
+         size: 15, // Comparison Line Chart and Legend Font Size
+          //color: '#7f7f7f'
+        },  	
 		updatemenus: updatemenus,
 		paper_bgcolor: '#FAFAFA',
 		plot_bgcolor: '#FAFAFA',
@@ -4079,9 +4167,12 @@ function paintMultipleLineChart(zoomedData=[], {mapN="", lassoData="", lassoedMa
 	
 	var MultipleLineChart_width;
 	if (app.MultipleLineChart_width == null) {
+    //console.log("app.sPointsMultipleLineChart[app.MLCvariables[0]]['key'].length #########################################################################               ", app.sPointsMultipleLineChart[app.MLCvariables[0]]['key'].length)
 		if (app.sPointsMultipleLineChart[app.MLCvariables[0]]['key'].length <= 20) MultipleLineChart_width = 1000;
 		if (app.sPointsMultipleLineChart[app.MLCvariables[0]]['key'].length > 20) MultipleLineChart_width = 1300;
-		if (app.sPointsMultipleLineChart[app.MLCvariables[0]]['key'].length > 100) MultipleLineChart_width = 1600;
+		if (app.sPointsMultipleLineChart[app.MLCvariables[0]]['key'].length > 50) MultipleLineChart_width = 1500; 
+		if (app.sPointsMultipleLineChart[app.MLCvariables[0]]['key'].length > 80) MultipleLineChart_width = 1700;          
+		if (app.sPointsMultipleLineChart[app.MLCvariables[0]]['key'].length > 100) MultipleLineChart_width = 1800;
 	} else {
 		MultipleLineChart_width = app.MultipleLineChart_width;
 	}
@@ -4144,7 +4235,7 @@ function paintMultipleLineChart(zoomedData=[], {mapN="", lassoData="", lassoedMa
 		margin: { l: 45, t: 45, r: 45, b: 45 },
 		xaxis: {
 			tickfont: {
-			size: 10,
+			size: 14,
 			color: '#7f7f7f'
 			},
 			showgrid: true,
@@ -4159,7 +4250,7 @@ function paintMultipleLineChart(zoomedData=[], {mapN="", lassoData="", lassoedMa
 		yaxis: {
 			fixedrange: true,
 			tickfont: {
-			size: 10,
+			size: 14,
 			color: '#7f7f7f'
 			},
 			showgrid: true,

@@ -22,6 +22,7 @@ var NumOfCLC = 0;
 var InitialVariableCLC = []; 
 var DefaultRegion_CLC = ""; //Set Defaul Region
 
+
 // Define the number of variable that you want to visualize Multiple Synchronized Line Chart. 
 var NumOfMLC = 0;
 // Define variables that you want to visualize at MLC (Multiple Synchronized Line Chart).

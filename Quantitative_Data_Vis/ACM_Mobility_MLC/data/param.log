@@ -1,0 +1,23 @@
+2024-08-29 08:38:37 ACM_Mobility_MLC
+
+  {'title': 'Covid-19 Risk Assessment using Twitter, Metropolitan Statistical '
+            'Areas, USA',
+   'Subject': 'Temporal Patterns of COVID-19 Risk Factors',
+   'filename_suffix': 'Mobility_MLC',
+   'variables': ['Confirmed Rate', 'Death Rate',
+                 'The Number of Visits from Outside to Inside of the selected '
+                 'MSA'],
+   'NumOfMaps': 2,
+   'InitialLayers': ['2020-03-15_Confirmed Rate', '2020-12-27_Confirmed Rate'],
+   'Initial_map_center': [37, -97],
+   'Initial_map_zoom_level': 4,
+   'Map_width': '650px',
+   'Map_height': '400px',
+   'Top10_Chart': True,
+   'Multiple_Line_Chart': True,
+   'NumOfMLC': 3,
+   'titlesOfMLC': ['1. COVID-19 Confirmed Cases (/100k pop)',
+                   '2. COVID-19 Death Cases (/100k pop)',
+                   '3. The Number of Visits from Outside to Inside of the '
+                   'selected MSA'],
+   'DefaultRegion_MLC': '35620'}

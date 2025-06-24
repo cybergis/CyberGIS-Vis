@@ -605,13 +605,7 @@ function draw_titleTop10chart(mapN=null) {
 	html_layer += '<option value="None">No Data</option>';
 	html_layer += '</select>'
 	$("#Top10Chart .map_layer").html(html_layer);
-	
-	//$('input[type=checkbox][id="parcoords-fixAxes"]').change(function() {
-	//	//var fixAxes = $(this).is(":checked");
-	//	var fixAxes = $('input[type=checkbox][id="parcoords-fixAxes"]').is(":checked");
-	//	console.log(getNow(), "parcoords-fixAxes changed:", fixAxes);
-	//	paintParcoords();
-	//});
+
 }
 
 
@@ -3555,7 +3549,8 @@ function paintTop10Chart({mapN="", lassoData="", lassoedMap="", eventData="", gl
 					feature.properties[selectedItem], rIdx]);
 		}
 	});
-	sortedValues = selectedValues.sort((a, b) => b[2] - a[2])		// descending sort by value of selectedItem
+	//sortedValues = selectedValues.sort((a, b) => b[2] - a[2])		// descending sort by value of selectedItem
+	sortedValues = selectedValues.sort((a, b) => a[2] - b[2]);
 	//console.log(mapN, selectedValues)
 	console.log(mapN, sortedValues)
 	

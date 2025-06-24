@@ -17,30 +17,37 @@ import numpy as np
 from scipy import stats
 import geopandas as gpd
 #This is for CyberGISX. Uncomment a command line below when you run in CyberGIX Environment
-#from jupyter_server import serverapp
+from jupyter_server import serverapp
+import ipywidgets as widgets
+from IPython.display import display, clear_output
+import inspect
+from dateutil.parser import isoparser
+
+globals_from_jupyter = None
+parser = isoparser()
 
 #This is for CyberGISX. Uncomment a command line below when you run in CyberGIX Environment
-## Retrieve Server URL that Jupyter is running
-#jupyter_envs = {k: v for k, v in os.environ.items() if k.startswith('JUPYTER')}
-#temp_server = jupyter_envs['JUPYTER_INSTANCE_URL']
+# Retrieve Server URL that Jupyter is running
+jupyter_envs = {k: v for k, v in os.environ.items() if k.startswith('JUPYTER')}
+temp_server = jupyter_envs['JUPYTER_INSTANCE_URL']
 
 #This is for CyberGISX. Uncomment a command line below when you run in CyberGIX Environment
 # Define Paths for Visualization (Jupyter Lab)
-#servers = list(serverapp.list_running_servers())
-#servers1 = temp_server+servers[0]["base_url"]+ 'view'
-#servers2 = temp_server+servers[0]["base_url"]+ 'edit'
+servers = list(serverapp.list_running_servers())
+servers1 = temp_server+servers[0]["base_url"]+ 'view'
+servers2 = temp_server+servers[0]["base_url"]+ 'edit'
 
 cwd = os.getcwd()
 prefix_cwd = "/home/jovyan/work"
 cwd = cwd.replace(prefix_cwd, "")
 
 # This is for Jupyter notebbok installed in your PC
-local_dir1 = cwd
-local_dir2 = cwd  
+#local_dir1 = cwd
+#local_dir2 = cwd  
 
 #This is for CyberGISX. Uncomment two command lines below when you run in CyberGIX Environment
-#local_dir1 = servers1 + cwd + '/'
-#local_dir2 = servers2 + cwd + '/' 
+local_dir1 = servers1 + cwd + '/'
+local_dir2 = servers2 + cwd + '/' 
 
 def write_INDEX_html(param, oDir):
     #open Adaptive_Choropleth_Mapper.html (the excutable file for the visualization)
@@ -91,68 +98,38 @@ def write_CONFIG_js(param, oDir):
 def write_VARIABLES_js(community, param, oDir):
     #print(param)    
     geoid        =  community.columns[0]
-    periods      =  param['periods']
+    periods      =  set(param['periods'])
     variables    =  param['variables']
     
-    ## filtering by years
-    #community = community[community.year.isin(years)]
-    #print(community)
-    #selectedCommunity = community[variables]
-    #print(community)
-    #return
+    index_col = "geoid"
+    field_col = "period"
+    community=community.rename(columns=param['labels'])
+    value_col = [param['labels'][v] if v in param['labels'] else v for v in variables]
     
-    #make heading: community.columns[0] has "geoid" (string)
-    heading = [geoid]
-    for i, period in enumerate(periods):
-        #for j, variable in enumerate(param['labels']):
-        #    #heading.append(str(period)+' '+variable)
-        #    heading.append(str(period)+'_'+variable)
-        for j, variable in enumerate(variables):
-            if (variable in param['labels']): shortLabel = param['labels'][variable]
-            else: shortLabel = variable
-            heading.append(str(period)+'_'+shortLabel)
-    #Make Dictionary
-    mydictionary = {}    # key: geoid, value: variables by heading
-    h = -1
-    selectedColumns = [geoid]
-    selectedColumns.extend(variables)
-    #print("selectedColumns:", type(selectedColumns), selectedColumns)
-    for i, period in enumerate(periods):
-        aYearDF = community[community.period==period][selectedColumns]
-        #print(period, type(aYearDF), aYearDF)
-        for j, variable in enumerate(variables):
-            h += 1
-            for index, row in aYearDF.iterrows():
-                #print(index, row)
-                key = row[geoid]
-                val = row[variable]
-                if (math.isnan(val)): #converts Nan in GEOSNAP data to -9999
-                    #print(i, j, key, period, val)
-                    val = -9999
-                if (key in mydictionary):
-                    value = mydictionary[key]
-                    value[h] = val
-                else:
-                    value = [-9999] * (len(heading) - 1)                
-                    value[h] = val
-                mydictionary[key] = value
-                
-    #Select keys in the Dictionary and sort
-    keys = list(mydictionary.keys())
-    keys.sort()
+    pivoted = community.replace([np.inf, -np.inf], np.nan).query("period in @periods").pivot(columns=field_col, index=index_col, values=value_col)
+    pivoted = pivoted.swaplevel(0, 1, axis=1)
+    # fill NA
+    pivoted = pivoted.fillna(-9999)
+    # update header
+    pivoted.columns = ['_'.join([str(c) for c in col]).strip() for col in pivoted.columns.values]
+    # # if integer columns exist, convert them
+    # for column in pivoted.columns:
+    #     if pd.api.types.is_float_dtype(pivoted[column]):
+    #         # Check if all values in the column are effectively integers
+    #         if all(pivoted[column] % 1 == 0):
+    #             pivoted[column] = pivoted[column].astype(int)
+    # format the dataframe to array structure
+    tight_dict = pivoted.reset_index().to_dict(orient='tight')
+
     # use Keys and Dictionary created above and write them VARIABLES.js
     filename_VARIABLES = "ACM_" + param['filename_suffix'] + "/data/VARIABLES_"+param['filename_suffix']+".js"
     ofile = open(filename_VARIABLES, 'w')
-    ofile.write('var GEO_VARIABLES =\n')
-    ofile.write('[\n')
-    ofile.write('  '+json.dumps(heading)+',\n')
-    for i, key in enumerate(keys):
-        values = mydictionary[key]
-        values.insert(0, key)
-        #print(key, values)
-        ofile.write('  '+json.dumps(values)+',\n')
-    ofile.write(']\n')
-    ofile.close()
+    with open(filename_VARIABLES, "w") as f:
+        f.writelines('var GEO_VARIABLES =[\n')
+        f.writelines(str(tight_dict["columns"]))
+        tmp_text = str(tight_dict["data"])
+        f.write(","+tmp_text[1:])
+                
     
 def write_GEO_JSON_js(param, oDir):    
     # read shape file to df_shape
@@ -198,7 +175,7 @@ def write_GEO_JSON_js(param, oDir):
     ofile.write(']}\n')
     ofile.close()
 def varName(p):
-    for k, v in globals().items():
+    for k, v in globals_from_jupyter.items():
         if id(p) == id(v):
             return k
             
@@ -384,56 +361,7 @@ def Adaptive_Choropleth_Mapper_viz(param):
     if ('variables' not in param and 'variable' in param): 
         param['variables'] = [param['variable']]
         #print("default param ['variables']:", param['variables'])
-    
-    community = None
-    # select community by state_fips, msa_fips, county_fips  ->  reserved for future use (RFU)
-    #if ('msa_fips' in param and param['msa_fips']):
-    #    community = Community.from_ltdb(years=param['years'], msa_fips=param['msa_fips'])
-    #    #community = Community.from_ltdb(msa_fips=param['msa_fips'])
-    #elif ('county_fips' in param and param['county_fips']):
-    #    community = Community.from_ltdb(years=param['years'], county_fips=param['county_fips'])
-    #elif ('state_fips' in param and param['state_fips']):
-    #    community = Community.from_ltdb(years=param['years'], state_fips=param['state_fips'])
-    #print(community)
-    
-    #### This is executed when the user enter attributes in csv file and geometroy in shapefile 
-    if ('inputCSV' in param and 'shapefile' in param):
-        community = param["inputCSV"]
-        geoid = community.columns[0]      
-        community[community.columns[0]] = community[geoid].astype(str)
-        #print("community.columns[0]:", community.columns[0])
-        
-        df_shape = param['shapefile']
-        df_shape = df_shape.astype(str)     
-        geokey = df_shape.columns[0]
-        df_shape = df_shape.set_index(geokey)
-        
-        # insert geometry to community
-        geometry = []
-        for index, row in community.iterrows():
-            tractid = row[geoid]
-            try:
-                tract = df_shape.loc[tractid]
-                geometry.append(shapely.wkt.loads(tract.geometry))
-            except KeyError:
-                #print("Tract ID [{}] is not found in the shape file {}".format(tractid, param['shapefile']))
-                geometry.append(None)
-        
-        if(("geometry" in community) == False):
-            community.insert(len(community.columns), "geometry", geometry)
-    ####
-    
-    community = community.replace([np.inf, -np.inf], np.nan)
-    # check if geometry is not null for Spatial Clustering  
-    community = community[pd.notnull(community['geometry'])]
-    #print(community)
 
-    # read short label and convert it to dict
-    ##  param['labels'] = {}
-    ##  if ('shortLabelCSV' in param):
-    ##      df_shortLabel = pd.read_csv(param['shortLabelCSV']).set_index('variable')
-    ##      param['labels'] = df_shortLabel.to_dict()['short_name']
-    ##      print(param['labels'])
     param['labels'] = {}
     if ('shortLabelCSV' in param):
         df_shortLabel = pd.read_csv(param['shortLabelCSV'])
@@ -454,7 +382,7 @@ def Adaptive_Choropleth_Mapper_viz(param):
     print('output directory :  {}'.format(oDir))
     write_INDEX_html(param, oDir)
     write_CONFIG_js(param, oDir)
-    write_VARIABLES_js(community, param, oDir)
+    write_VARIABLES_js(param["inputCSV"].copy(), param, oDir)
     #write_GEO_JSON_js(community, param)
     write_GEO_JSON_js(param, oDir)
     write_LOG(param, oDir)
@@ -468,7 +396,7 @@ def Adaptive_Choropleth_Mapper_viz(param):
     print('To see your visualization, click the URL below (or locate the files):')
     print(url)
     print('To access all visualizations that you have created, click the URL below (or locate the files):')
-    print(local_dir1 + '/ACM_log.html')    
+    print(local_dir1 + 'ACM_log.html')    
     print('Advanced options are available in ')  
     print(local_dir2 + 'ACM_' + param['filename_suffix']+'/data/CONFIG_' + param['filename_suffix']+'.js')
     #display(Javascript('window.open("{url}");'.format(url=url)))
@@ -494,6 +422,1221 @@ def CheckColumnName(df_name, df, columnName, pos=-1):
         print(df.columns.tolist())
         return False
     return True
+
+# Function to wrap widgets with tooltips
+def widget_with_tooltip(widget, tooltip_text):
+    """
+    Wraps a widget with a tooltip that appears on hover.
+    """
+    tooltip = widgets.HTML(
+        value=f"""
+        <div class="tooltip-container">
+            {widget._repr_html_()}
+            <span class="tooltip-text">{tooltip_text}</span>
+        </div>
+        """
+    )
+    return tooltip
+
+
+# Check date format for periods.
+def check_dateformat(text):
+    try:
+        parser.parse_isodate(str(text))
+    except:
+        return False
+    return True
+
+def Initial_Layers(file):
+    # Pre-compute the heading for debugging or display
+    # Define the output file for the heading
+    output_heading_file = "heading_output.csv"
+    input_attributes = file
+    # Clear the file before use
+    with open(output_heading_file, 'w') as file:
+        pass
+    
+    # Generate the heading variable as per the user's code
+    periods = input_attributes[input_attributes.columns[1]].unique().tolist()  # Unique values of the second column
+    variables = input_attributes.columns[2:].tolist()
+    heading_initial = []
+    
+    for period in periods:
+        for variable in variables:
+            heading_initial.append(f"{period}_{variable}")
+    
+    # Convert heading to a DataFrame and export to CSV
+    heading_df = pd.DataFrame(heading_initial, columns=["Heading"])
+    heading_df.to_csv(output_heading_file, index=False)
+    
+    # Display all rows and columns
+    pd.set_option('display.max_rows', None)
+    pd.set_option('display.max_columns', None)
+
+    print(heading_df.to_string())
+
+
+# Function to create the GUI
+def MLC(map_center=None, map_zoom=None):
+    # Set default values based on passed arguments
+    map_center_default = "" if map_center is None else f"{map_center[0]}, {map_center[1]}"
+    map_zoom_default = "" if map_zoom is None else str(map_zoom)
+    
+    # Currentframe is this python file. f_back enabling going back to the frame where MLC is called.
+    frame = inspect.currentframe().f_back
+    globals_from_jupyter = frame.f_globals  # we can bring both global or local. For making globals_from_jupyter accessible from outside.
+    
+    #print(caller_gloables.get("input_attributes"))
+    # Widget definitions
+    input_csv_widget = widgets.Text(
+        description='Input Attribute:',
+        value='attributes',
+        style={'description_width': '160px'},
+        layout=widgets.Layout(width='400px'),
+        #tooltip='Enter the CSV file name containing the attribute data.'
+    )
+    input_csv_help = widgets.Label(value='Enter the CSV file variable name containing the attribute data.')
+    
+    shapefile_widget = widgets.Text(
+        description='Input Shapefile:',
+        value='shapefile',
+        style={'description_width': '160px'},
+        layout=widgets.Layout(width='400px'),
+        #tooltip='Enter the shapefile (.shp) variable name containing geographic data.'
+    )
+    shapefile_help = widgets.Label(value='Enter the shapefile (.shp) variable name containing geographic data.')    
+    
+    title_widget = widgets.Text(
+        description='Title:',
+        value='Spatiotemporal Dynamics of COVID-19 Cases and Deaths in U.S. Counties',
+        layout=widgets.Layout(width='600px'),
+        style={'description_width': '160px'},
+        #tooltip='Enter the title for the result visualization.'
+    )
+    title_help = widgets.Label(value='Enter the title for the result visualization.')  
+    
+    subject_widget = widgets.Text(
+        description="Chart Title:",
+        value="Temporal Patterns of COVID-19 Risk Factors",
+        layout=widgets.Layout(width='600px'),
+        style={'description_width': '160px'},
+        #tooltip='Enter the text to be displayed at the top of all line charts. For example: "Temporal Patterns of Risk Factors..'
+    )
+    subject_help = widgets.Label(value="Enter the text to be displayed at the top of the line charts, such as 'Temporal Patterns of COVID-19 Rates.'")  
+    
+    filename_suffix_widget = widgets.Text(
+        description="Output Folder Name:",
+        value="COVID_MLC",
+        layout=widgets.Layout(width='400px'),
+        style={'description_width': '160px'},
+        #tooltip='Enter the name of the output folder for generated files.'
+    )
+    filename_suffix_help = widgets.Label(value='Enter the name of the output folder for generated files.')      
+    
+    periods_widget = widgets.SelectMultiple(
+        description='Periods:',
+        options=['All'],
+        value=['All'],
+        layout=widgets.Layout(width='400px'),
+        style={'description_width': '160px'},
+        #tooltip='Specify the periods as comma-separated values for specific periods or select "All" to display all available periods.'
+    )
+    periods_help = widgets.Label(value='Select time ranges for temporal charts; "All" for all ranges. Use "Ctrl" for multiple choices. Acceptable formats: YYYY, MM-DD, or MM-DD-YYYY')
+    
+    num_of_maps_widget = widgets.IntSlider(
+        description="The Number of Maps:",
+        value=2,
+        min=1,
+        max=10,
+        layout=widgets.Layout(width='400px'),
+        style={'description_width': '160px'},
+        #tooltip='Specify the number of maps to be displayed. Multiple maps can be displayed.'
+    )
+    num_of_maps_help = widgets.Label(value='Specify the number of maps to visualize.')      
+
+    # Widget for map center (latitude and longitude)
+    map_center_widget = widgets.Text(
+        description="Map Center (Lat, Lon):",
+        value=map_center_default,  # Set from parameter or empty string
+        layout=widgets.Layout(width='400px'),
+        style={'description_width': '160px'},
+        #tooltip='Specify the map center as "latitude, longitude" (e.g., 38, -97).'
+    )
+    
+    # Widget for map zoom level
+    map_zoom_widget = widgets.Text(
+        description="Map Zoom Level:",
+        value=map_zoom_default,  # Set from parameter or empty string
+        layout=widgets.Layout(width='300px'),
+        style={'description_width': '160px'},
+        #tooltip='Specify the initial zoom level of the map (optional).'
+    )
+         
+    sort_layers_widget = widgets.Dropdown(
+        options=['temporal', 'compare'],
+        description='Sort Layers:',
+        value='temporal',
+        style={'description_width': '160px'},
+        layout=widgets.Layout(width='400px'),
+        #tooltip='"temporal" for examining temporal changes of distribution, "compare" for comparing different attributes for a specific year.'
+    )
+    sort_layers_help = widgets.Label(value='Choose "Temporal" to compare the same variable at different points in time or "Compare" to compare different variables at the same point in time.')  
+    
+    initial_layers_widget = widgets.Textarea(
+        description="Initial Layers:",
+        value="2020-04-06_confirmed_rate,2020-07-20_confirmed_rate",
+        layout=widgets.Layout(width='600px', height='150px'),
+        style={'description_width': '160px'},
+        #tooltip='Specify default names of map layers displayed on the first view of maps. It should not exceed the number of maps you specified. \n Try Initial_Layers(attributes) to see all possible options. E.g., 2020-04-06_confirmed_rate, 2020-07-20_confirmed_rate'
+    )
+    initial_layers_help = widgets.Label(value='Specify default names of map layers displayed on the first view of maps. It should not exceed the number of maps you specified.\nTry Initial_Layers(attributes) to see all possible options. E.g., 2020-04-06_confirmed_rate, 2020-07-20_confirmed_rate')
+    
+    variables_widget = widgets.SelectMultiple(
+        description="Variables:",
+        layout=widgets.Layout(width='600px', height='150px', overflow='auto'),
+        style={'description_width': '160px'},
+        #tooltip='Enter at least one variable. "Ctrl" for selecting multiple variables.'
+    )
+    variables_help = widgets.Label(value='Enter at least one variable. "Ctrl" for selecting multiple variables.')  
+    
+    map_width_widget = widgets.Text(
+        description="Map Width (px):",
+        value="650px",
+        layout=widgets.Layout(width='300px'),
+        style={'description_width': '160px'},
+        #tooltip='Specify the width of the map in pixels.'
+    )
+    
+    map_height_widget = widgets.Text(
+        description="Map Height (px):",
+        value="450px",
+        layout=widgets.Layout(width='300px'),
+        style={'description_width': '160px'},
+        #tooltip='Specify the height of the map in pixels.'
+    )
+
+    chart_info = widgets.HTML(
+        value="Select the chart to be visualized.",
+        layout=widgets.Layout(width='600px')
+    )
+    
+    top10_chart_widget = widgets.Checkbox(
+        description="Top 10 Chart",
+        value=True,
+        layout=widgets.Layout(width='400px'),
+        style={'description_width': '160px'},
+        #tooltip='Enable or disable the display of the top 10 chart.'
+    )
+    
+    mlc_widget = widgets.Checkbox(
+        description="Multiple Line Chart (MLC):",
+        value=True,
+        layout=widgets.Layout(width='400px'),
+        style={'description_width': '160px'},
+        #tooltip='Enable or disable the Multiple Line Chart (MLC) feature.'
+    )
+    
+    # Number of MLCs widget
+    num_mlc_widget = widgets.IntSlider(
+        description="The number of MLC:",
+        value=0,  # Default to 0 initially
+        min=0,  # Allow 0 as the minimum
+        max=0,  # Will be updated dynamically based on variable selection
+        layout=widgets.Layout(width='400px'),
+        style={'description_width': '160px'},
+        #tooltip='Select the number of Multiple Line Charts (MLCs) to display.'
+    )
+    num_mlc_info = widgets.HTML(
+        value="Enter the number of line charts to be visualized.",
+        layout=widgets.Layout(width='600px')
+    )
+    
+    titles_mlc_widget = widgets.Textarea(
+        description="Titles of MLCs:",
+        value="1. Confirmed Rate (Confirmed Cases per 10k population), 2. Death Rate (Deaths per 10k population), 3. Cumulative Confirmed Rate, 4. Cumulative Death Rate, 5. Visitor Flows from the Selected Region",
+        layout=widgets.Layout(width='600px', height='90px'),
+        style={'description_width': '160px'},
+        #tooltip='Titles for each line chart in order. The number of titles should be equal to the number of MLCs you specified. \n For example, "1. Confirmed Rate, 2. Death Rate, 3. Cumulative Confirmed Rate"'
+    )
+    titles_mlc_help = widgets.Label(value='Provide titles for each line chart in order, separated by commas. Ensure the number of titles matches the number of MLCs specified. For example, "1. Confirmed Rate (Confirmed Cases per 10k population), 2. Death Rate (Deaths per 10k population), 3. Cumulative Confirmed Rate, 4. Cumulative Death Rate, 5. Visitor Flows from the Selected Region"')  #1. Confirmed Rate, 2. Death Rate, 3. Cumulative Confirmed Rate
+
+    default_region_info_MLC = widgets.HTML(
+        value="Select the region to display temporal patterns in the initial view of the Multipe Line Chart (MLC):",
+        layout=widgets.Layout(width='600px')
+    )
+    
+    default_region_widget = widgets.Combobox(
+        description='Default Region (Geoid):',
+        options=[],  # Will be populated based on shapefile
+        ensure_option=True,  # Allow only options from the provided list
+        placeholder='Type to search...',
+        layout=widgets.Layout(width='400px'),
+        style={'description_width': '160px'},
+        #tooltip='Select the default region (Geoid) to focus on initially.'
+    )
+    
+    # Run button
+    run_button = widgets.Button(
+        description="Generate Visualization",
+        button_style="success",
+        layout=widgets.Layout(width='300px', height='50px'),
+        #tooltip='Click to generate the visualization based on the specified parameters.'
+    )
+    output_area = widgets.Output()
+
+    # Layout definition
+    data_widgets = widgets.VBox([
+        widgets.HBox([input_csv_widget, input_csv_help]),
+        widgets.HBox([shapefile_widget, shapefile_help]),
+        widgets.HBox([title_widget, title_help]),
+        widgets.HBox([subject_widget, subject_help]),
+        widgets.HBox([filename_suffix_widget, filename_suffix_help]),
+        widgets.HBox([periods_widget, periods_help]),
+        widgets.HBox([variables_widget, variables_help]),
+        #variables_widget,        
+        #num_of_maps_widget,
+        widgets.HBox([num_of_maps_widget, num_of_maps_help]),
+        #sort_layers_widget,
+        widgets.HBox([sort_layers_widget, sort_layers_help]),
+    ], layout=widgets.Layout(padding='10px'))
+
+    map_widgets = widgets.VBox([
+        chart_info,
+        top10_chart_widget,
+        mlc_widget,
+        num_mlc_info,
+        num_mlc_widget,
+        default_region_info_MLC,
+        default_region_widget      
+    ], layout=widgets.Layout(padding='10px'))
+
+    optional_settings_widgets = widgets.VBox([
+        map_center_widget,
+        map_zoom_widget,         
+        widgets.HBox([map_width_widget]),
+        widgets.HBox([map_height_widget]),
+        #initial_layers_widget,
+        widgets.HBox([initial_layers_widget]),
+        initial_layers_help,
+        titles_mlc_widget,
+        titles_mlc_help
+    ], layout=widgets.Layout(padding='10px'))
+
+    map_settings_widgets = widgets.VBox([
+        widgets.HBox([map_width_widget]),
+        titles_mlc_widget
+    ], layout=widgets.Layout(padding='10px'))
+    
+
+
+
+    # Full layout including the run button and output
+    tab = widgets.Tab([
+        widgets.VBox([data_widgets, map_widgets], layout=widgets.Layout(padding='10px')),
+        optional_settings_widgets
+    ])
+    tab.set_title(0, 'Required parameters')
+    tab.set_title(1, 'Optional parameters')
+
+    gui = widgets.VBox([
+        tab,
+        run_button,
+        output_area
+    ], layout=widgets.Layout(padding='10px', width='100%', align_items='flex-start'))
+
+    display(gui)
+
+    # Function to update variable options based on selected CSV
+    def update_default_region_options():
+        """
+        Updates the 'Default Region (Geoid):' options based on the shapefile widget's value.
+        Displays the second column for user selection but assigns the corresponding value from the first column.
+        """
+        try:
+            shapefile = globals_from_jupyter.get(shapefile_widget.value)  # Retrieve the GeoDataFrame
+            if isinstance(shapefile, gpd.GeoDataFrame):
+                # Ensure the shapefile has at least two columns
+                if shapefile.shape[1] >= 2:
+                    # Create a mapping from the second column to the first column
+                    display_values = shapefile.iloc[:, 1].astype(str).tolist()  # Second column for display
+                    actual_values = shapefile.iloc[:, 0].astype(str).tolist()  # First column for actual values
+                    default_region_mapping = dict(zip(display_values, actual_values))
+                    
+                    # Populate the options and set the mapping
+                    default_region_widget.options = display_values
+                    default_region_widget.mapping = default_region_mapping
+                    default_region_widget.value = ""  # Set to an empty string instead of None
+                else:
+                    print("Error: Shapefile must have at least two columns.")
+                    default_region_widget.options = []
+                    default_region_widget.value = ""  # Set to an empty string
+            else:
+                print("Error: Shapefile is not a valid GeoDataFrame.")
+                default_region_widget.options = []
+                default_region_widget.value = ""  # Set to an empty string
+        except Exception as e:
+            print(f"Error updating default region options: {e}")
+            default_region_widget.options = []
+            default_region_widget.value = ""  # Set to an empty string
+    
+
+
+    
+    def handle_default_region_selection(change):
+        """
+        Removes the first option from 'Default Region (Geoid):' when a region is selected by the user.
+        """
+        try:
+            selected_region = change['new']
+            if selected_region and selected_region in default_region_widget.options:
+                # Remove the first option after the user selects a region
+                default_region_widget.options = [
+                    region for region in default_region_widget.options if region != selected_region
+                ]
+        except Exception as e:
+            print(f"Error handling default region selection: {e}")
+
+            
+            
+    # Function to update variable options based on selected CSV
+    def update_variables_options(change=None):
+        try:
+            # Retrieve the input CSV variable name from the widget
+            input_csv_name = input_csv_widget.value
+            # Get the corresponding DataFrame from globals
+            
+            #print(globals_from_jupyter.get("input_attributes"))
+            df = globals_from_jupyter.get(input_csv_name, None)
+            #df = globals().get(input_csv_name, None)
+
+            if isinstance(df, pd.DataFrame):
+                # Update the "Variables" widget with the column names starting from the third column
+                variables_widget.options = df.columns[2:]
+
+                # Update the "Periods" widget with 'All' and unique values from the second column
+                if df.shape[1] > 1:  # Ensure the DataFrame has at least two columns
+                    unique_periods = df.iloc[:, 1].dropna().astype(str).unique().tolist()
+                    periods_widget.options = ['All'] + unique_periods
+                    periods_widget.value = ['All']
+                else:
+                    periods_widget.options = ['All']
+                    periods_widget.value = ['All']
+            else:
+                # Reset options if the CSV is invalid
+                variables_widget.options = []
+                periods_widget.options = ['All']
+                periods_widget.value = ['All']
+                print(f"Error: {input_csv_name} is not a valid DataFrame.")
+        except Exception as e:
+            # Fallback for unexpected errors
+            variables_widget.options = []
+            periods_widget.options = ['All']
+            periods_widget.value = ['All']
+            print(f"Error updating variables and periods: {e}")
+
+    # Function to update the max and default value of the Number of MLCs widget
+    def update_num_mlc(change):
+        selected_variables = list(change['new'])
+        num_mlc_widget.max = len(selected_variables)  # Update max based on selected variables
+        num_mlc_widget.value = num_mlc_widget.max  # Set default value to the maximum
+
+    # Force update of periods widget on initialization or when input changes
+    def force_update_periods():
+        update_variables_options({'new': input_csv_widget.value})
+        num_mlc_widget.max = len(change['new'])
+        if num_mlc_widget.value > len(change['new']):
+            num_mlc_widget.value = len(change['new'])
+
+            
+    # Function to handle visualization generation
+    def generate_visualization(_):
+        with output_area:
+            clear_output()
+            try:
+                # Parse map center input
+                map_center = map_center_widget.value.strip()
+                if map_center:
+                    try:
+                        lat_lon = map_center.split(',')
+                        if len(lat_lon) != 2:
+                            raise ValueError("Map Center must have exactly two values: latitude and longitude.")
+                        lat, lon = map(float, lat_lon)
+                        if not (-90 <= lat <= 90):
+                            raise ValueError("Latitude must be between -90 and 90.")
+                        if not (-180 <= lon <= 180):
+                            raise ValueError("Longitude must be between -180 and 180.")
+                        map_center = [lat, lon]
+                    except ValueError:
+                        raise ValueError("Map Center must be in the format 'latitude, longitude' (e.g., 38, -97).")
+                else:
+                    map_center = None  # Default to None if not provided
+    
+                # Parse map zoom level input
+                map_zoom = map_zoom_widget.value
+                if map_zoom:
+                    try:
+                        map_zoom = int(map_zoom)
+                        if not (1 <= map_zoom <= 20):
+                            raise ValueError("Zoom level must be between 1 and 20.")
+                    except ValueError:
+                        raise ValueError("Map Zoom Level must be an integer between 1 and 20.")
+                else:
+                    map_zoom = None  # Default to None if not provided
+                
+                
+                # Check if at least one variable is selected
+                if not variables_widget.value:
+                    print("Error: At least one variable should be selected.")
+                    return  # Halt execution if no variables are selected
+                
+                # Load the input CSV and shapefile dynamically
+                input_csv = globals_from_jupyter.get(input_csv_widget.value, None)
+                shapefile = globals_from_jupyter.get(shapefile_widget.value, None)
+    
+                # Validate inputs
+                if not isinstance(input_csv, pd.DataFrame):
+                    raise ValueError('Input CSV is not a valid DataFrame or variable does not exist in the current scope')
+                if not isinstance(shapefile, gpd.GeoDataFrame):
+                    raise ValueError('Shapefile is not a valid GeoDataFrame or variable does not exist in the current scope')
+    
+                # Retrieve the selected region and map it to the corresponding actual value
+                selected_region_display = default_region_widget.value
+                selected_region = None
+                if selected_region_display and hasattr(default_region_widget, 'mapping'):
+                    selected_region = default_region_widget.mapping.get(selected_region_display)
+
+    
+                # Parse and validate periods
+                periods = 'All' if 'All' in periods_widget.value else [p for p in periods_widget.value if check_dateformat(p)]
+                
+                # check if all values are YYYY
+                year_periods = True
+                for p in periods_widget.value:
+                    # it means YYYY
+                    if not p.isdigit():
+                        year_periods = False
+                
+                if year_periods:
+                    periods = []
+                    for p in periods_widget.value:
+                        periods.append(int(p))
+                        
+                if not periods:
+                    print("Error: Invalid or empty period selection.")
+                    return
+            
+                # Parse parameters
+                params = {
+                    'title': title_widget.value,
+                    'Subject': subject_widget.value,
+                    'filename_suffix': filename_suffix_widget.value if filename_suffix_widget.value else "default_suffix",
+                    'inputCSV': input_csv,
+                    'shapefile': shapefile,
+                    'periods': (
+                        'All' if 'All' in periods 
+                        else periods
+                     ),
+                    'variables': list(variables_widget.value),
+                    'NumOfMaps': num_of_maps_widget.value,
+                    'Initial_map_center': map_center,
+                    'Initial_map_zoom_level': int(map_zoom_widget.value) if map_zoom_widget.value else None,
+                    'SortLayers': sort_layers_widget.value,
+                    #'InitialLayers': initial_layers_widget.value.split(","),
+                    'InitialLayers': [layer.strip() for layer in initial_layers_widget.value.split(",")],
+                    'Map_width': map_width_widget.value,
+                    'Map_height': map_height_widget.value,
+                    'Top10_Chart': top10_chart_widget.value,
+                    'Multiple_Line_Chart': mlc_widget.value,
+                    'NumOfMLC': num_mlc_widget.value,
+                    'titlesOfMLC': titles_mlc_widget.value.split(","),
+                    'DefaultRegion_MLC': selected_region,
+                }
+            
+                # Include the Short Label CSV only if it's provided
+                #if short_label_csv_widget.value.strip():
+                #    params['shortLabelCSV'] = short_label_csv_widget.value.strip()    
+                    
+                # Print the selected region and entered parameters for debugging
+                #print(f"Selected Region (Geoid): {selected_region}")
+                #print(f"Parameters: {params}") #######################################################################
+    
+                # Call visualization and logging functions
+                try:
+                    Adaptive_Choropleth_Mapper_viz(params)
+                    print("Visualization generated successfully!")
+                except Exception as viz_error:
+                    print(f"Error generating visualization: {viz_error}")
+                Adaptive_Choropleth_Mapper_log(params)
+            except Exception as e:
+                print(f"Error: {e}")
+    
+    
+    # Remove redundant observers and keep only the necessary ones
+    run_button.on_click(generate_visualization)
+    input_csv_widget.observe(update_variables_options, names='value')
+    # Attach observer for Variables widget to update Number of MLCs widget
+    variables_widget.observe(update_num_mlc, names='value')
+
+    shapefile_widget.observe(lambda change: update_default_region_options(), names='value')
+    # Attach observer to default_region_widget for the selection change
+    default_region_widget.observe(handle_default_region_selection, names='value')
+
+    # Initialize variable options and other widget settings
+    update_variables_options({'new': input_csv_widget.value})
+    update_default_region_options()
+    
+# Function to create the GUI
+def CLC(map_center=None, map_zoom=None):
+    # Set default values based on passed arguments
+    map_center_default = "" if map_center is None else f"{map_center[0]}, {map_center[1]}"
+    map_zoom_default = "" if map_zoom is None else str(map_zoom)
+    
+    # Currentframe is this python file. f_back enabling going back to the frame where CLC is called.
+    frame = inspect.currentframe().f_back
+    globals_from_jupyter = frame.f_globals  # we can bring both global or local. For making globals_from_jupyter accessible from outside.
+    
+    #print(caller_gloables.get("input_attributes"))
+    # Widget definitions
+    input_csv_widget = widgets.Text(
+        description='Input Attribute:',
+        value='attributes',
+        style={'description_width': '160px'},
+        layout=widgets.Layout(width='400px'),
+        #tooltip='Enter the CSV file name containing the attribute data.'
+    )
+    input_csv_help = widgets.Label(value='Enter the CSV file variable name containing the attribute data.')
+    
+    shapefile_widget = widgets.Text(
+        description='Input Shapefile:',
+        value='shapefile',
+        style={'description_width': '160px'},
+        layout=widgets.Layout(width='400px'),
+        #tooltip='Enter the shapefile (.shp) variable name containing geographic data.'
+    )
+    shapefile_help = widgets.Label(value='Enter the shapefile (.shp) variable name containing geographic data.')    
+    
+    title_widget = widgets.Text(
+        description='Title:',
+        value='Comparison of Temporal Patterns of Covid-19 Confirmed Rate between US Counties',
+        layout=widgets.Layout(width='600px'),
+        style={'description_width': '160px'},
+        #tooltip='Enter the title for the result visualization.'
+    )
+    title_help = widgets.Label(value='Enter the title for the result visualization.')  
+    
+    subject_widget = widgets.Text(
+        description="Chart Title:",
+        value="Temporal Patterns of COVID-19 Cases per 10,000 Population in Two Selected Regions",
+        layout=widgets.Layout(width='600px'),
+        style={'description_width': '160px'},
+        #tooltip='Enter the text to be displayed at the top of all line charts. For example: "Temporal Patterns of Risk Factors..'
+    )
+    subject_help = widgets.Label(value="Enter the text to be displayed at the top of the line charts, such as 'Temporal Patterns of COVID-19 Rates.'")  
+    
+    filename_suffix_widget = widgets.Text(
+        description="Output Folder Name:",
+        value="COVID_CLC",
+        layout=widgets.Layout(width='400px'),
+        style={'description_width': '160px'},
+        #tooltip='Enter the name of the output folder for generated files.'
+    )
+    filename_suffix_help = widgets.Label(value='Enter the name of the output folder for generated files.')      
+    
+    periods_widget = widgets.SelectMultiple(
+        description='Periods:',
+        options=['All'],
+        value=['All'],
+        layout=widgets.Layout(width='400px'),
+        style={'description_width': '160px'},
+        #tooltip='Specify the periods as comma-separated values for specific periods or select "All" to display all available periods.'
+    )
+    periods_help = widgets.Label(value='Select time ranges for temporal charts; "All" for all ranges. Use "Ctrl" for multiple choices. Acceptable formats: YYYY, MM-DD, or MM-DD-YYYY')
+    
+
+    # Widget for map center (latitude and longitude)
+    map_center_widget = widgets.Text(
+        description="Map Center (Lat, Lon):",
+        value=map_center_default,  # Set from parameter or empty string
+        layout=widgets.Layout(width='400px'),
+        style={'description_width': '160px'},
+        #tooltip='Specify the map center as "latitude, longitude" (e.g., 38, -97).'
+    )
+    
+    # Widget for map zoom level
+    map_zoom_widget = widgets.Text(
+        description="Map Zoom Level:",
+        value=map_zoom_default,  # Set from parameter or empty string
+        layout=widgets.Layout(width='300px'),
+        style={'description_width': '160px'},
+        #tooltip='Specify the initial zoom level of the map (optional).'
+    ) 
+
+    num_of_maps_widget = widgets.IntSlider(
+        description="The Number of Maps:",
+        value=2,
+        min=1,
+        max=5,
+        layout=widgets.Layout(width='400px'),
+        style={'description_width': '160px'},
+        #tooltip='Specify the number of maps to be displayed. Multiple maps can be displayed.'
+    )
+    
+    sort_layers_widget = widgets.Dropdown(
+        options=['temporal', 'compare'],
+        description='Sort Layers:',
+        value='temporal',
+        style={'description_width': '160px'},
+        layout=widgets.Layout(width='400px'),
+        #tooltip='"temporal" for examining temporal changes of distribution, "compare" for comparing different attributes for a specific year.'
+    )
+    sort_layers_help = widgets.Label(value='Choose "Temporal" to compare the same variable at different points in time or "Compare" to compare different variables at the same point in time.')
+    
+    initial_layers_widget = widgets.Textarea(
+        description="Initial Layers:",
+        value="2020-04-06_confirmed_rate,2020-07-20_confirmed_rate",
+        layout=widgets.Layout(width='600px', height='150px'),
+        style={'description_width': '160px'},
+        #tooltip='Specify default names of map layers displayed on the first view of maps. It should not exceed the number of maps you specified. \n Try Initial_Layers(attributes) to see all possible options. E.g., 2020-04-06_confirmed_rate, 2020-07-20_confirmed_rate'
+    )
+    initial_layers_help = widgets.Label(value='Specify default names of map layers displayed on the first view of the two maps. \nTry Initial_Layers(attributes) to see all possible options. E.g., 2020-04-06_confirmed_rate, 2020-07-20_confirmed_rate')
+    
+    
+    # Change from SelectMultiple to Dropdown for single selection
+    variables_widget = widgets.Dropdown(
+        description="Variable:",
+        options=[],  # Options will be dynamically updated
+        layout=widgets.Layout(width='600px'),
+        style={'description_width': '160px'},
+        #tooltip='Select a single variable to include in the visualization. Columns are dynamically populated from the input CSV.'
+    )
+    variables_help = widgets.Label(value='Select a single variable to include in the visualization.') 
+    
+    '''
+    variables_widget = widgets.SelectMultiple(
+        description="Variables:",
+        layout=widgets.Layout(width='600px', height='150px', overflow='auto'),
+        style={'description_width': '200px'},
+        #tooltip='Enter at least one variable. "Ctrl" for selecting multiple variables.'
+    )
+    '''
+    
+    map_width_widget = widgets.Text(
+        description="Map Width (px):",
+        value="650px",
+        layout=widgets.Layout(width='300px'),
+        style={'description_width': '160px'},
+        #tooltip='Specify the width of the map in pixels.'
+    )
+    
+    map_height_widget = widgets.Text(
+        description="Map Height (px):",
+        value="450px",
+        layout=widgets.Layout(width='300px'),
+        style={'description_width': '160px'},
+        #tooltip='Specify the height of the map in pixels.'
+    )
+
+    chart_info = widgets.HTML(
+        value="Select the chart to be visualized.",
+        layout=widgets.Layout(width='600px')
+    )
+    
+    top10_chart_widget = widgets.Checkbox(
+        description="Top 10 Chart",
+        value=True,
+        layout=widgets.Layout(width='400px'),
+        style={'description_width': '160px'},
+        #tooltip='Enable or disable the display of the top 10 chart.'
+    )
+    
+    clc_widget = widgets.Checkbox(
+        description="Comparison Line Chart (CLC):",
+        value=True,
+        layout=widgets.Layout(width='400px'),
+        style={'description_width': '160px'},
+        #tooltip='Enable or disable the Multiple Line Chart (MLC) feature.'
+    )
+    
+    
+    num_clc_widget = widgets.IntSlider(
+        description="The number of CLC:",
+        value=0,  # Default to 0 initially
+        min=0,  # Allow 0 as the minimum
+        max=0,  # Will be updated dynamically based on variable selection
+        layout=widgets.Layout(width='400px'),
+        style={'description_width': '160px'},
+        #tooltip='Select the number of periods, x values'
+    )
+    
+    # Number of MLCs widget
+    num_mlc_widget = widgets.IntSlider(
+        description="The number of CLC:",
+        value=0,  # Default to 0 initially
+        min=0,  # Allow 0 as the minimum
+        max=0,  # Will be updated dynamically based on variable selection
+        layout=widgets.Layout(width='400px'),
+        style={'description_width': '160px'},
+        #tooltip='Select the number of Multiple Line Charts (MLCs) to display.'
+    )
+    num_mlc_info = widgets.HTML(
+        value="<i>This number cannot be greater than the variables you selected above.</i>",
+        layout=widgets.Layout(width='600px')
+    )
+    
+    titles_mlc_widget = widgets.Textarea(
+        description="Titles of MLCs:",
+        value="",
+        layout=widgets.Layout(width='600px', height='90px'),
+        style={'description_width': '160px'},
+        #tooltip='Titles for each line chart in order. The number of titles should be equal to the number of MLCs you specified. \n For example, "1. Confirmed Rate, 2. Death Rate, 3. Cumulative Confirmed Rate"'
+    )
+    #titles_mlc_help = widgets.Label(value='Titles for each line chart in order. The number of titles should be equal to the number of MLCs you specified.\nFor example, "1. Confirmed Rate, 2. Death Rate, 3. Cumulative Confirmed Rate"')
+
+    #Select the region to visualize temporal patterns at initial view of the Comparison Line Chart (CLC):
+    # Combobox widgets for Default Region CLC
+
+    default_region_info_CLC = widgets.HTML(
+        value="Select the region to display temporal patterns in the initial view of the Comparison Line Chart (CLC):",
+        layout=widgets.Layout(width='600px')
+    )
+ 
+    default_region_clc_widget_1 = widgets.Combobox(
+        description='Default Region 1:',
+        options=[],  # Will be populated dynamically based on the shapefile
+        ensure_option=True,  # Allow only options from the provided list
+        placeholder='Type to search...',  # Placeholder text
+        layout=widgets.Layout(width='400px'),
+        style={'description_width': '160px'},
+        #tooltip='Select the first default region (Geoid) for Comparison Line Chart (CLC).'
+    )
+    
+    default_region_clc_widget_2 = widgets.Combobox(
+        description='Default Region 2:',
+        options=[],  # Will be populated dynamically based on the shapefile
+        ensure_option=True,  # Allow only options from the provided list
+        placeholder='Type to search...',  # Placeholder text
+        layout=widgets.Layout(width='400px'),
+        style={'description_width': '160px'},
+        #tooltip='Select the second default region (Geoid) for Comparison Line Chart (CLC).'
+    )     
+    
+    
+    default_region_widget = widgets.Combobox(
+        description='Default Region (Geoid):',
+        options=[],  # Will be populated based on shapefile
+        ensure_option=True,  # Allow only options from the provided list
+        placeholder='Type to search...',
+        layout=widgets.Layout(width='400px'),
+        style={'description_width': '160px'},
+        #tooltip='Select the default region (Geoid) to focus on initially.'
+    )
+    
+    # Run button
+    run_button = widgets.Button(
+        description="Generate Visualization",
+        button_style="success",
+        layout=widgets.Layout(width='300px', height='50px'),
+        #tooltip='Click to generate the visualization based on the specified parameters.'
+    )
+    output_area = widgets.Output()
+
+    # Layout definition
+    data_widgets = widgets.VBox([
+        widgets.HBox([input_csv_widget, input_csv_help]),
+        widgets.HBox([shapefile_widget, shapefile_help]),
+        widgets.HBox([title_widget, title_help]),
+        widgets.HBox([subject_widget, subject_help]),
+        widgets.HBox([filename_suffix_widget, filename_suffix_help]),
+        widgets.HBox([periods_widget, periods_help]),        
+        widgets.HBox([variables_widget, variables_help]),     
+        widgets.HBox([sort_layers_widget, sort_layers_help]),
+    ], layout=widgets.Layout(padding='10px'))
+
+    map_widgets = widgets.VBox([
+        chart_info,
+        top10_chart_widget,
+        #mlc_widget,
+        #num_mlc_widget,
+        clc_widget,  
+        #num_clc_widget, 
+        #num_mlc_info,
+        #default_region_widget,
+        default_region_info_CLC,
+        default_region_clc_widget_1,
+        default_region_clc_widget_2
+    ], layout=widgets.Layout(padding='10px'))
+
+    optional_settings_widgets = widgets.VBox([
+        map_center_widget,
+        map_zoom_widget,         
+        widgets.HBox([map_width_widget]),
+        widgets.HBox([map_height_widget]),
+        initial_layers_widget,
+        initial_layers_help,
+        #titles_mlc_widget,
+        #titles_mlc_help
+    ], layout=widgets.Layout(padding='10px'))
+
+    map_settings_widgets = widgets.VBox([
+        widgets.HBox([map_width_widget]),
+        #titles_mlc_widget
+    ], layout=widgets.Layout(padding='10px'))
+    
+
+
+
+    # Full layout including the run button and output
+    tab = widgets.Tab([
+        widgets.VBox([data_widgets, map_widgets], layout=widgets.Layout(padding='10px')),
+        optional_settings_widgets
+    ])
+    tab.set_title(0, 'Required parameters')
+    tab.set_title(1, 'Optional parameters')
+
+    gui = widgets.VBox([
+        tab,
+        run_button,
+        output_area
+    ], layout=widgets.Layout(padding='10px', width='100%', align_items='flex-start'))
+
+    display(gui)
+
+    # Function to update variable options based on selected CSV
+    def update_default_region_options():
+        """
+        Updates the 'Default Region (Geoid):' options based on the shapefile widget's value.
+        Displays the second column for user selection but assigns the corresponding value from the first column.
+        """
+        try:
+            shapefile = globals_from_jupyter.get(shapefile_widget.value)  # Retrieve the GeoDataFrame  #eval should be changed to globals_from_jupyter
+            #shapefile = eval(shapefile_widget.value)
+            if isinstance(shapefile, gpd.GeoDataFrame):
+                # Ensure the shapefile has at least two columns
+                if shapefile.shape[1] >= 2:
+                    # Create a mapping from the second column to the first column
+                    display_values = shapefile.iloc[:, 1].astype(str).tolist()  # Second column for display
+                    actual_values = shapefile.iloc[:, 0].astype(str).tolist()  # First column for actual values
+                    default_region_mapping = dict(zip(display_values, actual_values))
+                    
+                    # Populate the options and set the mapping
+                    # default_region_widget.options = display_values
+                    default_region_clc_widget_1.options = display_values
+                    default_region_clc_widget_2.options = display_values
+                    
+                    # default_region_widget.mapping = default_region_mapping
+                    default_region_clc_widget_1.mapping = default_region_mapping
+                    default_region_clc_widget_2.mapping = default_region_mapping
+                    
+                    # default_region_widget.value = ""  # Set to an empty string instead of None
+                    default_region_clc_widget_1.value = ""  # Set to an empty string instead of None
+                    default_region_clc_widget_2.value = ""  # Set to an empty string instead of None
+                else:
+                    print("Error: Shapefile must have at least two columns.")
+                    # default_region_widget.options = []
+                    default_region_clc_widget_1.options = []
+                    default_region_clc_widget_2.options = []
+                    
+                    # default_region_widget.value = ""  # Set to an empty string
+                    default_region_clc_widget_1.value = ""  # Set to an empty string
+                    default_region_clc_widget_2.value = ""  # Set to an empty string
+            else:
+                print("Error: Shapefile is not a valid GeoDataFrame.")
+                # default_region_widget.options = []
+                default_region_clc_widget_1.options = []
+                default_region_clc_widget_2.options = []
+                
+                # default_region_widget.value = ""  # Set to an empty string
+                default_region_clc_widget_1.value = ""  # Set to an empty string
+                default_region_clc_widget_2.value = ""  # Set to an empty string
+        except Exception as e:
+            print(f"Error updating default region options: {e}")
+            # default_region_widget.options = []
+            default_region_clc_widget_1.options = []
+            default_region_clc_widget_2.options = []
+            
+            # default_region_widget.value = ""  # Set to an empty string
+            default_region_clc_widget_1.value = ""  # Set to an empty string
+            default_region_clc_widget_2.value = ""  # Set to an empty string
+    
+
+
+    
+    def handle_default_region_selection(change):
+        """
+        Removes the first option from 'Default Region (Geoid):' when a region is selected by the user.
+        """
+        try:
+            selected_region = change['new']
+            if selected_region and selected_region in default_region_widget.options:
+                # Remove the first option after the user selects a region
+                default_region_widget.options = [
+                    region for region in default_region_widget.options if region != selected_region
+                ]
+        except Exception as e:
+            print(f"Error handling default region selection: {e}")
+
+        try:
+            selected_region = change['new']
+            if selected_region and selected_region in default_region_clc_widget_1.options:
+                # Remove the first option after the user selects a region
+                default_region_clc_widget_1.options = [
+                    region for region in default_region_clc_widget_1.options if region != selected_region
+                ]
+        except Exception as e:
+            print(f"Error handling default region selection: {e}")
+            
+        try:
+            selected_region = change['new']
+            if selected_region and selected_region in default_region_clc_widget_2.options:
+                # Remove the first option after the user selects a region
+                default_region_clc_widget_2.options = [
+                    region for region in default_region_clc_widget_2.options if region != selected_region
+                ]
+        except Exception as e:
+            print(f"Error handling default region selection: {e}")            
+
+            
+            
+    # Function to update variable options based on selected CSV
+    def update_variables_options(change=None):
+        try:
+            # Retrieve the input CSV variable name from the widget
+            input_csv_name = input_csv_widget.value
+            # Get the corresponding DataFrame from globals
+            df = globals_from_jupyter.get(input_csv_name, None)
+
+            if isinstance(df, pd.DataFrame):
+                # Update the "Variables" widget with the column names starting from the third column
+                # Update the "Variables" widget with the column names starting from the third column
+                column_options = df.columns[2:]
+                variables_widget.options = list(column_options)
+    
+                # Set the default value to the first column if available
+                if column_options.any():
+                    variables_widget.value = column_options[0]
+                else:
+                    variables_widget.value = None
+
+                # Update the "Periods" widget with 'All' and unique values from the second column
+                if df.shape[1] > 1:  # Ensure the DataFrame has at least two columns
+                    unique_periods = df.iloc[:, 1].dropna().astype(str).unique().tolist()
+                    periods_widget.options = ['All'] + unique_periods
+                    periods_widget.value = ['All']
+                else:
+                    periods_widget.options = ['All']
+                    periods_widget.value = ['All']
+            else:
+                # Reset options if the CSV is invalid
+                variables_widget.options = []
+                variables_widget.value = None
+                periods_widget.options = ['All']
+                periods_widget.value = ['All']
+                print(f"Error: {input_csv_name} is not a valid DataFrame.")
+        except Exception as e:
+            # Fallback for unexpected errors
+            variables_widget.options = []
+            variables_widget.value = None
+            periods_widget.options = ['All']
+            periods_widget.value = ['All']
+            print(f"Error updating variables and periods: {e}")
+
+    # Function to update the max and default value of the Number of MLCs widget
+    def update_num_mlc(change):
+        selected_variables = list(change['new'])
+        num_mlc_widget.max = len(selected_variables)  # Update max based on selected variables
+        num_mlc_widget.value = num_mlc_widget.max  # Set default value to the maximum
+
+    # Force update of periods widget on initialization or when input changes
+    def force_update_periods():
+        update_variables_options({'new': input_csv_widget.value})
+        num_mlc_widget.max = len(change['new'])
+        if num_mlc_widget.value > len(change['new']):
+            num_mlc_widget.value = len(change['new'])
+
+    def update_num_clc_widget_max():
+        """
+        Updates the maximum value of "The number of CLC:" slider 
+        based on the number of unique values in the second column of the input CSV data.
+        """
+        try:
+            # Retrieve the input CSV DataFrame
+            input_csv = globals_from_jupyter.get(input_csv_widget.value, None)
+    
+            if isinstance(input_csv, pd.DataFrame):
+                # Ensure the DataFrame has at least two columns
+                if input_csv.shape[1] > 1:
+                    unique_values = input_csv.iloc[:, 1].dropna().unique()  # Get unique values in the second column
+                    num_clc_widget.max = len(unique_values)  # Set the maximum value of the slider
+                    num_clc_widget.value = num_clc_widget.max  # Set default value to the maximum
+                else:
+                    num_clc_widget.max = 0
+                    num_clc_widget.value = 0
+                    print("Error: The input DataFrame must have at least two columns.")
+            else:
+                num_clc_widget.max = 0
+                num_clc_widget.value = 0
+                print(f"Error: '{input_csv_widget.value}' is not a valid DataFrame.")
+        except Exception as e:
+            print(f"Error updating 'The number of CLC:' widget max: {e}")
+            num_clc_widget.max = 0
+            num_clc_widget.value = 0
+
+        
+    # Function to handle visualization generation
+    def generate_visualization(_):
+        with output_area:
+            clear_output()
+            try:
+                # Parse map center input
+                map_center = map_center_widget.value.strip()
+                if map_center:
+                    try:
+                        lat_lon = map_center.split(',')
+                        if len(lat_lon) != 2:
+                            raise ValueError("Map Center must have exactly two values: latitude and longitude.")
+                        lat, lon = map(float, lat_lon)
+                        if not (-90 <= lat <= 90):
+                            raise ValueError("Latitude must be between -90 and 90.")
+                        if not (-180 <= lon <= 180):
+                            raise ValueError("Longitude must be between -180 and 180.")
+                        map_center = [lat, lon]
+                    except ValueError:
+                        raise ValueError("Map Center must be in the format 'latitude, longitude' (e.g., 38, -97).")
+                else:
+                    map_center = None  # Default to None if not provided
+    
+                # Parse map zoom level input
+                map_zoom = map_zoom_widget.value
+                if map_zoom:
+                    try:
+                        map_zoom = int(map_zoom)
+                        if not (1 <= map_zoom <= 20):
+                            raise ValueError("Zoom level must be between 1 and 20.")
+                    except ValueError:
+                        raise ValueError("Map Zoom Level must be an integer between 1 and 20.")
+                else:
+                    map_zoom = None  # Default to None if not provided
+                    
+                # Check if at least one variable is selected
+                if not variables_widget.value:
+                    print("Error: At least one variable should be selected.")
+                    return  # Halt execution if no variables are selected
+                
+                # Load the input CSV and shapefile dynamically
+                input_csv = globals_from_jupyter.get(input_csv_widget.value, None)
+                shapefile = globals_from_jupyter.get(shapefile_widget.value, None)
+    
+                # Validate inputs
+                if not isinstance(input_csv, pd.DataFrame):
+                    raise ValueError('Input CSV is not a valid DataFrame or variable does not exist in the current scope')
+                if not isinstance(shapefile, gpd.GeoDataFrame):
+                    raise ValueError('Shapefile is not a valid GeoDataFrame or variable does not exist in the current scope')
+    
+                # Process the selected variable (ensure it's treated as a list)
+                selected_variable = [variables_widget.value]  # Wrap the single value in a list
+                
+        
+                # Retrieve the selected region and map it to the corresponding actual value
+                selected_region_display = default_region_widget.value
+                selected_region = None
+                if selected_region_display and hasattr(default_region_widget, 'mapping'):
+                    selected_region = default_region_widget.mapping.get(selected_region_display)
+
+                # Retrieve the selected region and map it to the corresponding actual value
+                selected_region_clc_1_display = default_region_clc_widget_1.value
+                selected_region_clc_1 = None
+                if selected_region_clc_1_display and hasattr(default_region_clc_widget_1, 'mapping'):
+                    selected_region_clc_1 = default_region_clc_widget_1.mapping.get(selected_region_clc_1_display)                    
+
+                # Retrieve the selected region and map it to the corresponding actual value
+                selected_region_clc_2_display = default_region_clc_widget_2.value
+                selected_region_clc_2 = None
+                if selected_region_clc_2_display and hasattr(default_region_clc_widget_2, 'mapping'):
+                    selected_region_clc_2 = default_region_clc_widget_2.mapping.get(selected_region_clc_2_display)                     
+                
+                # Retrieve the selected regions for CLC
+                default_region_clc = [
+                    selected_region_clc_1,
+                    selected_region_clc_2
+                ]
+                
+                # Parse and validate periods
+                periods = 'All' if 'All' in periods_widget.value else [p for p in periods_widget.value if check_dateformat(p)]
+                
+                # check if all values are YYYY
+                year_periods = True
+                for p in periods_widget.value:
+                    # it means YYYY
+                    if not p.isdigit():
+                        year_periods = False
+                
+                if year_periods:
+                    periods = []
+                    for p in periods_widget.value:
+                        periods.append(int(p))
+                        
+                if not periods:
+                    print("Error: Invalid or empty period selection.")
+                    return
+            
+                # Parse parameters
+                params = {
+                    'title': title_widget.value,
+                    'Subject': subject_widget.value,
+                    'filename_suffix': filename_suffix_widget.value if filename_suffix_widget.value else "default_suffix",
+                    'inputCSV': input_csv,
+                    'shapefile': shapefile,
+                    'periods': (
+                        'All' if 'All' in periods 
+                        else periods
+                     ),
+                    'variables': selected_variable,
+                    #'NumOfMaps': num_of_maps_widget.value,
+                    'Initial_map_center': map_center,
+                    'Initial_map_zoom_level': int(map_zoom_widget.value) if map_zoom_widget.value else None,                    
+                    'SortLayers': sort_layers_widget.value,
+                    #'InitialLayers': initial_layers_widget.value.split(","),
+                    'InitialLayers': [layer.strip() for layer in initial_layers_widget.value.split(",")],
+                    'Map_width': map_width_widget.value,
+                    'Map_height': map_height_widget.value,
+                    'Top10_Chart': top10_chart_widget.value,
+                    'Comparision_Chart': clc_widget.value,
+                    'DefaultRegion_CLC': default_region_clc,
+                }
+                
+                #print(f"Parameters: {params}")
+    
+                # Call visualization and logging functions
+                try:
+                    Adaptive_Choropleth_Mapper_viz(params)
+                    print("Visualization generated successfully!")
+                except Exception as viz_error:
+                    print(f"Error generating visualization: {viz_error}")
+                Adaptive_Choropleth_Mapper_log(params)
+            except Exception as e:
+                print(f"Error: {e}")
+    
+    
+    # Remove redundant observers and keep only the necessary ones
+    run_button.on_click(generate_visualization)
+    input_csv_widget.observe(update_variables_options, names='value')
+    # Attach observer for Variables widget to update Number of MLCs widget
+    variables_widget.observe(update_num_mlc, names='value')
+    
+    # Attach observer to update the "The number of CLC:" slider when the input CSV changes
+    '''
+    input_csv_widget.observe(lambda change: update_num_clc_widget_max(), names='value')
+    update_num_clc_widget_max()
+    '''
+
+    shapefile_widget.observe(lambda change: update_default_region_options(), names='value')
+    # Attach observer to default_region_widget for the selection change
+    default_region_widget.observe(handle_default_region_selection, names='value')
+    # Attach observer to update Default Region CLC widgets when shapefile changes
+
+    # Initialize variable options and other widget settings
+    update_variables_options({'new': input_csv_widget.value})
+    update_default_region_options()
 
     
 if __name__ == '__main__':
@@ -887,8 +2030,8 @@ if __name__ == '__main__':
     #Adaptive_Choropleth_Mapper_viz(param_MLC_HIV)
     #Adaptive_Choropleth_Mapper_viz(param_CLC_hiv)
     
-    Adaptive_Choropleth_Mapper_viz(param_MLC_COVID_San_Diego)
-    Adaptive_Choropleth_Mapper_log(param_MLC_COVID_San_Diego)
+    #Adaptive_Choropleth_Mapper_viz(param_MLC_COVID_San_Diego)
+    #Adaptive_Choropleth_Mapper_log(param_MLC_COVID_San_Diego)
     
     #Adaptive_Choropleth_Mapper_viz(param_MLC_COVID)
     #Adaptive_Choropleth_Mapper_log(param_MLC_COVID)
