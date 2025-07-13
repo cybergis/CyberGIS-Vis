@@ -2147,11 +2147,11 @@ $( document ).ready(function() {
 	}
 	if (app.titles.length <= app.nPCPvariables) app.nPCPvariables = app.titles.length - 1;		   // ???
 	
-	app.nCLCvariables = app.m;                                       // default same as app.m
 	if (typeof NumOfCLC !== 'undefined' && typeof NumOfCLC === 'number') {
-		if (NumOfCLC >= 1 && NumOfCLC <= 1000) app.nCLCvariables = NumOfCLC;
-	}
-	if (app.titles.length <= app.nCLCvariables) app.nCLCvariables = app.titles.length - 1;		   // ???
+        app.nCLCvariables = NumOfCLC;
+        console.log("Assigned app.nCLCvariables:", app.nCLCvariables, ",     app.titles.length: ", app.titles.length);
+        console.log("Valid number!");
+    }
 	
 	app.nMLCvariables = app.nMLCvariables;                           // default 1st line of GEO_VARIABLES -> new Set(GEO_VARIABLES[0]).length
 	if (typeof NumOfMLC !== 'undefined' && typeof NumOfMLC === 'number') {
