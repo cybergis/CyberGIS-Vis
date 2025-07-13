@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="../template/Adaptive_Choropleth_Mapper/lib/jQuery/jquery-3.3.1.js"></script>
+	<script src="../template/Adaptive_Choropleth_Mapper/lib/ddslick/jquery.ddslick.min.js"></script>
+</head>
+<body>
+
+<h2>Color selection for CyberGIS-VIS</h2>
+
+<div id="demoBasic"></div>
+
+<script>
+
+//Dropdown plugin data
+var ddData = [
+    {
+        //text: "Facebook",
+        value: "Yellow_to_Red_s",
+        selected: true,
+        //description: "Description with Facebook",
+        imageSrc: "../template/Adaptive_Choropleth_Mapper/images/Multi-hue/Yellow_to_Red_s.png"
+    },
+    {
+        value: "Yellow_to_Blue_s",
+        selected: false,
+        imageSrc: "../template/Adaptive_Choropleth_Mapper/images/Multi-hue/Yellow_to_Blue_s.png"
+    },
+    {
+        value: "Yellow_to_Green_s",
+        selected: false,
+        imageSrc: "../template/Adaptive_Choropleth_Mapper/images/Multi-hue/Yellow_to_Green_s.png"
+    },
+    {
+        value: "Yellow_to_Brown_s",
+        selected: false,
+        imageSrc: "../template/Adaptive_Choropleth_Mapper/images/Multi-hue/Yellow_to_Brown_s.png"
+    },
+	
+    {
+        value: "Red_s",
+        selected: false,
+        imageSrc: "../template/Adaptive_Choropleth_Mapper/images/Single-hue/Red_s.png"
+    },
+    {
+        value: "Blue_s",
+        selected: false,
+        imageSrc: "../template/Adaptive_Choropleth_Mapper/images/Single-hue/Blue_s.png"
+    },
+    {
+        value: "Green_s",
+        selected: false,
+        imageSrc: "../template/Adaptive_Choropleth_Mapper/images/Single-hue/Green_s.png"
+    },
+    {
+        value: "Purple_s",
+        selected: false,
+        imageSrc: "../template/Adaptive_Choropleth_Mapper/images/Single-hue/Purple_s.png"
+    },
+    {
+        value: "Brown_s",
+        selected: false,
+        imageSrc: "../template/Adaptive_Choropleth_Mapper/images/Single-hue/Brown_s.png"
+    },
+    {
+        value: "Black_s",
+        selected: false,
+        imageSrc: "../template/Adaptive_Choropleth_Mapper/images/Single-hue/Black_s.png"
+    },
+	
+
+    {
+        //text: "Facebook",
+        value: "Yellow_to_Red_s_r",
+        selected: false,
+        //description: "Description with Facebook",
+        imageSrc: "../template/Adaptive_Choropleth_Mapper/images/Multi-hue/Yellow_to_Red_s_r.png"
+    },
+    {
+        value: "Yellow_to_Blue_s_r",
+        selected: false,
+        imageSrc: "../template/Adaptive_Choropleth_Mapper/images/Multi-hue/Yellow_to_Blue_s_r.png"
+    },
+    {
+        value: "Yellow_to_Green_s_r",
+        selected: false,
+        imageSrc: "../template/Adaptive_Choropleth_Mapper/images/Multi-hue/Yellow_to_Green_s_r.png"
+    },
+    {
+        value: "Yellow_to_Brown_s_r",
+        selected: false,
+        imageSrc: "../template/Adaptive_Choropleth_Mapper/images/Multi-hue/Yellow_to_Brown_s_r.png"
+    },
+
+	
+    {
+        value: "Red_s_r",
+        selected: false,
+        imageSrc: "../template/Adaptive_Choropleth_Mapper/images/Single-hue/Red_s_r.png"
+    },
+    {
+        value: "Blue_s_r",
+        selected: false,
+        imageSrc: "../template/Adaptive_Choropleth_Mapper/images/Single-hue/Blue_s_r.png"
+    },
+    {
+        value: "Green_s_r",
+        selected: false,
+        imageSrc: "../template/Adaptive_Choropleth_Mapper/images/Single-hue/Green_s_r.png"
+    },
+    {
+        value: "Purple_s_r",
+        selected: false,
+        imageSrc: "../template/Adaptive_Choropleth_Mapper/images/Single-hue/Purple_s_r.png"
+    },
+    {
+        value: "Brown_s_r",
+        selected: false,
+        imageSrc: "../template/Adaptive_Choropleth_Mapper/images/Single-hue/Brown_s_r.png"
+    },
+    {
+        value: "Black_s_r",
+        selected: false,
+        imageSrc: "../template/Adaptive_Choropleth_Mapper/images/Single-hue/Black_s_r.png"
+    },
+	
+
+];
+
+$('#demoBasic').ddslick({
+    data: ddData,
+    width: 150,
+    imagePosition: "left",
+    selectText: "Select your favorite social network",
+    onSelected: function (data) {
+        console.log(data.selectedData.value);
+    }
+});
+
+
+
+
+
+</script>
+
+</body>
+</html> 

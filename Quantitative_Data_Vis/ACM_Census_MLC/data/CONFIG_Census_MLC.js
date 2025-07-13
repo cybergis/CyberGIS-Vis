@@ -22,6 +22,7 @@ var NumOfCLC = 0;
 var InitialVariableCLC = []; 
 var DefaultRegion_CLC = ""; //Set Defaul Region
 
+
 // Define the number of variable that you want to visualize Multiple Synchronized Line Chart. 
 var NumOfMLC = 4;
 // Define variables that you want to visualize at MLC (Multiple Synchronized Line Chart).
@@ -34,7 +35,7 @@ var titlesOfMLC = [];
 // [["begin_X_value","end_X_value","color"], ["begin_X_value","end_X_value","color"]…] 
 var DefaultRegion_MLC = "06037237201";
 var HighlightMLC = []; //Set  highlighted ranges for x value
-
+var MultipleLineChart_width = "";
 
 //Define the geographic id or name to be display on the top-right corner of the map
 //var NameDisplayed = "geoname";
@@ -56,18 +57,15 @@ var Correlogram = false;
 var Scatter_Plot = false;
 var Top10_Chart = true;
 var Parallel_Coordinates_Plot = false;
-var Comparision_Chart = true;
-var Multiple_Line_Chart = false;
+var Comparision_Chart = false;
+var Multiple_Line_Chart = true;
 
 // The number of digit after the decial point.
-var Num_Of_Decimal_Places = 2;                              // default = 1 
+var Num_Of_Decimal_Places = 2;                              // default = 2 
 
 //Adjust the size of maps
 var Map_width = "650px";
 var Map_height = "400px";
 
-//Adjust the size of the stacked chart. Double-slashes in the front need to be deleted to make them effective
-var Chart_width  = "350px";									// min 350px
-var Chart_height = "350px";									// min 300px
 
 

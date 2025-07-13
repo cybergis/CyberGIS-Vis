@@ -2,11 +2,11 @@
 var Subject = "";
 
 // Define the number of maps that you want to visualize. upto 15 maps are supported.
-var NumOfMaps = 4;
+var NumOfMaps = 5;
 
 
 // Define the order to show the drop-down list fo the Layer. "compare" or "temporal" 
-var SortLayers = "temporal";
+var SortLayers = "compare";
 
 
 // Define the number of variable that you want to visaulize Parallel Coordinates Plot. 
@@ -21,6 +21,7 @@ var NumOfCLC = 0;
 //var InitialVariableCLC = ["2012_HIV Rate", "2013_HIV Rate", "2014_HIV Rate", "2015_HIV Rate", "2016_HIV Rate", "2017_HIV Rate", "2018_HIV Rate", "2019_HIV Rate", "2020_HIV Rate", "2021_HIV Rate", "2022_HIV Rate"]
 var InitialVariableCLC = []; 
 var DefaultRegion_CLC = ""; //Set Defaul Region
+
 
 // Define the number of variable that you want to visualize Multiple Synchronized Line Chart. 
 var NumOfMLC = 0;
@@ -41,7 +42,7 @@ var MultipleLineChart_width = "";
 
 // Define variables that you want to visualize at initial map views. For example, 
 // enter five variables when the NumOfMaps is equal to 5.
-var InitialLayers = ["1980_% nonhisp white persons", "1990_% nonhisp white persons", "2000_% nonhisp white persons", "2010_% nonhisp white persons"];
+var InitialLayers = [];
 
 /*Define initial map center and zoom level below. Map Extent and Zoom level will be automatically adjusted when you do not define map center and zoom level. Double-slashes  in the front need to be deleted to make them effective*/
 var Initial_map_center = null;  

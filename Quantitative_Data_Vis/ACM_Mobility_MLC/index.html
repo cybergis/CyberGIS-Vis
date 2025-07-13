@@ -80,7 +80,7 @@
 <body style="height:1500px;">
 	
 	<header>
-		<h1>Covid-19 Risk Assessment using Twitter, Metropolitan Statistical Areas, USA</h1>	
+		<h1>Covid-19 Risk Assessment using Twitter, Metropolitan Statistical Areas, USA with Scatter Plot</h1>	
 	</header>
 	
 	<br>
@@ -209,6 +209,7 @@ var app={
 	map4: {map: null, bounds: null, geojson: null, bingGeocoder: null, lasso: null, info: null, legend: null, layers: null, layerscontrol:null, lastHighlightedTractid: null, classification: null, item: null, items: null, zIntervals: null, mIntervals: null, nPolygonbyClass: []},
 	colorGradient1: [[],[]],
 	colorGradient19: [[],[]],
+	selectedScatterData: null
 };
 
 var RGBwhite = 'rgb(244, 244, 244)';
@@ -253,8 +254,7 @@ var COLOR_CLASS = {
 	"Yellow_to_Red_6"    : ["#ffffb2", "#fed976", "#feb24c", "#fd8d3c", "#f03b20", "#bd0026"],
 	"Yellow_to_Red_7"    : ["#ffffb2", "#fed976", "#feb24c", "#fd8d3c", "#fc4e2a", "#e31a1c", "#b10026"],
 	"Yellow_to_Red_8"    : ["#ffffcc" ,"#ffeda0", "#fed976", "#feb24c", "#fd8d3c", "#fc4e2a", "#e31a1c", "#b10026"],
-   	//"Yellow_to_Red_9"    : ["#ffffcc" ,"#ffeda0", "#fed976", "#feb24c", "#fd8d3c", "#fc4e2a", "#e31a1c", "#bd0026", "#800026"],
-   	"Yellow_to_Red_9"    : ["#ffffdd" ,"#fff8c4", "#ffefa6", "#ffd982", "#fdbf70", "#fa9251", "#f45630", "#bd1f29", "#780000"], 
+   	"Yellow_to_Red_9"    : ["#ffffcc" ,"#ffeda0", "#fed976", "#feb24c", "#fd8d3c", "#fc4e2a", "#e31a1c", "#bd0026", "#800026"],
 	"Yellow_to_Green_5"  : ["#ffffcc", "#c2e699", "#78c679", "#31a354", "#006837"],
 	"Yellow_to_Green_6"  : ["#ffffcc", "#d9f0a3", "#addd8e", "#78c679", "#31a354", "#006837"],
 	"Yellow_to_Green_7"  : ["#ffffcc", "#d9f0a3", "#addd8e", "#78c679", "#41ab5d", "#238443", "#005a32"],
@@ -599,24 +599,15 @@ function draw_titleTop10chart(mapN=null) {
 		//var layer = $("#"+mapN+" select[name=ACSdata]").find("option:selected").text();
 	}
 	console.log("selectedItem:", selectedItem)
-    var html_layer ='<select >' +
-                        '<option value="TOP" selected>Top </option>' +
-                        '<option value="Bottom" >Bottom </option>' +
-                    '</select>&nbsp;&nbsp;&nbsp;' +
-                    '<select>' +
-                        '<option value="10" selected>10</option>' +
-                        '<option value="15" >15</option>' +
-                        '<option value="20" >20</option>' +
-                        '<option value="25" >15</option>' +
-                        '<option value="25" >20</option>' +
-                        '<option value="25" >25</option>' +
-                        '<option value="25" >30</option>' +          
-                    '</select>' +        
-                    ' Regions of: ' 
-                    
-                    + '<select name="ACSdata" class="ACSdataSelect" onChange="layer_change(\'' + 'Top10Chart' + '\')">';
-
-
+	var html_layer = '<b>TOP10 Regions of</b>: <select name="ACSdata" class="ACSdataSelect" onChange="layer_change(\'' + 'Top10Chart' + '\')">';
+	//$.each(app.titles, function(gIdx, title) {
+	//	if (gIdx < 1) return true;
+	//	if (app.values[gIdx] != selectedItem) {
+	//		html_layer += '<option value="' + app.values[gIdx] + '" class="line_none">' + title + '</option>';
+	//	} else {
+	//		html_layer += '<option value="' + app.values[gIdx] + '" class="line_none" selected>' + title + '</option>';
+	//	}
+	//});
 	html_layer = get_dropdownoptions_Layer(html_layer, null, selectedItem);
 	if (html_layer.length < 100) 
 	html_layer += '<option value="None">No Data</option>';
@@ -633,7 +624,7 @@ function draw_titleTop10chart(mapN=null) {
 
 
 function draw_titleComparisionLineChart(mapN=null) {
-	var chartID = (app.subject) ? "<div style=font-size:18px;>" + app.subject + "</div>" : "Comparision Line Chart";
+	var chartID = (app.subject) ? "Comparision Line Chart of " + app.subject : "Comparision Line Chart";
 	$("#CLCchart .map_id").html('&nbsp;<b>'+chartID+'</b>');
 	//var html_check = '	 <input id="CLCchart-fixAxes" type="checkbox" name="CLCchart_fixAxes" value="Fix Axes">' +
 	//				 '   <label for="fixAxes">Fix Axes</label>';
@@ -668,7 +659,7 @@ function draw_titleComparisionLineChart(mapN=null) {
 
 
 function draw_titleMultipleLineChart() {
-	var chartID = (app.subject) ? "<div style=font-size:20px;>" + app.subject + "</div>" : "Multiple Line Chart";
+	var chartID = (app.subject) ? app.subject : "Multiple Line Chart";
 	//$("#MLCchart .map_id").html('&nbsp;<b>'+chartID+'</b>');
 	$("#MLCchart .map_id").html('&nbsp;<b>'+chartID+'</b>');    
 }
@@ -973,9 +964,9 @@ function draw_globalSelection() {
 	var html_layer = 'Classification: <select name="globalClass" style="color:red;">' +
 					'<option value="equal" class="line_none">Equal</option>' +
 					'<option value="quantile" class="line_none" >Quantile</option>' +
-					'<option value="ckmeans" class="line_none">Optimal</option>' +
+					'<option value="ckmeans" class="line_none" selected>Optimal</option>' +
 					'<option value="arithmetic" class="line_none">Arithmetic Progression</option>' +
-					'<option value="geometric" class="line_none" selected>Geometric Progression</option>' +
+					'<option value="geometric" class="line_none">Geometric Progression</option>' +
 					'<option value="std" class="line_none">Std Deviation</option>' +
 					'</select>';
 	$("#global_class").html(html_layer);
@@ -986,8 +977,8 @@ function draw_globalSelection() {
 					'<option value="5" class="line_none">5</option>' +
 					'<option value="6" class="line_none">6</option>' + 
 					'<option value="7" class="line_none">7</option>' +
-					'<option value="8" class="line_none">8</option>' +
-					'<option value="9" class="line_none" selected>9</option>' +
+					'<option value="8" class="line_none" selected>8</option>' +
+					'<option value="9" class="line_none">9</option>' +
 					'</select>';
 	$("#global_count").html(html_count);
 	app.globalCount = $("#global_count select[name=globalCount]").val();
@@ -1334,7 +1325,7 @@ function geostats_classification(classification, nClass, geojson, items) {
 
 	var values = [];
 	var j=0;
-	if (classification != "quantile" && classification != "geometric") {
+	if (classification != "quantile") {
 		for (var l=0; l<items.length; l++) {
 			item = items[l];
 			for (var i=0; i<geojson.features.length; i++) {
@@ -1362,7 +1353,7 @@ function geostats_classification(classification, nClass, geojson, items) {
 	var maxInterval = nClass * 1;
 	if (maxInterval > values.length) {
 		maxInterval = values.length;
-		if (classification == "quantile" && classification == "geometric") maxInterval = values.length - 1;
+		if (classification == "quantile") maxInterval = values.length - 1;
 	}
 	
 	values.sort(function(a,b){return a-b});
@@ -1376,11 +1367,12 @@ function geostats_classification(classification, nClass, geojson, items) {
 		if (classification == 'quantile')   ranges = serie.getClassQuantile(maxInterval - 1);			// for a class that value is 0.
 		if (classification == 'std')        ranges = serie.getClassStdDeviation(maxInterval);
 		if (classification == 'arithmetic') ranges = serie.getClassArithmeticProgression(maxInterval);
-		if (classification == 'geometric')  ranges = serie.getClassGeometricProgression(maxInterval-1);
-        
-		if (classification == 'quantile') {
-			//console.log("%%%quantile%%%%%%%%%%%%%%%%%%%%%%%%%%% ranges 1:", ranges) 			
-            intervals = [0, ranges[0]];								 // 0 is the special class for quantile
+		if (classification == 'geometric')  ranges = serie.getClassGeometricProgression(maxInterval);
+		if (classification != 'quantile') {
+			//intervals = ranges.slice(0, -1);
+			if (typeof(ranges) == "object") intervals = ranges.slice(0, -1);
+		} else {
+			intervals = [0, ranges[0]];								 // 0 is the special class for quantile
 			var r = 1;
 			for (var v=0; v<values.length; v++) {
 				if (values[v] == ranges[r]) {
@@ -1391,23 +1383,11 @@ function geostats_classification(classification, nClass, geojson, items) {
 					if (++r >= ranges.length) break;
 				}
 			}
-			//console.log("%%%quantile%%%%%%%%%%%%%%%%%%%%%%%%%%% intervals 2:", intervals)             
 			intervals.sort(function(a,b){return a-b});				 // sort for negative values
-		} else if (classification == 'geometric'){
-            var roundedranges = []; 
-              // Use map to create a new array with rounded values
-              var roundedranges = ranges.map(value => {
-              // Round to 2 decimal points and convert back to number
-              return parseFloat(value.toFixed(2))*1.0;
-            });
-			if (typeof(roundedranges) == "object") intervals = roundedranges.slice(0, -1);
-            intervals.unshift(0);
-			//nsole.log("%%%quantile%%%%%%%%%%%%%%%%%%%%%%%%%%% intervals 2:", intervals)    
-        }
-        else  {
-			//intervals = ranges.slice(0, -1);
-			if (typeof(ranges) == "object") intervals = ranges.slice(0, -1);
-		} 
+			//console.log(items, "items:", classification,  nClass)
+			//console.log("ranges:", ranges)
+			//console.log("intervals:", intervals)
+		}
 	}
 	
 	if (classification == 'ckmeans') {                               // using simple-statistics
@@ -1500,8 +1480,8 @@ function ACSdata_render(mIDX) {
 		
         if (first < NumOfMaps) {
             var options = {
-                collapsed: false, /* Whether its collapsed or not */
-                position: 'bottomleft', /* The position of the control */
+                collapsed: true, /* Whether its collapsed or not */
+                position: 'topleft', /* The position of the control */
                 text: 'Locate', /* The text of the submit button */
                 geocoderId: first,
                 callback: function (results) {
@@ -2331,13 +2311,6 @@ $( document ).ready(function() {
 			//alert(app.MultipleLineChart_width);
 	}
 	
-	//parcoords_width
-	if (typeof Comparision_Chart_width !== 'undefined' && typeof Comparision_Chart_width === 'string' && 
-	    Comparision_Chart_width.substring(Comparision_Chart_width.length-2) == 'px' && $.isNumeric(Comparision_Chart_width.replace('px',''))) {
-			app.parcoords_width = Comparision_Chart_width;
-			//alert(app.parcoords_width);
-	}
-	
     // set highlighted areas of CLC (Comparision Line Chart)						 // deep copy of array
 	if (typeof HighlightCLC !== 'undefined' && HighlightCLC instanceof Array) {
 		app.HighlightCLC = HighlightCLC;
@@ -2584,8 +2557,7 @@ function draw_all_maps() {
 	
 	if (app.ScatterPlot) {
 		var map_html = '';
-		map_html += '<div>';
-		map_html += '	<div class="map_id" style="height:25px;float:left;clear:both"></div>';
+		map_html += '	<div class="map_id" style="height:25px;float:left;clear:both"><button id="scatter-download-btn" onclick="downloadScatterData()">Download</button></div>';
 		map_html += '	<div class="map_layer" style="height:25px;float:right"></div>';
 		map_html += '</div>';
 		map_html += '<div id="chart_scatter" class="mapArea" ' +
@@ -2938,9 +2910,9 @@ function mapOn_lasso_event_set() {
 				if (app.sPointsMaps instanceof Array && app.sPointsMaps.length > 1) {
 					swal({
 						title: "Attention!",
-						text: "Please select only one area by clicking the left mouse button.",
+						text: "The multiple line chart cannot be drawn because there are too many lasso selected areas to draw.\nPlease click only one area.\n\nProceed anyway?",
 						icon: "warning",
-						button: "OK",
+						button: "CONTINUE",
 					});
 				}
 				
@@ -3652,12 +3624,6 @@ function paintTop10Chart({mapN="", lassoData="", lassoedMap="", eventData="", gl
 	var layout = {
 		//title: 'Top 10 US Counties of HIV Rate',
 		margin: {l:120, r:50, b:40, t:40, pad:4},
-		xaxis: {
-			tickfont: {
-			size: 14,
-			color: '#7f7f7f'
-			}
-		},		
 		barmode: 'stack',
 		paper_bgcolor: '#FAFAFA',
 		plot_bgcolor: '#FAFAFA',
@@ -4048,21 +4014,7 @@ function paintComparisionLineChart({mapN="", lassoData="", lassoedMap="", eventD
     
 	var layout = {
         shapes: shapes,
-		xaxis: {
-			tickfont: {
-			size: 16,
-			color: '#7f7f7f'}
-		},
-		yaxis: {
-			tickfont: {
-			size: 16,
-			color: '#7f7f7f'}
-		},
-        font: {
-         // family: 'Arial',
-         size: 15, // Comparison Line Chart and Legend Font Size
-          //color: '#7f7f7f'
-        },  	
+		//title: "Comparision of " + app.subject + " between "+ series1_name + " and " + series2_name,
 		updatemenus: updatemenus,
 		paper_bgcolor: '#FAFAFA',
 		plot_bgcolor: '#FAFAFA',
@@ -4128,8 +4080,8 @@ function paintMultipleLineChart(zoomedData=[], {mapN="", lassoData="", lassoedMa
 	var MultipleLineChart_width;
 	if (app.MultipleLineChart_width == null) {
 		if (app.sPointsMultipleLineChart[app.MLCvariables[0]]['key'].length <= 20) MultipleLineChart_width = 1000;
-		if (app.sPointsMultipleLineChart[app.MLCvariables[0]]['key'].length > 20) MultipleLineChart_width = 1600;
-		if (app.sPointsMultipleLineChart[app.MLCvariables[0]]['key'].length > 100) MultipleLineChart_width = 1800;
+		if (app.sPointsMultipleLineChart[app.MLCvariables[0]]['key'].length > 20) MultipleLineChart_width = 1300;
+		if (app.sPointsMultipleLineChart[app.MLCvariables[0]]['key'].length > 100) MultipleLineChart_width = 1600;
 	} else {
 		MultipleLineChart_width = app.MultipleLineChart_width;
 	}
@@ -4192,7 +4144,7 @@ function paintMultipleLineChart(zoomedData=[], {mapN="", lassoData="", lassoedMa
 		margin: { l: 45, t: 45, r: 45, b: 45 },
 		xaxis: {
 			tickfont: {
-			size: 14,
+			size: 10,
 			color: '#7f7f7f'
 			},
 			showgrid: true,
@@ -4207,7 +4159,7 @@ function paintMultipleLineChart(zoomedData=[], {mapN="", lassoData="", lassoedMa
 		yaxis: {
 			fixedrange: true,
 			tickfont: {
-			size: 14,
+			size: 10,
 			color: '#7f7f7f'
 			},
 			showgrid: true,
@@ -5197,6 +5149,7 @@ function redrawScatterChart(map0="map0", map1="map1", {lassoData="", eventData="
 	paintScatter(map0, map1, {lassoData:lassoData, eventData:eventData, globalJoin:globalJoin});
 }
 
+
 // check and draw scatter plot
 function paintScatter(map0="map0", map1="map1", {lassoData="", eventData="", globalJoin=null}={}) {
 //function paintScatter(map0="map0", map1="map1", args) {
@@ -5253,7 +5206,7 @@ function paintScatter(map0="map0", map1="map1", {lassoData="", eventData="", glo
 	var dict = {};
 	var geoJSON = (sameBounds) ? app.selectedGeoJSON : app.receivedGeoJSON;    // always app.selectedGeoJSON ??
 	//console.log(geoJSON.features)
-	for (var i=0; i<geoJSON.features.length; i++) {
+	for (var i=0, count=0; i<geoJSON.features.length; i++) {
 		var row = geoJSON.features[i].properties;
 		if (!row.hasOwnProperty(app.geokey)) continue;
 		if (!row.hasOwnProperty(xItem) || row[xItem] == -9999 || !row.hasOwnProperty(yItem) || row[yItem] == -9999) continue;
@@ -5266,7 +5219,8 @@ function paintScatter(map0="map0", map1="map1", {lassoData="", eventData="", glo
 		zData.push(row[zItem])
 		tooltips.push(zValue == -9999 ? "x: " + xValue + "<br>" + "y: " + yValue : 
 										"x: " + xValue + "<br>" + "y: " + yValue + "<br>" + "Z: " + zValue);
-		dict[row[app.geokey]] = [i, xValue, yValue, zValue]
+		dict[row[app.geokey]] = [count, xValue, yValue, zValue];
+		count++;
 	}
 	//console.log("xData:", xData)
 	//console.log("yData:", yData)
@@ -5276,8 +5230,8 @@ function paintScatter(map0="map0", map1="map1", {lassoData="", eventData="", glo
 	var max_xData = Math.max.apply(Math, xData);
 	var min_yData = Math.min.apply(Math, yData);
 	var max_yData = Math.max.apply(Math, yData);
-	console.log("min_xData:", min_xData, " max_xData:", max_xData)
-	console.log("min_yData:", min_yData, " max_yData:", max_yData)
+	//console.log("min_xData:", min_xData, " max_xData:", max_xData)
+	//console.log("min_yData:", min_yData, " max_yData:", max_yData)
 	
 	var markSize = 10;
 	if (geoid.length > 100) markSize = 8;
@@ -5418,6 +5372,62 @@ function paintScatter(map0="map0", map1="map1", {lassoData="", eventData="", glo
 		//        'line': {'color': '#FF0000'},
 		//        'name': 'Reg'}
 		//)
+		console.log("===============================================================")
+		console.log(lassoData)
+		if (typeof lassoData === "object") {
+			const headers = ["geoid", xText, yText];
+			const jsonData = selectedpoints.map((id_index, i) => ({
+			  [headers[0]]: geoid[id_index],
+			  [headers[1]]: xData[id_index],
+			  [headers[2]]: yData[id_index]
+			}));
+			const jsonStr = JSON.stringify(jsonData, null, 2);
+			
+			
+			let csvContent = headers.join(",") + "\n"; // Header row
+			for (let i = 0; i < selectedpoints.length; i++) {
+				let id_index = selectedpoints[i];
+			  const row = [
+				geoid[id_index],
+				xData[id_index],
+				yData[id_index]
+			  ];
+			  csvContent += row.join(",") + "\n";
+			}
+			//downloadJSON(jsonStr, "output.json");
+			//downloadCSV(csvContent, "output.csv");
+			
+			console.log("json",jsonData);
+			app.selectedScatterData = jsonData;
+		}
+		if (typeof eventData === "object") {
+			const headers = ["geoid", xText, yText];
+			const jsonData = eventData.points.map((point, i) => ({
+			  [headers[0]]: geoid[point.pointIndex],
+			  [headers[1]]: xData[point.pointIndex],
+			  [headers[2]]: yData[point.pointIndex]
+			}));
+			const jsonStr = JSON.stringify(jsonData, null, 2);
+			
+			let csvContent = headers.join(",") + "\n"; // Header row
+			for (let i = 0; i < eventData.points.length; i++) {
+			  const row = [
+				geoid[eventData.points[i].pointIndex],
+				xData[eventData.points[i].pointIndex],
+				yData[eventData.points[i].pointIndex]
+			  ];
+			  csvContent += row.join(",") + "\n";
+			}
+			//downloadJSON(jsonStr, "output.json");
+			//downloadCSV(csvContent, "output.csv");
+			console.log("json",jsonData);
+			app.selectedScatterData = jsonData;
+		}
+		
+		
+	}
+	else {
+		app.selectedScatterData = null;
 	}
 	//console.log(data);
 	
@@ -5486,8 +5496,65 @@ function paintScatter(map0="map0", map1="map1", {lassoData="", eventData="", glo
 		}
 		return colorGradient[0];									 // val = 61.81, intervals[0] = 61.81474480151229
 	}
+	if (app.selectedScatterData==null) {
+		document.getElementById('scatter-download-btn').disabled = true;
+	}
+	else {
+		document.getElementById('scatter-download-btn').disabled = false;
+	}
 }
 
+function convertToCSV(data) {
+    const headers = Object.keys(data[0]);
+    const csvRows = [];
+
+    // Add header row
+    csvRows.push(headers.join(","));
+
+    // Add data rows
+    for (const row of data) {
+        const values = headers.map(header => {
+            const value = row[header];
+            // Escape values with commas or quotes
+            return typeof value === "string" && /[",\n]/.test(value)
+                ? `"${value.replace(/"/g, '""')}"`
+                : value;
+        });
+        csvRows.push(values.join(","));
+    }
+
+    return csvRows.join("\n");
+}
+
+function downloadScatterData() {
+	if (app.selectedScatterData!=null)
+	{
+		const csv = convertToCSV(app.selectedScatterData);
+		downloadCSV(csv, "output.csv");
+	}
+	else {
+		console.log("No data to download. Select data first.");
+	}
+}
+
+
+
+// Function to download the JSON file
+function downloadJSON(content, fileName) {
+  const blob = new Blob([content], { type: "application/json" });
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = fileName;
+  link.click();
+}
+
+function downloadCSV(content, fileName) {
+  const blob = new Blob([content], { type: "text/csv" });
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = fileName;
+  link.click();
+}
 
 function oncontextScatter(e) {
 	console.log(this)

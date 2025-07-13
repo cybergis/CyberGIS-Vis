@@ -29,11 +29,13 @@
 	<script src="../template/Adaptive_Choropleth_Mapper/lib/leaflet@1.5.1/leaflet-src.js"></script>
 	<script src="../template/Adaptive_Choropleth_Mapper/lib/Leaflet.markercluster-master@1.4.1/dist/leaflet.markercluster.js"></script>
 
-	<script src="../template/Adaptive_Choropleth_Mapper/lib/leaflet-lasso-master@2.0.4/dist/leaflet-lasso.umd.min.js"></script>
+	<!--script src="../template/Adaptive_Choropleth_Mapper/lib/leaflet-lasso-master@2.0.4/dist/leaflet-lasso.umd.min.js"></script-->
+	<script src="../template/Adaptive_Choropleth_Mapper/lib/leaflet-lasso-master@2.0.4m/dist/leaflet-lasso.umd.js"></script>
 	<script src="../template/Adaptive_Choropleth_Mapper/lib/sweetalert/sweetalert.min.js"></script>
     <link rel="stylesheet" href="../template/Adaptive_Choropleth_Mapper/lib/geocode/Control.BingGeocoder.css" />
 	<script src="../template/Adaptive_Choropleth_Mapper/lib/geocode/Control.BingGeocoder.js" type="text/javascript" ></script>
-
+	<script src="../template/Adaptive_Choropleth_Mapper/lib/grayscale/TileLayer.Grayscale.js"></script>
+	
 	<link rel="stylesheet" href="../template/Adaptive_Choropleth_Mapper/css/Adaptive_Choropleth_Mapper.css" />
 	<style>
 		#tooltip {
@@ -78,7 +80,7 @@
 <body style="height:1500px;">
 	
 	<header>
-		<h1>Adaptive Choropleth Mapper with Multiple Line Charts</h1>	
+		<h1>Adaptive Choropleth Mapper with Multiple Line Charts with Scatter Plot</h1>	
 	</header>
 	
 	<br>
@@ -207,6 +209,7 @@ var app={
 	map4: {map: null, bounds: null, geojson: null, bingGeocoder: null, lasso: null, info: null, legend: null, layers: null, layerscontrol:null, lastHighlightedTractid: null, classification: null, item: null, items: null, zIntervals: null, mIntervals: null, nPolygonbyClass: []},
 	colorGradient1: [[],[]],
 	colorGradient19: [[],[]],
+	selectedScatterData: null
 };
 
 var RGBwhite = 'rgb(244, 244, 244)';
@@ -275,11 +278,15 @@ var COLOR_CLASS = {
 };
 
 
-	var cartodbAttr = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="https://carto.com/attribution">CARTO</a>';
+	var cartodbAttr = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attribution">CARTO</a>';
 	var openAttr = '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>';
+	var mbAttr = '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> ' +
+ 		//'<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+ 		'&copy; <a href="http://mapbox.com">Mapbox</a>';
 	
 	var cartoURL = 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png';
-	var openURL = 'https://tile.openstreetmap.org/{z}/{x}/{y}.png'
+	var mbUrl = "https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1Ijoic2h1bm55ODQiLCJhIjoiY2xseWxnaXY3MjBpbDNxcGduZHd1OGtoaCJ9.LjTME7cigyTNJKVWYLYAww";
+	var openURL = 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
 
 	var FakeBaseLayers = {
 	};	
@@ -318,8 +325,9 @@ function draw_basemap(mIDX) {
 	
 	var selected_mapdiv = document.getElementById(mIDX).getElementsByClassName("map")[0];
 
-	var grayscale   = L.tileLayer(cartoURL, {attribution: cartodbAttr});
-	var	streets  = L.tileLayer(openURL, {attribution: openAttr});
+	streets_gray  = L.tileLayer.grayscale(openURL, {attribution: openAttr});
+	grayscale = L.tileLayer(cartoURL, { attribution: cartodbAttr}),
+    streets  = L.tileLayer(mbUrl, {id: 'streets-v11',   attribution: mbAttr});
 	
 	var mapCenter = [37.09024, -95.712891];
 	var mapZoomLevel = 4;
@@ -403,7 +411,7 @@ function draw_titlemap(mIDX, layer) {
 		globalHeadingRestore();
 		
 		var nowBounds = app[mIDX].map.getBounds();
-		if (!boundsEqual(app.selectedBounds, nowBounds, app[mapN].map)) {
+		if (!boundsEqual(app.selectedBounds, nowBounds, app[mIDX].map)) {
 			//console.log(getNow(), mIDX, 'mapN.map.getBounds() != app.selectedBounds', nowBounds, app.selectedBounds);
 			app.selectedBounds = nowBounds;
 			updateSelectedGeoJSON(mIDX);
@@ -1526,8 +1534,15 @@ function ACSdata_render(mIDX) {
 			initializeLassoButtons(mIDX);
 			app[mIDX].lasso.remove();
 		}
-		if (app.ScatterPlot == true || app.ParallelCoordinatesPlot == true || app.Top10Chart == true || app.ComparisionLineChart == true || app.MultipleLineChart == true) {
-			app[mIDX].lasso = L.control.lasso({intersect: true,  position: 'topleft'}).addTo(map);
+		//if (app.ScatterPlot == true || app.ParallelCoordinatesPlot == true || app.Top10Chart == true || app.ComparisionLineChart == true || app.MultipleLineChart == true) {
+		//	app[mIDX].lasso = L.control.lasso({intersect: true,  position: 'topleft'}).addTo(map);
+		var selectedIcon = '';
+		if (app.ScatterPlot == true || app.ParallelCoordinatesPlot == true)
+			selectedIcon = 'lasso';
+		if (app.ComparisionLineChart == true || app.MultipleLineChart == true)
+			selectedIcon = 'globe';
+		if (selectedIcon != '') {
+			app[mIDX].lasso = L.control.lasso({intersect: true, position: 'topleft', icon: selectedIcon}).addTo(map);
 			//app[mIDX].lasso = L.control.lasso({position: 'topleft'}).addTo(map);
 			$("#"+mIDX+" .leaflet-control-lasso").css('background-color', RGBwhite);
             // to solve the problem that the current page is moved to "#" when lasso button is clicked
@@ -2542,8 +2557,7 @@ function draw_all_maps() {
 	
 	if (app.ScatterPlot) {
 		var map_html = '';
-		map_html += '<div>';
-		map_html += '	<div class="map_id" style="height:25px;float:left;clear:both"></div>';
+		map_html += '	<div class="map_id" style="height:25px;float:left;clear:both"><button id="scatter-download-btn" onclick="downloadScatterData()">Download</button></div>';
 		map_html += '	<div class="map_layer" style="height:25px;float:right"></div>';
 		map_html += '</div>';
 		map_html += '<div id="chart_scatter" class="mapArea" ' +
@@ -2813,7 +2827,8 @@ function fadeOutWindow(mIDX) {
 
 
 function mapOn_lasso_event_set() {
-	if (app.ScatterPlot == false && app.ParallelCoordinatesPlot == false && app.Top10Chart == false && app.ComparisionLineChart == false && app.MultipleLineChart == false) return;
+	//if (app.ScatterPlot == false && app.ParallelCoordinatesPlot == false && app.Top10Chart == false && app.ComparisionLineChart == false && app.MultipleLineChart == false) return;
+	if (app.ScatterPlot == false && app.ParallelCoordinatesPlot == false && app.ComparisionLineChart == false && app.MultipleLineChart == false) return;
 	j = null;
 	for (i=0; i<app.m; i++) {
 		var mIDX = "map" + i;
@@ -2861,6 +2876,17 @@ function mapOn_lasso_event_set() {
 				$("#Scatterchart select[name=ACSdata]").val("L000");
 				paintScatter('map0', 'map1', {lassoData:app.sPointsMaps});
 				
+				// check app.sPointsMaps.length for ComparisionLineChart
+				if ($('#CLCchart').length != 0)
+				if (app.sPointsMaps instanceof Array && app.sPointsMaps.length > 1) {
+					swal({
+						title: "Attention!",
+						text: "The comparision line chart cannot be drawn because there are too many lasso selected areas to draw.\nPlease click only one area.\n\nProceed anyway?",
+						icon: "warning",
+						button: "CONTINUE",
+					});
+				}
+				
 				// save lassoData to app.sPointsComparisionLineChart
 				if (app.sPointsMaps instanceof Array && app.sPointsMaps.length == 1) {
 					var geokey = app.sPointsMaps[0];
@@ -2878,6 +2904,17 @@ function mapOn_lasso_event_set() {
 					}
 				}
 				console.log("app.sPointsComparisionLineChart:", app.sPointsComparisionLineChart)
+				
+				// check app.sPointsMaps.length for MultipleLineChart
+				if ($('#MLCchart').length != 0)
+				if (app.sPointsMaps instanceof Array && app.sPointsMaps.length > 1) {
+					swal({
+						title: "Attention!",
+						text: "The multiple line chart cannot be drawn because there are too many lasso selected areas to draw.\nPlease click only one area.\n\nProceed anyway?",
+						icon: "warning",
+						button: "CONTINUE",
+					});
+				}
 				
 				// save lassoData to app.sPointsMultipleLineChart
 				if (app.sPointsMaps instanceof Array && app.sPointsMaps.length == 1) {
@@ -3938,7 +3975,7 @@ function paintComparisionLineChart({mapN="", lassoData="", lassoedMap="", eventD
 					args: [{'visible': [true, false, true, false, false, false, false, false  ]},
 						{//'title': 'Yahoo',
 							'annotations': []}],
-					label: 'Initiaize',
+					label: 'Initialize',
 					method: 'update',
 				},
 				
@@ -5112,6 +5149,7 @@ function redrawScatterChart(map0="map0", map1="map1", {lassoData="", eventData="
 	paintScatter(map0, map1, {lassoData:lassoData, eventData:eventData, globalJoin:globalJoin});
 }
 
+
 // check and draw scatter plot
 function paintScatter(map0="map0", map1="map1", {lassoData="", eventData="", globalJoin=null}={}) {
 //function paintScatter(map0="map0", map1="map1", args) {
@@ -5168,7 +5206,7 @@ function paintScatter(map0="map0", map1="map1", {lassoData="", eventData="", glo
 	var dict = {};
 	var geoJSON = (sameBounds) ? app.selectedGeoJSON : app.receivedGeoJSON;    // always app.selectedGeoJSON ??
 	//console.log(geoJSON.features)
-	for (var i=0; i<geoJSON.features.length; i++) {
+	for (var i=0, count=0; i<geoJSON.features.length; i++) {
 		var row = geoJSON.features[i].properties;
 		if (!row.hasOwnProperty(app.geokey)) continue;
 		if (!row.hasOwnProperty(xItem) || row[xItem] == -9999 || !row.hasOwnProperty(yItem) || row[yItem] == -9999) continue;
@@ -5181,7 +5219,8 @@ function paintScatter(map0="map0", map1="map1", {lassoData="", eventData="", glo
 		zData.push(row[zItem])
 		tooltips.push(zValue == -9999 ? "x: " + xValue + "<br>" + "y: " + yValue : 
 										"x: " + xValue + "<br>" + "y: " + yValue + "<br>" + "Z: " + zValue);
-		dict[row[app.geokey]] = [i, xValue, yValue, zValue]
+		dict[row[app.geokey]] = [count, xValue, yValue, zValue];
+		count++;
 	}
 	//console.log("xData:", xData)
 	//console.log("yData:", yData)
@@ -5191,8 +5230,8 @@ function paintScatter(map0="map0", map1="map1", {lassoData="", eventData="", glo
 	var max_xData = Math.max.apply(Math, xData);
 	var min_yData = Math.min.apply(Math, yData);
 	var max_yData = Math.max.apply(Math, yData);
-	console.log("min_xData:", min_xData, " max_xData:", max_xData)
-	console.log("min_yData:", min_yData, " max_yData:", max_yData)
+	//console.log("min_xData:", min_xData, " max_xData:", max_xData)
+	//console.log("min_yData:", min_yData, " max_yData:", max_yData)
 	
 	var markSize = 10;
 	if (geoid.length > 100) markSize = 8;
@@ -5333,6 +5372,62 @@ function paintScatter(map0="map0", map1="map1", {lassoData="", eventData="", glo
 		//        'line': {'color': '#FF0000'},
 		//        'name': 'Reg'}
 		//)
+		console.log("===============================================================")
+		console.log(lassoData)
+		if (typeof lassoData === "object") {
+			const headers = ["geoid", xText, yText];
+			const jsonData = selectedpoints.map((id_index, i) => ({
+			  [headers[0]]: geoid[id_index],
+			  [headers[1]]: xData[id_index],
+			  [headers[2]]: yData[id_index]
+			}));
+			const jsonStr = JSON.stringify(jsonData, null, 2);
+			
+			
+			let csvContent = headers.join(",") + "\n"; // Header row
+			for (let i = 0; i < selectedpoints.length; i++) {
+				let id_index = selectedpoints[i];
+			  const row = [
+				geoid[id_index],
+				xData[id_index],
+				yData[id_index]
+			  ];
+			  csvContent += row.join(",") + "\n";
+			}
+			//downloadJSON(jsonStr, "output.json");
+			//downloadCSV(csvContent, "output.csv");
+			
+			console.log("json",jsonData);
+			app.selectedScatterData = jsonData;
+		}
+		if (typeof eventData === "object") {
+			const headers = ["geoid", xText, yText];
+			const jsonData = eventData.points.map((point, i) => ({
+			  [headers[0]]: geoid[point.pointIndex],
+			  [headers[1]]: xData[point.pointIndex],
+			  [headers[2]]: yData[point.pointIndex]
+			}));
+			const jsonStr = JSON.stringify(jsonData, null, 2);
+			
+			let csvContent = headers.join(",") + "\n"; // Header row
+			for (let i = 0; i < eventData.points.length; i++) {
+			  const row = [
+				geoid[eventData.points[i].pointIndex],
+				xData[eventData.points[i].pointIndex],
+				yData[eventData.points[i].pointIndex]
+			  ];
+			  csvContent += row.join(",") + "\n";
+			}
+			//downloadJSON(jsonStr, "output.json");
+			//downloadCSV(csvContent, "output.csv");
+			console.log("json",jsonData);
+			app.selectedScatterData = jsonData;
+		}
+		
+		
+	}
+	else {
+		app.selectedScatterData = null;
 	}
 	//console.log(data);
 	
@@ -5401,8 +5496,65 @@ function paintScatter(map0="map0", map1="map1", {lassoData="", eventData="", glo
 		}
 		return colorGradient[0];									 // val = 61.81, intervals[0] = 61.81474480151229
 	}
+	if (app.selectedScatterData==null) {
+		document.getElementById('scatter-download-btn').disabled = true;
+	}
+	else {
+		document.getElementById('scatter-download-btn').disabled = false;
+	}
 }
 
+function convertToCSV(data) {
+    const headers = Object.keys(data[0]);
+    const csvRows = [];
+
+    // Add header row
+    csvRows.push(headers.join(","));
+
+    // Add data rows
+    for (const row of data) {
+        const values = headers.map(header => {
+            const value = row[header];
+            // Escape values with commas or quotes
+            return typeof value === "string" && /[",\n]/.test(value)
+                ? `"${value.replace(/"/g, '""')}"`
+                : value;
+        });
+        csvRows.push(values.join(","));
+    }
+
+    return csvRows.join("\n");
+}
+
+function downloadScatterData() {
+	if (app.selectedScatterData!=null)
+	{
+		const csv = convertToCSV(app.selectedScatterData);
+		downloadCSV(csv, "output.csv");
+	}
+	else {
+		console.log("No data to download. Select data first.");
+	}
+}
+
+
+
+// Function to download the JSON file
+function downloadJSON(content, fileName) {
+  const blob = new Blob([content], { type: "application/json" });
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = fileName;
+  link.click();
+}
+
+function downloadCSV(content, fileName) {
+  const blob = new Blob([content], { type: "text/csv" });
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = fileName;
+  link.click();
+}
 
 function oncontextScatter(e) {
 	console.log(this)

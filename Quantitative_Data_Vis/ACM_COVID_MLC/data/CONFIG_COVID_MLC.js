@@ -24,18 +24,19 @@ var DefaultRegion_CLC = ""; //Set Defaul Region
 
 
 // Define the number of variable that you want to visualize Multiple Synchronized Line Chart. 
-var NumOfMLC = 4;
+var NumOfMLC = 6;
 // Define variables that you want to visualize at MLC (Multiple Synchronized Line Chart).
 //var InitialVariableMLC = ["HIV Rate", "HIV Test (/100k pop)", "Rate of Illicit Drug Use", "Health Care Center (/100k pop)"]
 var InitialVariableMLC = []
 // Define titles that you want to visualize at MLC (Multiple Synchronized Line Chart).
 //var titlesOfMLC = ["1. HIV Rate", "2. HIV Test (/100k pop)", "3. Rate of Illicit Drug Use", "4. Health Care Center (/100k pop)"];
-var titlesOfMLC = ["1. Confirmed Rate (Confirmed Cases per 10k population)", "2. Death Rate (Deaths per 10k population)", "3. Cumulative Confirmed Rate", "4. Cumulative Death Rate"];
+var titlesOfMLC = ["1. Confirmed Rate (Confirmed Cases per 10k population)", " 2. Death Rate (Deaths per 10k population)", " 3. Cumulative Confirmed Rate", " 4. Cumulative Death Rate", " 5. Visitor Flows from the Selected Region"];
 // Define beginning and ending of highlighted areas of MLC. You can do multiple times
 // [["begin_X_value","end_X_value","color"], ["begin_X_value","end_X_value","color"]…] 
-var DefaultRegion_MLC = "12086";
+var DefaultRegion_MLC = "777777";
 var HighlightMLC = []; //Set  highlighted ranges for x value
 var MultipleLineChart_width = "";
+
 //Define the geographic id or name to be display on the top-right corner of the map
 //var NameDisplayed = "geoname";
 
@@ -44,7 +45,7 @@ var MultipleLineChart_width = "";
 var InitialLayers = ["2020-04-06_confirmed_rate", "2020-07-20_confirmed_rate"];
 
 /*Define initial map center and zoom level below. Map Extent and Zoom level will be automatically adjusted when you do not define map center and zoom level. Double-slashes  in the front need to be deleted to make them effective*/
-var Initial_map_center = [38, -97];
+var Initial_map_center = [38.0, -97.0];
 var Initial_map_zoom_level = 4;
 
 
