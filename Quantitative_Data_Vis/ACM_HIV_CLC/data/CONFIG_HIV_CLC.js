@@ -22,6 +22,7 @@ var NumOfCLC = 7;
 var InitialVariableCLC = []; 
 var DefaultRegion_CLC = ["36061", "12086"];
 
+
 // Define the number of variable that you want to visualize Multiple Synchronized Line Chart. 
 var NumOfMLC = 0;
 // Define variables that you want to visualize at MLC (Multiple Synchronized Line Chart).
@@ -60,14 +61,11 @@ var Comparision_Chart = true;
 var Multiple_Line_Chart = false;
 
 // The number of digit after the decial point.
-var Num_Of_Decimal_Places = 2;                              // default = 1 
+var Num_Of_Decimal_Places = 2;                              // default = 2 
 
 //Adjust the size of maps
 var Map_width = "650px";
 var Map_height = "410px";
 
-//Adjust the size of the stacked chart. Double-slashes in the front need to be deleted to make them effective
-var Chart_width  = "350px";									// min 350px
-var Chart_height = "350px";									// min 300px
 
 

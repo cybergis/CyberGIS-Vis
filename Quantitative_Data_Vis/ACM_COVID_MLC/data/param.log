@@ -1,22 +1,24 @@
-2024-08-29 08:55:56 ACM_COVID_MLC
+2025-06-25 16:28:30 ACM_COVID_MLC
 
   {'title': 'Spatiotemporal Dynamics of COVID-19 Cases and Deaths in U.S. '
             'Counties',
    'Subject': 'Temporal Patterns of COVID-19 Risk Factors',
    'filename_suffix': 'COVID_MLC',
    'variables': ['confirmed_rate', 'death_rate', 'confirmed_rate_total',
-                 'death_rate_tatal'],
+                 'death_rate_total', 'visitor_flows_to_selected_area',
+                 'visitor_flows_from_selected_area'],
    'NumOfMaps': 2,
+   'Initial_map_center': [38.0, -97.0],
+   'Initial_map_zoom_level': 4,
    'SortLayers': 'temporal',
    'InitialLayers': ['2020-04-06_confirmed_rate', '2020-07-20_confirmed_rate'],
-   'Initial_map_center': [38, -97],
-   'Initial_map_zoom_level': 4,
    'Map_width': '650px',
    'Map_height': '450px',
    'Top10_Chart': True,
    'Multiple_Line_Chart': True,
-   'NumOfMLC': 4,
+   'NumOfMLC': 6,
    'titlesOfMLC': ['1. Confirmed Rate (Confirmed Cases per 10k population)',
-                   '2. Death Rate (Deaths per 10k population)',
-                   '3. Cumulative Confirmed Rate', '4. Cumulative Death Rate'],
-   'DefaultRegion_MLC': '12086'}
+                   ' 2. Death Rate (Deaths per 10k population)',
+                   ' 3. Cumulative Confirmed Rate', ' 4. Cumulative Death Rate',
+                   ' 5. Visitor Flows from the Selected Region'],
+   'DefaultRegion_MLC': '777777'}

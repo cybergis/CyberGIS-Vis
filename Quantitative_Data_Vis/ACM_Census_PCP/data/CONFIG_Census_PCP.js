@@ -2,7 +2,7 @@
 var Subject = "";
 
 // Define the number of maps that you want to visualize. upto 15 maps are supported.
-var NumOfMaps = 4;
+var NumOfMaps = 2;
 
 
 // Define the order to show the drop-down list fo the Layer. "compare" or "temporal" 
@@ -10,7 +10,7 @@ var SortLayers = "compare";
 
 
 // Define the number of variable that you want to visaulize Parallel Coordinates Plot. 
-var NumOfPCP = 4;
+var NumOfPCP = 10;
 //Define variables that you want to visualize at PCP.
 var InitialVariablePCP = ["2010_% white (non-Hispanic)", "2010_% black (non-Hispanic)", "2010_% Hispanic", "2010_% Asian & PI race", "2010_% professional employees", "2010_% manufacturing employees", "2010_% in poverty", "2010_% foreign born", "2010_% 17 and under (total)", "2010_% 60 and older"];
 
@@ -21,6 +21,7 @@ var NumOfCLC = 0;
 //var InitialVariableCLC = ["2012_HIV Rate", "2013_HIV Rate", "2014_HIV Rate", "2015_HIV Rate", "2016_HIV Rate", "2017_HIV Rate", "2018_HIV Rate", "2019_HIV Rate", "2020_HIV Rate", "2021_HIV Rate", "2022_HIV Rate"]
 var InitialVariableCLC = []; 
 var DefaultRegion_CLC = ""; //Set Defaul Region
+
 
 // Define the number of variable that you want to visualize Multiple Synchronized Line Chart. 
 var NumOfMLC = 0;
@@ -63,8 +64,8 @@ var Multiple_Line_Chart = false;
 var Num_Of_Decimal_Places = 2;                              // default = 2 
 
 //Adjust the size of maps
-var Map_width = "350px";
-var Map_height = "350px";
+var Map_width = "650px";
+var Map_height = "400px";
 
 
 

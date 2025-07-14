@@ -16,11 +16,11 @@ var InitialVariablePCP = [];
 
 
 // Define the number of variable that you want to visaulize Comparision Line Chart. 
-var NumOfCLC = 91;
+var NumOfCLC = 2039;
 // Define variables that you want to visualize at CLC (Comparision Line Chart).
 //var InitialVariableCLC = ["2012_HIV Rate", "2013_HIV Rate", "2014_HIV Rate", "2015_HIV Rate", "2016_HIV Rate", "2017_HIV Rate", "2018_HIV Rate", "2019_HIV Rate", "2020_HIV Rate", "2021_HIV Rate", "2022_HIV Rate"]
 var InitialVariableCLC = []; 
-var DefaultRegion_CLC = ["777777", "53033"];
+var DefaultRegion_CLC = ["27", "132"];
 
 
 // Define the number of variable that you want to visualize Multiple Synchronized Line Chart. 
@@ -35,7 +35,7 @@ var titlesOfMLC = [];
 // [["begin_X_value","end_X_value","color"], ["begin_X_value","end_X_value","color"]…] 
 var DefaultRegion_MLC = ""; //Set Default region
 var HighlightMLC = []; //Set  highlighted ranges for x value
-
+var MultipleLineChart_width = "";
 
 //Define the geographic id or name to be display on the top-right corner of the map
 //var NameDisplayed = "geoname";
@@ -45,8 +45,8 @@ var HighlightMLC = []; //Set  highlighted ranges for x value
 var InitialLayers = ["2020-04-06_confirmed_rate", "2020-07-20_confirmed_rate"];
 
 /*Define initial map center and zoom level below. Map Extent and Zoom level will be automatically adjusted when you do not define map center and zoom level. Double-slashes  in the front need to be deleted to make them effective*/
-var Initial_map_center = [38, -99.5];
-var Initial_map_zoom_level = 4;
+var Initial_map_center = [40.7128, -74.006];
+var Initial_map_zoom_level = 10;
 
 
 // It appears only when the map extent and the class intervals of all maps are same.

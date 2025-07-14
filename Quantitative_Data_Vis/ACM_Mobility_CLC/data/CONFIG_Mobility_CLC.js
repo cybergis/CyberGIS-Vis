@@ -1,5 +1,5 @@
 // Define subject of this visaulize
-var Subject = "Temporal Patterns of COVID-19 Confirmed Rate";
+var Subject = "Temporal Patterns";
 
 // Define the number of maps that you want to visualize. upto 15 maps are supported.
 var NumOfMaps = 2;
@@ -35,7 +35,7 @@ var titlesOfMLC = [];
 // [["begin_X_value","end_X_value","color"], ["begin_X_value","end_X_value","color"]…] 
 var DefaultRegion_MLC = ""; //Set Default region
 var HighlightMLC = []; //Set  highlighted ranges for x value
-
+var MultipleLineChart_width = "";
 
 //Define the geographic id or name to be display on the top-right corner of the map
 //var NameDisplayed = "geoname";
@@ -65,7 +65,7 @@ var Num_Of_Decimal_Places = 2;                              // default = 2
 
 //Adjust the size of maps
 var Map_width = "650px";
-var Map_height = "400px";
+var Map_height = "410px";
 
 
 

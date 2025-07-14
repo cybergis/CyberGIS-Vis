@@ -2,7 +2,7 @@
 var Subject = "";
 
 // Define the number of maps that you want to visualize. upto 15 maps are supported.
-var NumOfMaps = 6;
+var NumOfMaps = 4;
 
 
 // Define the order to show the drop-down list fo the Layer. "compare" or "temporal" 
@@ -21,6 +21,7 @@ var NumOfCLC = 0;
 //var InitialVariableCLC = ["2012_HIV Rate", "2013_HIV Rate", "2014_HIV Rate", "2015_HIV Rate", "2016_HIV Rate", "2017_HIV Rate", "2018_HIV Rate", "2019_HIV Rate", "2020_HIV Rate", "2021_HIV Rate", "2022_HIV Rate"]
 var InitialVariableCLC = []; 
 var DefaultRegion_CLC = ""; //Set Defaul Region
+
 
 // Define the number of variable that you want to visualize Multiple Synchronized Line Chart. 
 var NumOfMLC = 0;
